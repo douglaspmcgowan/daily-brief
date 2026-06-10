@@ -248,14 +248,17 @@ def build_html(corpus, run_date):
   .mast-sub {{ color:var(--muted); margin:10px 0 0; font-size:15px;
     display:flex; gap:14px; flex-wrap:wrap; align-items:center; }}
   .mast-sub b {{ color:var(--ink); font-weight:600; }}
-  .controls {{ position:sticky; top:0; background:var(--paper); padding:14px 0;
+  .controls {{ position:sticky; top:0; background:var(--paper); padding:10px 0;
     border-bottom:1px solid var(--rule); z-index:5;
-    display:flex; gap:10px; flex-wrap:wrap; align-items:center; }}
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center; }}
+  .pills-row {{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; flex:1; min-width:0; }}
   .pill {{ font:inherit; font-size:13.5px; border:1px solid var(--ink); background:transparent;
-    color:var(--ink); padding:6px 12px; border-radius:999px; cursor:pointer; }}
+    color:var(--ink); padding:6px 12px; border-radius:999px; cursor:pointer;
+    touch-action:manipulation; }}
   .pill.active {{ background:var(--ink); color:var(--paper); }}
   .pill .pc {{ opacity:.6; font-variant-numeric:tabular-nums; margin-left:4px; }}
-  #q {{ font:inherit; flex:1; min-width:180px; padding:7px 12px; border:1px solid var(--rule);
+  .search-row {{ display:flex; gap:8px; align-items:center; flex-shrink:0; }}
+  #q {{ font:inherit; flex:1; min-width:160px; padding:7px 12px; border:1px solid var(--rule);
     border-radius:8px; background:var(--card); color:var(--ink); }}
   .whatsnew {{ background:var(--anchor-soft); border:1px solid var(--anchor);
     border-radius:12px; padding:16px 20px; margin:22px 0; }}
@@ -300,7 +303,26 @@ def build_html(corpus, run_date):
   a {{ color:var(--link); }}
   footer.foot {{ margin-top:40px; color:var(--muted); font-size:12.5px;
     border-top:1px solid var(--rule); padding-top:14px; }}
-  @media (max-width:680px) {{ .ref-list {{ columns:1; }} .mast-title {{ font-size:40px; }} }}
+  @media (max-width:680px) {{ .mast-title {{ font-size:38px; }} .ref-list {{ columns:1; }} }}
+  @media (max-width:600px) {{
+    .wrap {{ padding:0 16px 60px; }}
+    .mast-title {{ font-size:28px; letter-spacing:-.3px; }}
+    .mast-sub {{ font-size:13px; gap:6px; }}
+    .mast-topics {{ display:none; }}
+    .controls {{ flex-direction:column; align-items:stretch; gap:6px; }}
+    .pills-row {{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      scrollbar-width:none; gap:6px; padding-bottom:2px; }}
+    .pills-row::-webkit-scrollbar {{ display:none; }}
+    .pill {{ flex-shrink:0; font-size:12.5px; padding:7px 10px; }}
+    .search-row {{ gap:6px; }}
+    #q {{ min-width:0; font-size:15px; }}
+    #theme-btn {{ padding:7px 11px; }}
+    .topic-h {{ font-size:21px; }}
+    .title {{ font-size:15px; line-height:1.35; }}
+    .item {{ padding:12px 13px; }}
+    .summary {{ font-size:14px; }}
+    .whatsnew {{ padding:12px 14px; }}
+  }}
   html[data-theme="dark"] {{
     --paper:{PALETTE_DARK['paper']}; --card:{PALETTE_DARK['card']}; --ink:{PALETTE_DARK['ink']};
     --muted:{PALETTE_DARK['muted']}; --rule:{PALETTE_DARK['rule']}; --anchor:{PALETTE_DARK['anchor']};
@@ -308,8 +330,8 @@ def build_html(corpus, run_date):
   }}
   html[data-theme="dark"] .summary {{ color:#c8bfb0; }}
   #theme-btn {{ font:inherit; font-size:13px; border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:5px 11px; border-radius:999px; cursor:pointer; margin-left:auto;
-    transition:border-color .15s,color .15s; }}
+    color:var(--muted); padding:5px 11px; border-radius:999px; cursor:pointer;
+    transition:border-color .15s,color .15s; touch-action:manipulation; white-space:nowrap; }}
   #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
 </style>
 </head>
@@ -319,14 +341,18 @@ def build_html(corpus, run_date):
     <h1 class="mast-title">The <span class="accent">Daily</span> Brief</h1>
     <p class="mast-sub"><b>{stamp}</b><span>·</span><span>{len(items)} items live</span>
       <span>·</span><span>{new_count} new</span>
-      <span>·</span><span>AI · Design · AI×Design/Eng · Tech</span></p>
+      <span>·</span><span class="mast-topics">AI · Design · AI×Design/Eng · Tech</span></p>
   </header>
 
   <div class="controls">
-    <button class="pill active" data-filter="all">All</button>
-    {pills}
-    <input id="q" type="search" placeholder="Filter by keyword…" autocomplete="off">
-    <button id="theme-btn" title="Toggle dark mode">Dark</button>
+    <div class="pills-row">
+      <button class="pill active" data-filter="all">All</button>
+      {pills}
+    </div>
+    <div class="search-row">
+      <input id="q" type="search" placeholder="Filter…" autocomplete="off">
+      <button id="theme-btn" title="Toggle dark mode">Dark</button>
+    </div>
   </div>
 
   {whats_new}
