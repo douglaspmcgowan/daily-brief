@@ -132,9 +132,13 @@ def render_item_html(it, lead=True):
     summary = esc(it.get("summary", ""))
     pin = '<span class="pin" title="pinned / evergreen">★</span>' if it.get("pinned") else ""
     cls = "item lead" if lead else "item also"
+    rbtl = esc(it.get("rbtl", ""))
     search_blob = esc(" ".join([it.get("title", ""), it.get("summary", ""),
-                                it.get("source", ""), " ".join(it.get("topics", []))])).lower()
+                                it.get("rbtl", ""), it.get("source", ""),
+                                " ".join(it.get("topics", []))])).lower()
     summ_html = f'<p class="summary">{summary}</p>' if (summary and lead) else ""
+    rbtl_html = (f'<p class="rbtl"><span class="rbtl-label">Reading between the lines</span>'
+                 f'{rbtl}</p>') if (rbtl and lead) else ""
     return f"""<article class="{cls}" data-search="{search_blob}">
   <div class="item-head">
     <a class="title" href="{url}" target="_blank" rel="noopener">{title}</a>
@@ -142,6 +146,7 @@ def render_item_html(it, lead=True):
   </div>
   <div class="meta"><span class="src">{src}</span><span class="dot">·</span><span class="stype">{stype}</span></div>
   {summ_html}
+  {rbtl_html}
 </article>"""
 
 
@@ -287,6 +292,9 @@ def build_html(corpus, run_date):
   .meta {{ color:var(--muted); font-size:12.5px; margin-top:3px; }}
   .meta .dot {{ margin:0 6px; }}
   .summary {{ margin:8px 0 0; color:#3a352d; font-size:15px; }}
+  .rbtl {{ margin:8px 0 0; font-size:14px; color:var(--muted); font-style:italic; line-height:1.5; }}
+  .rbtl-label {{ font-style:normal; font-size:10.5px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.7px; display:block; color:var(--anchor); opacity:.85; margin-bottom:3px; }}
   .also-wrap {{ margin:2px 0 0 2px; }}
   .also-wrap summary {{ cursor:pointer; color:var(--link); font-size:13px; }}
   .also-list {{ margin:8px 0 4px; padding-left:18px; }}
@@ -442,6 +450,8 @@ def build_markdown(corpus, run_date):
                          f"— {lead.get('source','')}{tag}{pin}")
             if lead.get("summary"):
                 lines.append(f"  - {lead['summary']}")
+            if lead.get("rbtl"):
+                lines.append(f"  - *Reading between the lines: {lead['rbtl']}*")
             for m in c["members"][1:]:
                 lines.append(f"  - also: [{m.get('title','')}]({m.get('url','#')}) — {m.get('source','')}")
         lines.append("")

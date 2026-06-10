@@ -77,7 +77,8 @@ Merge into `corpus.json` (append new, bump `last_seen` for existing items).
   "source_type": "email|rss|web|reddit|twitter|forum",
   "topic": "ai|design|ai_in_design|tech",
   "topics": ["ai"],
-  "summary": "1–2 sentences — ONLY for items scoring ≥7 or cluster leads. Empty string otherwise.",
+  "summary": "2–4 sentences — full context on what happened and why it matters. Only on cluster leads / score ≥7. Empty string otherwise.",
+  "rbtl": "1–2 sentences — the meta story, what this actually signals. Only on cluster leads / score ≥7. Empty string otherwise.",
   "first_seen": "YYYY-MM-DD",
   "cluster": "optional-shared-slug",
   "score": 7,
@@ -90,7 +91,10 @@ Rules:
 - **Cluster:** ≥2 sources on the same story → shared `cluster` key. build_digest.py renders a lead + "+N more" expander.
 - **Topic routing:** `ai` = models/labs/policy; `design` = UX/visual/tools (non-AI); `ai_in_design` = generative UI, AI design/eng tooling; `tech` = big tech/startups/coding/infra
 - **Score:** launches/major moves 7–9; solid reads 5–6; minor 3–4
-- **Summaries:** real 1–2 sentences only for cluster leads and items ≥7. Empty string for the long tail.
+- **Summaries + RBTL = top stories only.** For cluster leads and items scoring ≥7, write two fields:
+  - `summary`: 2–4 sentences. What happened, key details, full context — more depth than a wire-service lede. Ground every claim in the source.
+  - `rbtl` ("Reading Between the Lines"): 1–2 sentences on the *meta* story. What this actually signals — the competitive dynamic, the thing the press release doesn't say, the power move buried in the announcement, the implication most coverage will miss. Be direct and analytical; don't hedge into the obvious.
+  Everything else ships as headline + source + link with empty `summary` and `rbtl`. build_digest.py renders `rbtl` with a distinct italic style below the summary, only on cluster leads.
 - Do **not** set `is_new` — build_digest.py computes it from `first_seen` vs `last_run`
 
 Write the merged corpus back to `corpus.json` (preserve existing `references` array and `retention_days`).
