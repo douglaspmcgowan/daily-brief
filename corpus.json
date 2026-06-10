@@ -1,0 +1,1253 @@
+{
+  "version": 1,
+  "last_run": "2026-06-10",
+  "retention_days": {
+    "default": 14,
+    "design": 21,
+    "ai_in_design": 30,
+    "evergreen": 90
+  },
+  "_seed_note": "Seeded 2026-06-09 with real items from Doug's inbox + verified practitioner sources so the first render is non-empty. Pinned (★) entries are evergreen sources, not dated stories. The agent appends fresh items on each /news-digest run; build_digest.py prunes by retention.",
+  "items": [
+    {
+      "id": "openai-s1-tldr",
+      "title": "OpenAI confidentially files draft S-1 with the SEC",
+      "url": "https://www.cnbc.com/2026/06/08/openai-confidentially-files-for-ipo-prepping-wall-street-for-ai-debut.html",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "OpenAI submitted a confidential draft S-1 to the SEC, prepping Wall Street for an AI debut. Anthropic is also reported to have filed confidentially and could reach public markets first.",
+      "first_seen": "2026-06-09",
+      "cluster": "openai-ipo",
+      "score": 9,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "openai-ipo-linkedin",
+      "title": "OpenAI files for its IPO",
+      "url": "https://www.linkedin.com/news/",
+      "source": "LinkedIn News (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "cluster": "openai-ipo",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "openai-chatgpt-overhaul",
+      "title": "OpenAI reportedly has a major ChatGPT overhaul in store",
+      "url": "https://www.engadget.com/2189038/openai-reportedly-has-a-major-chatgpt-overhaul-in-store/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "cluster": "openai-ipo",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "claude-fable-5-launch",
+      "title": "Claude Fable 5 (Mythos) officially launches",
+      "url": "https://www.anthropic.com/news/claude-fable-5-mythos-5",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Anthropic launched Claude Fable 5, also known as Mythos 5 — its most powerful public model yet, with major capability and safety improvements. The launch was widely tested and reviewed on release day.",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 9,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "simonw-fable-5",
+      "title": "Simon Willison on Claude Fable 5",
+      "url": "https://simonwillison.net/2026/Jun/9/claude-fable-5/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "interconnects-fable-5",
+      "title": "Claude Fable 5 and New AI Safety Fables",
+      "url": "https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "mollick-mythos",
+      "title": "What It Feels Like to Work With Mythos",
+      "url": "https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-fable-vibe",
+      "title": "Fable 5 / Mythos Vibe Check (Every)",
+      "url": "https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "zvi-three-labs",
+      "title": "Three Labs With a Plan and a Memorandum",
+      "url": "https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "emerging-fable-5",
+      "title": "Claude Fable 5 Is a Beast: The First Setup Guide",
+      "url": "https://emergingai.substack.com/p/claude-fable-5-is-a-beast-the-first",
+      "source": "Emerging AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "claude-fable-5",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "anthropic-mythos-leak",
+      "title": "Anthropic Mythos AI project Glasswing details emerge",
+      "url": "https://www.cnbc.com/2026/06/02/anthropic-mythos-ai-project-glasswing.html",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-02",
+      "cluster": "claude-fable-5",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "anthropic-series-h",
+      "title": "Anthropic raises Series H at ~$965B valuation",
+      "url": "https://www.anthropic.com/news/series-h",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "Anthropic closed a massive Series H round, reportedly valuing the company near $965 billion — one of the highest valuations ever for a private AI company.",
+      "first_seen": "2026-05-29",
+      "cluster": "anthropic-series-h",
+      "score": 9,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "claude-opus-48",
+      "title": "Claude Opus 4.8 launches",
+      "url": "https://www.anthropic.com/news/claude-opus-4-8",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Anthropic launched Claude Opus 4.8, its highest-capability model at the time — focused on extended reasoning and agentic tasks. Now positioned just below the newly released Fable 5.",
+      "first_seen": "2026-05-29",
+      "cluster": "claude-opus-48",
+      "score": 9,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "claude-code-dynamic-workflows",
+      "title": "Introducing Dynamic Workflows in Claude Code",
+      "url": "https://claude.com/blog/introducing-dynamic-workflows-in-claude-code",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "cluster": "claude-opus-48",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "gemini-35-translate",
+      "title": "Gemini 3.5 launches with Live Translate",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Google released Gemini 3.5 with Live Translate — enabling real-time AI-powered cross-language conversation. A major step toward real-time multimodal AI.",
+      "first_seen": "2026-06-10",
+      "cluster": "gemini-35",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "trump-openai-stake",
+      "title": "Trump administration reportedly taking stake in OpenAI",
+      "url": "https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "Reports emerged that the Trump administration is negotiating a direct government equity stake in OpenAI — raising significant questions about AI governance and public-private AI development.",
+      "first_seen": "2026-06-08",
+      "cluster": "openai-trump-stake",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "spacex-ai1-satellite",
+      "title": "SpaceX details its AI1 compute satellite",
+      "url": "https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "cluster": "spacex-ai-compute",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "google-spacex-compute",
+      "title": "Google taps SpaceX for $920M/month AI compute deal",
+      "url": "https://winbuzzer.com/2026/06/06/google-taps-spacex-for-920m-monthly-ai-compute-deal-xcxwbn/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-08",
+      "cluster": "spacex-ai-compute",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "anthropic-spacex-lease",
+      "title": "How long is Anthropic's lease with SpaceX? Opinions vary.",
+      "url": "https://techcrunch.com/2026/05/28/how-long-is-anthropics-lease-with-spacex-opinions-vary/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "cluster": "spacex-ai-compute",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "cheaper-ai-models",
+      "title": "Can Tech Companies Learn to Love Cheaper AI Models?",
+      "url": "https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "As frontier model prices plummet, TechCrunch examines whether enterprise buyers will shift toward cheaper capable models — and what that means for labs betting on premium pricing.",
+      "first_seen": "2026-06-10",
+      "cluster": "ai-costs",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "anthropic-cost-analysis",
+      "title": "Anthropic/OpenAI May Be Spending $1,000 for Every $100 You Pay Them",
+      "url": "https://ea.rna.nl/2026/06/07/anthropic-openai-may-be-spending-more-than-1000-for-every-100-you-pay-them/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-08",
+      "cluster": "ai-costs",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "apple-core-ai",
+      "title": "Apple releases Core AI developer documentation",
+      "url": "https://developer.apple.com/documentation/coreai/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "Apple quietly published Core AI documentation for developers, pointing toward deep native on-device AI integration across its ecosystem.",
+      "first_seen": "2026-06-09",
+      "cluster": "apple-ai-strategy",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "apple-new-ai-arch",
+      "title": "Apple reveals new on-device AI architecture",
+      "url": "https://www.macrumors.com/2026/06/08/apple-reveals-new-ai-architecture/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "cluster": "apple-ai-strategy",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "microsoft-seven-models",
+      "title": "Microsoft launches 7 new MAI models in a 'hillclimbing' release",
+      "url": "https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Microsoft unveiled seven new MAI models simultaneously — a 'hillclimbing' strategy aimed at accelerating AI capability improvements across its product portfolio.",
+      "first_seen": "2026-06-03",
+      "cluster": "microsoft-ai-models",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "microsoft-scout",
+      "title": "Microsoft rolls out Scout AI agent to frontier users",
+      "url": "https://www.testingcatalog.com/early-look-microsoft-rolls-out-scout-ai-agent-to-frontier-users/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-08",
+      "cluster": "microsoft-ai-models",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "microsoft-coding-model",
+      "title": "Microsoft tries to re-enter AI coding with new model",
+      "url": "https://sherwood.news/tech/report-microsoft-tries-to-get-back-in-the-ai-coding-game-with-new-model/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "cluster": "microsoft-ai-models",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "chatgpt-search-fail",
+      "title": "ChatGPT failed to kill Google Search",
+      "url": "https://sherwood.news/tech/chatgpt-failed-to-kill-google-search/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "anthropic-claude-chemist",
+      "title": "Making Claude a Chemist",
+      "url": "https://www.anthropic.com/research/making-claude-a-chemist",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-08",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "open-vs-closed-models",
+      "title": "Open and Closed Models Are on Different Paths",
+      "url": "https://www.interconnects.ai/p/open-and-closed-models-are-on-different",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Nathan Lambert argues that open and closed AI models aren't racing to the same finish line — their cost structures, use cases, and innovation cycles are fundamentally diverging.",
+      "first_seen": "2026-06-03",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "how-far-open-models",
+      "title": "How Far Behind Are Open Models?",
+      "url": "https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "bytedance-chips",
+      "title": "ByteDance is making its own AI chips",
+      "url": "https://www.pcgamer.com/hardware/processors/bytedance-has-had-enough-of-waiting-months-for-processors-so-its-going-to-make-them-itself/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "mistral-chips",
+      "title": "Mistral CEO wants to design AI chips for data centers",
+      "url": "https://www.cnbc.com/2026/05/28/mistral-arthur-mensch-design-chips-ai-data-centers.html",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "aws-bedrock-console",
+      "title": "New Amazon Bedrock console experience: Anthropic and OpenAI APIs",
+      "url": "https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-08",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "cursor-design-mode",
+      "title": "Cursor Design Mode",
+      "url": "https://cursor.com/blog/design-mode",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "Cursor launched Design Mode, bringing visual editing directly into the AI-powered IDE — letting developers see and make design changes with direct visual feedback alongside code generation.",
+      "first_seen": "2026-06-08",
+      "cluster": "cursor-design",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "cursor-insights",
+      "title": "Cursor Insights",
+      "url": "https://cursor.com/insights",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-05-29",
+      "cluster": "cursor-design",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "a16z-visual-ai-code",
+      "title": "The Next Frontier of Visual AI Is Code",
+      "url": "https://a16z.com/the-next-frontier-of-visual-ai-is-code/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "a16z lays out how AI is bridging visual design and code generation — translating visual intent directly into functional frontend code at scale.",
+      "first_seen": "2026-06-03",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "latent-space-github",
+      "title": "GitHub x Latent Space: AI coding deep dive",
+      "url": "https://www.latent.space/p/github",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-03",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "apple-container-gh",
+      "title": "Apple open-sources its container project",
+      "url": "https://github.com/apple/container",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-10",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-after-automation",
+      "title": "After Automation",
+      "url": "https://every.to/p/after-automation",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Dan Shipper argues that AI progress creates more human work, not less — as cheap competence floods in and creates sameness, humans are structurally needed to provide the next layer of judgment and framing.",
+      "first_seen": "2026-05-21",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-ai-ready-orgs",
+      "title": "AI Is Ready. Organizations Aren't.",
+      "url": "https://every.to/p/ai-is-ready-organizations-aren-t",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Every argues the bottleneck on AI adoption has shifted from model capability to organizational readiness — the tech is there, but institutions aren't structured to use it.",
+      "first_seen": "2026-06-07",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-eight-levels",
+      "title": "The Eight Levels of AI Adoption",
+      "url": "https://every.to/guides/the-eight-levels-of-ai-adoption",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-07",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-still-employed",
+      "title": "Why We'll Still Be Employed When AI Can Do Everything",
+      "url": "https://every.to/context-window/why-we-ll-still-be-employed-when-ai-can-do-everything",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-07",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "every-metered-intelligence",
+      "title": "How Microsoft Is Building for a World of Metered Intelligence",
+      "url": "https://every.to/also-true-for-humans/how-microsoft-is-building-for-a-world-of-metered-intelligence",
+      "source": "Every (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "tech"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-07",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-make-local-code",
+      "title": "Figma Make, Now on Your Local Code",
+      "url": "https://www.figma.com/blog/figma-make-now-on-your-local-code/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "Figma Make now lets designers edit production codebases directly from Figma — visual edits, annotations, and Git-based PR workflows without leaving the design tool. Closes the design-to-code loop two-way.",
+      "first_seen": "2026-06-01",
+      "cluster": "figma-mcp",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-check-designs",
+      "title": "Figma Check Designs: catch what's off, ship what's right",
+      "url": "https://www.figma.com/release-notes/?title=check-designs-catch-whats-off-ship-whats-right",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "cluster": "figma-mcp",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-mcp-setup",
+      "title": "Set up the Figma remote MCP server",
+      "url": "https://help.figma.com/hc/en-us/articles/35281350665623-Figma-MCP-collection-How-to-set-up-the-Figma-remote-MCP-server",
+      "source": "Figma (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "Figma published official setup documentation for its remote MCP server, enabling AI coding tools like Claude Code and Cursor to read and reason about Figma designs directly in the IDE.",
+      "first_seen": "2026-06-03",
+      "cluster": "figma-mcp",
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-mcp-what-is",
+      "title": "What is MCP? (Figma Resource Library)",
+      "url": "https://www.figma.com/resource-library/what-is-mcp/",
+      "source": "Figma (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-03",
+      "cluster": "figma-mcp",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-code-to-canvas",
+      "title": "Figma Workflow Lab: Code to Canvas",
+      "url": "https://help.figma.com/hc/en-us/articles/40219873508247-Workflow-lab-Code-to-canvas",
+      "source": "Figma (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-03",
+      "cluster": "figma-mcp",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "bads-agentic-design-system",
+      "title": "Building BADS: The Behavioral Agentic Design System",
+      "url": "https://www.designsystemscollective.com/building-bads-the-behavioral-agentic-design-system-5698ff721db1",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "A new design system framework that embeds behavioral and agentic patterns directly into component logic — built for AI-driven interfaces where components must reason about their own state.",
+      "first_seen": "2026-06-09",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "slack-ai-design-validation",
+      "title": "How I Validated Design Decisions Before Writing Production Code",
+      "url": "https://slack.design/articles/how-i-validated-design-decisions-before-writing-production-code/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "speed-of-prototyping-ai",
+      "title": "Speed of Prototyping in the Age of AI",
+      "url": "https://darylcecile.net/notes/speed-of-prototyping-age-of-ai",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-09",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "nngroup-ai-design-jobs",
+      "title": "Four Design Jobs AI Created",
+      "url": "https://www.nngroup.com/articles/design-jobs-ai-created/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "Nielsen Norman Group identifies four new design roles that AI has created — including prompt designer and AI experience auditor — rather than simply eliminating traditional positions.",
+      "first_seen": "2026-06-09",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "airbnb-ceo-ai-design",
+      "title": "Airbnb CEO bets on design and UX over commodity AI features",
+      "url": "https://www.storyboard18.com/brand-makers/airbnb-ceo-bets-on-different-ai-future-focuses-on-design-and-user-experience-100312.htm",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "Brian Chesky argues Airbnb's AI advantage is design and experience quality — betting on AI that elevates human connection rather than chasing commodity AI features competitors can copy.",
+      "first_seen": "2026-06-09",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "photoshop-prompt-box",
+      "title": "Photoshop is being eaten by the prompt box",
+      "url": "https://www.digitaltrends.com/computing/photoshop-is-being-eaten-by-the-prompt-box/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-01",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "youtube-ai-labels",
+      "title": "YouTube will auto-label AI-generated videos",
+      "url": "https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-01",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "canva-design-intelligence",
+      "title": "Canva Design Intelligence: AI personalization at Snowflake Summit",
+      "url": "https://siliconangle.com/2026/06/04/ai-personalization-canva-design-intelligence-snowflakesummit/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-04",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "stripe-developer-ux",
+      "title": "How Stripe Uses 4 Developer-First UX Principles",
+      "url": "https://raw.studio/blog/how-stripe-uses-4-developer-first-ux-principles-to-drive-massive-adoption/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-01",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "ai-inclusive-design",
+      "title": "Could AI Help Us Design More Inclusive Digital Experiences?",
+      "url": "https://www.vccp.com/news/2026/05/could-ai-help-us-to-design-and-build-more-inclusive-digital-experiences/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-01",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "kc-green-artisan-settlement",
+      "title": "'This is fine' artist KC Green settles with AI startup Artisan",
+      "url": "https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai"
+      ],
+      "summary": "",
+      "first_seen": "2026-06-01",
+      "score": 5,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "simonw",
+      "title": "Simon Willison's Weblog",
+      "url": "https://simonwillison.net/",
+      "source": "Simon Willison",
+      "source_type": "web",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Daily hands-on notes on LLMs, tooling, and prompt engineering. A primary practitioner source — has a full Atom feed.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 9,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "latent-space",
+      "title": "Latent Space (swyx)",
+      "url": "https://www.latent.space/",
+      "source": "Latent Space",
+      "source_type": "web",
+      "topic": "ai",
+      "topics": [
+        "ai",
+        "ai_in_design"
+      ],
+      "summary": "The canonical AI-engineering publication; also runs the AINews daily digest.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "sidebar",
+      "title": "Sidebar.io — 5 design links a day",
+      "url": "https://sidebar.io/",
+      "source": "Sidebar",
+      "source_type": "web",
+      "topic": "design",
+      "topics": [
+        "design"
+      ],
+      "summary": "Five hand-picked design links daily. The gold standard for high signal-to-noise curation.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 8,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "smashing",
+      "title": "Smashing Magazine",
+      "url": "https://www.smashingmagazine.com/",
+      "source": "Smashing Magazine",
+      "source_type": "web",
+      "topic": "design",
+      "topics": [
+        "design"
+      ],
+      "summary": "Deep web design/dev articles and tutorials; evergreen over trend-chasing.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "nngroup",
+      "title": "Nielsen Norman Group — UX research",
+      "url": "https://www.nngroup.com/articles/",
+      "source": "NN/g",
+      "source_type": "web",
+      "topic": "design",
+      "topics": [
+        "design"
+      ],
+      "summary": "Evidence-based UX guidance. Useful when a design decision needs a citation.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "generative-ui",
+      "title": "Generative UI: the new frontend for AI agents",
+      "url": "https://emergingai.substack.com/",
+      "source": "Emerging AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai",
+        "design"
+      ],
+      "summary": "How generative UI turns AI agents into visual, interactive tools instead of chat boxes.",
+      "first_seen": "2026-06-05",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "eugene-yan",
+      "title": "Eugene Yan — patterns for building LLM systems & products",
+      "url": "https://eugeneyan.com/",
+      "source": "Eugene Yan",
+      "source_type": "web",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "Practical write-ups on designing and shipping LLM-backed products.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "figma-blog",
+      "title": "Figma Blog — design + AI",
+      "url": "https://www.figma.com/blog/",
+      "source": "Figma",
+      "source_type": "web",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "Product and craft posts; increasingly about vibe-coding and AI-assisted prototyping.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "spacex-ipo",
+      "title": "SpaceX prices IPO at $135, valuing it at $1.77T",
+      "url": "https://tldr.tech/",
+      "source": "TLDR (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "SpaceX set a $135 IPO price, aiming to raise $74.4B.",
+      "first_seen": "2026-06-04",
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "refactoring-ai-workflow",
+      "title": "My AI coding workflow",
+      "url": "https://refactoring.fm/",
+      "source": "Refactoring (email)",
+      "source_type": "email",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai_in_design"
+      ],
+      "summary": "Luca Rossi's monthly walkthrough of how he actually codes with AI day to day.",
+      "first_seen": "2026-06-03",
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "hn",
+      "title": "Hacker News (front page, 150+ points)",
+      "url": "https://news.ycombinator.com/",
+      "source": "Hacker News",
+      "source_type": "forum",
+      "topic": "tech",
+      "topics": [
+        "tech",
+        "ai"
+      ],
+      "summary": "Real-time dev/startup discussion; pull a high-signal feed via hnrss with a points threshold.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 7,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "techmeme",
+      "title": "Techmeme",
+      "url": "https://www.techmeme.com/",
+      "source": "Techmeme",
+      "source_type": "web",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "Editor + algorithm hybrid that clusters the top tech headlines with related coverage.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 6,
+      "last_seen": "2026-06-10"
+    },
+    {
+      "id": "lobsters",
+      "title": "Lobste.rs",
+      "url": "https://lobste.rs/",
+      "source": "Lobsters",
+      "source_type": "forum",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "Invite-only, tag-filterable technical link aggregator.",
+      "first_seen": "2026-01-01",
+      "pinned": true,
+      "score": 5,
+      "last_seen": "2026-06-10"
+    }
+  ],
+  "references": [
+    {
+      "name": "Techmeme",
+      "url": "https://www.techmeme.com/",
+      "note": "Best-in-class story clustering — one story, many sources."
+    },
+    {
+      "name": "Ground News",
+      "url": "https://ground.news/",
+      "note": "Same-story clustering with source/bias context."
+    },
+    {
+      "name": "TLDR AI",
+      "url": "https://tldr.tech/ai",
+      "note": "Tight one-paragraph item format; a model for digest brevity."
+    },
+    {
+      "name": "Sidebar.io",
+      "url": "https://sidebar.io/",
+      "note": "5 links a day — the daily-cap discipline to copy."
+    },
+    {
+      "name": "Dense Discovery",
+      "url": "https://www.densediscovery.com/",
+      "note": "Thoughtful design/tech/culture weekly."
+    },
+    {
+      "name": "Meridian (GitHub)",
+      "url": "https://github.com/iliane5/meridian",
+      "note": "Scrape → embeddings → cluster → LLM 'daily brief'. Study this architecture."
+    },
+    {
+      "name": "Horizon (GitHub)",
+      "url": "https://github.com/Thysrael/Horizon",
+      "note": "Multi-source radar: HN/RSS/Reddit/X → AI scores 0-10 → dedups → GitHub Pages brief."
+    },
+    {
+      "name": "auto-news (GitHub)",
+      "url": "https://github.com/finaldie/auto-news",
+      "note": "Personal aggregator: Tweets/RSS/YouTube/Reddit + LLM noise-cutting."
+    },
+    {
+      "name": "RSSbrew (GitHub)",
+      "url": "https://github.com/yinan-c/RSSbrew",
+      "note": "Self-hosted: aggregate, filter, AI-summarize, roll into daily/weekly digests."
+    },
+    {
+      "name": "better-morning (GitHub)",
+      "url": "https://github.com/00sapo/better-morning",
+      "note": "TOML feeds → litellm summaries → GitHub Action → email/Release. Literal morning brief."
+    },
+    {
+      "name": "matcha (GitHub)",
+      "url": "https://github.com/piqoni/matcha",
+      "note": "Daily digest as a markdown file for Obsidian/terminal; local-AI friendly."
+    },
+    {
+      "name": "Miniflux",
+      "url": "https://miniflux.app/",
+      "note": "Minimal Go RSS reader with a clean API — good backend to bolt AI onto."
+    },
+    {
+      "name": "FreshRSS (GitHub)",
+      "url": "https://github.com/FreshRSS/FreshRSS",
+      "note": "Self-hosted reader with XPath scraping for feed-less sites."
+    },
+    {
+      "name": "awesome-ai-news",
+      "url": "https://github.com/taielab/awesome-ai-news",
+      "note": "Catalog of aggregation/digest tools to mine."
+    }
+  ]
+}

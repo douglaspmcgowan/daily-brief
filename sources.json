@@ -1,0 +1,95 @@
+{
+  "_comment": "Editable source registry for /news-digest. Add/remove freely. 'topics' tag where each source lands: ai | design | ai_in_design | tech. 'weight' (1-3) biases scoring. RSS/web sources are fetched with WebFetch; gmail sources are pulled with the Gmail MCP; reddit/forums via their .rss endpoints.",
+  "retention_days": { "default": 14, "design": 21, "ai_in_design": 30, "evergreen": 90 },
+  "first_screen_cap": 6,
+
+  "gmail": {
+    "_comment": "Pull with Gmail MCP search_threads using the queries below, then get_thread for FULL_CONTENT to extract the linked stories. Doug already foldered most of these under the 'AI & Tech Archive' and 'Half Baked' labels.",
+    "labels": {
+      "AI & Tech Archive": "Label_4919395749249167339",
+      "Half Baked": "Label_7604292166429045737",
+      "Newsletters": "Label_5637575818053267502",
+      "Good Ideas": "Label_5559430368712997354"
+    },
+    "senders": [
+      { "from": "dan@tldrnewsletter.com",            "name": "TLDR",                  "topics": ["ai", "tech"],            "weight": 3, "note": "Daily 5-min tech/AI digest. Highest-frequency, highest-signal source in the inbox." },
+      { "from": "emergingai@substack.com",            "name": "Emerging AI",           "topics": ["ai", "ai_in_design"],    "weight": 2, "note": "Claude/agent how-to guides." },
+      { "from": "hello@every.to",                     "name": "Every",                 "topics": ["ai", "tech"],            "weight": 2, "note": "AI essays + product strategy." },
+      { "from": "productforengineers@substack.com",   "name": "Product for Engineers", "topics": ["tech", "ai_in_design"],  "weight": 2 },
+      { "from": "refactoring+monday-ideas@substack.com", "name": "Refactoring (Luca Rossi)", "topics": ["tech"],          "weight": 2, "note": "Also: refactoring+essays@substack.com" },
+      { "from": "hybridhacker@substack.com",          "name": "Hybrid Hacker",         "topics": ["tech", "ai"],            "weight": 1, "note": "Weekly 'top things I read' roundup — good link harvest." },
+      { "from": "ideas@mail.gethalfbaked.com",        "name": "Half Baked",            "topics": ["tech"],                  "weight": 1, "note": "Startup ideas, product angles." },
+      { "from": "daily@chartr.co",                    "name": "Chartr",                "topics": ["tech"],                  "weight": 1, "note": "Data/charts, business — keep only AI/tech items." },
+      { "from": "ship@info.vercel.com",               "name": "Vercel Ship",           "topics": ["tech", "ai_in_design"],  "weight": 1, "note": "Dev-tool product updates." },
+      { "from": "announcements@figma.com",            "name": "Figma",                 "topics": ["design", "ai_in_design"],"weight": 2 },
+      { "from": "editors-noreply@linkedin.com",       "name": "LinkedIn News",         "topics": ["tech"],                  "weight": 1, "note": "Low signal; keep only big-tech items." }
+    ],
+    "default_query_window": "newer_than:8d"
+  },
+
+  "web": {
+    "_comment": "Fetch via WebFetch. Prefer the RSS/Atom feed when present (cheaper, structured). hnrss + reddit .rss + subreddit feeds give clean item lists.",
+    "ai": [
+      { "name": "TLDR AI",          "url": "https://tldr.tech/ai",                    "rss": "https://tldr.tech/api/rss/ai",                 "weight": 3 },
+      { "name": "Simon Willison",   "url": "https://simonwillison.net/",              "rss": "https://simonwillison.net/atom/everything/",   "weight": 3, "note": "Daily hands-on LLM/tooling. Primary practitioner source." },
+      { "name": "Latent Space",     "url": "https://www.latent.space/",               "rss": "https://www.latent.space/feed",                "weight": 3, "note": "swyx — AI engineering. Also runs AINews daily." },
+      { "name": "AINews",           "url": "https://buttondown.com/ainews",           "rss": "https://buttondown.com/ainews/rss",            "weight": 2 },
+      { "name": "Ahead of AI",      "url": "https://magazine.sebastianraschka.com/",  "rss": "https://magazine.sebastianraschka.com/feed", "weight": 2 },
+      { "name": "Interconnects",    "url": "https://www.interconnects.ai/",           "rss": "https://www.interconnects.ai/feed",            "weight": 2, "note": "Nathan Lambert — frontier-lab analysis." },
+      { "name": "Import AI",        "url": "https://importai.substack.com/",          "rss": "https://importai.substack.com/feed",           "weight": 2, "note": "Jack Clark — research/policy." },
+      { "name": "The Batch",        "url": "https://www.deeplearning.ai/the-batch/",  "rss": "https://www.deeplearning.ai/the-batch/feed/",  "weight": 2, "note": "Andrew Ng." },
+      { "name": "Ben's Bites",      "url": "https://news.bensbites.com/",             "rss": null,                                           "weight": 1 }
+    ],
+    "design": [
+      { "name": "Sidebar.io",        "url": "https://sidebar.io/",                    "rss": "https://sidebar.io/feed/",                     "weight": 3, "note": "5 hand-picked design links/day. Gold standard for signal." },
+      { "name": "Smashing Magazine", "url": "https://www.smashingmagazine.com/",      "rss": "https://www.smashingmagazine.com/feed/",       "weight": 2 },
+      { "name": "Dense Discovery",   "url": "https://www.densediscovery.com/",        "rss": "https://www.densediscovery.com/archive/rss/", "weight": 2, "note": "Design/tech/culture intersection." },
+      { "name": "Designer News",     "url": "https://www.designernews.co/",           "rss": "https://www.designernews.co/?format=rss",      "weight": 1 },
+      { "name": "Nielsen Norman Group", "url": "https://www.nngroup.com/articles/",   "rss": "https://www.nngroup.com/feed/rss/",            "weight": 2, "note": "UX research depth." },
+      { "name": "Awwwards",          "url": "https://www.awwwards.com/",              "rss": null,                                           "weight": 1, "note": "Visual inspiration / Site of the Day." }
+    ],
+    "ai_in_design": [
+      { "name": "Figma Blog",        "url": "https://www.figma.com/blog/",            "rss": "https://www.figma.com/blog/feed/",             "weight": 2 },
+      { "name": "Vercel Blog",       "url": "https://vercel.com/blog",                "rss": "https://vercel.com/atom",                      "weight": 2, "note": "v0, generative UI." },
+      { "name": "Eugene Yan",        "url": "https://eugeneyan.com/",                 "rss": "https://eugeneyan.com/rss/",                   "weight": 2, "note": "Patterns for building LLM systems & products." }
+    ],
+    "tech": [
+      { "name": "Hacker News (top)", "url": "https://news.ycombinator.com/",          "rss": "https://hnrss.org/frontpage?points=150",       "weight": 3, "note": "Points threshold keeps it high-signal." },
+      { "name": "Techmeme",          "url": "https://www.techmeme.com/",              "rss": "https://www.techmeme.com/feed.xml",            "weight": 2, "note": "Best story-clustering reference." },
+      { "name": "Lobste.rs",         "url": "https://lobste.rs/",                     "rss": "https://lobste.rs/rss",                        "weight": 2, "note": "Tag-filterable, high-signal." }
+    ]
+  },
+
+  "reddit": [
+    { "name": "r/LocalLLaMA",       "rss": "https://www.reddit.com/r/LocalLLaMA/top/.rss?t=day",            "topics": ["ai"],            "weight": 3, "note": "New model families trend here first." },
+    { "name": "r/MachineLearning",  "rss": "https://www.reddit.com/r/MachineLearning/top/.rss?t=day",       "topics": ["ai"],            "weight": 2 },
+    { "name": "r/artificial",       "rss": "https://www.reddit.com/r/artificial/top/.rss?t=day",            "topics": ["ai"],            "weight": 1 },
+    { "name": "r/ChatGPT",          "rss": "https://www.reddit.com/r/ChatGPT/top/.rss?t=day",               "topics": ["ai"],            "weight": 1 },
+    { "name": "r/PromptEngineering","rss": "https://www.reddit.com/r/PromptEngineering/top/.rss?t=week",     "topics": ["ai"],            "weight": 1 },
+    { "name": "r/UXDesign",         "rss": "https://www.reddit.com/r/UXDesign/top/.rss?t=week",              "topics": ["design"],        "weight": 2 },
+    { "name": "r/web_design",       "rss": "https://www.reddit.com/r/web_design/top/.rss?t=week",            "topics": ["design"],        "weight": 1 },
+    { "name": "r/generative",       "rss": "https://www.reddit.com/r/generative/top/.rss?t=week",            "topics": ["ai_in_design"],  "weight": 1 }
+  ],
+
+  "twitter": {
+    "_comment": "CORROBORATION-ONLY: an X post is surfaced ONLY when a non-X source in the same run covers the same story (shares its cluster key). Standalone X posts with no corroborating article are dropped. Use these handles as pointers to find the underlying story, then cite the underlying source. X has no open RSS — pull via a live nitter mirror (rotate instances) or WebFetch the public profile, or skip if unreachable; never block the digest on X.",
+    "corroboration_only": true,
+    "accounts": [
+      { "handle": "@simonw",   "name": "Simon Willison",   "topics": ["ai"],            "weight": 3 },
+      { "handle": "@swyx",     "name": "swyx",             "topics": ["ai", "ai_in_design"], "weight": 2 },
+      { "handle": "@karpathy", "name": "Andrej Karpathy",  "topics": ["ai"],            "weight": 2 },
+      { "handle": "@sama",     "name": "Sam Altman",       "topics": ["ai"],            "weight": 1 },
+      { "handle": "@AnthropicAI","name": "Anthropic",      "topics": ["ai"],            "weight": 2 },
+      { "handle": "@OpenAI",   "name": "OpenAI",           "topics": ["ai"],            "weight": 2 },
+      { "handle": "@figma",    "name": "Figma",            "topics": ["design", "ai_in_design"], "weight": 1 }
+    ],
+    "nitter_instances": ["https://nitter.net", "https://nitter.poast.org"]
+  },
+
+  "forums": [
+    { "name": "Hacker News",     "url": "https://news.ycombinator.com/",   "rss": "https://hnrss.org/frontpage?points=150", "topics": ["tech", "ai"], "weight": 3 },
+    { "name": "Lobste.rs",       "url": "https://lobste.rs/",              "rss": "https://lobste.rs/rss",                  "topics": ["tech"],       "weight": 2 },
+    { "name": "Product Hunt",    "url": "https://www.producthunt.com/",    "rss": "https://www.producthunt.com/feed",       "topics": ["tech", "ai_in_design"], "weight": 1, "note": "New tool launches." },
+    { "name": "Designer News",   "url": "https://www.designernews.co/",    "rss": "https://www.designernews.co/?format=rss", "topics": ["design"],     "weight": 1 }
+  ]
+}

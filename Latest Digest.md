@@ -1,0 +1,129 @@
+# News Digest — 2026-06-10
+
+_72 items live · 11 new since last run._
+
+## New since last digest
+- [Claude Fable 5 (Mythos) officially launches](https://www.anthropic.com/news/claude-fable-5-mythos-5) — TLDR AI (email) (AI)
+- [Simon Willison on Claude Fable 5](https://simonwillison.net/2026/Jun/9/claude-fable-5/) — TLDR AI (email) (AI)
+- [Fable 5 / Mythos Vibe Check (Every)](https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check) — Every (email) (AI)
+- [Gemini 3.5 launches with Live Translate](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/) — TLDR AI (email) (AI)
+- [Claude Fable 5 and New AI Safety Fables](https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety) — TLDR AI (email) (AI)
+- [What It Feels Like to Work With Mythos](https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos) — TLDR AI (email) (AI)
+- [Three Labs With a Plan and a Memorandum](https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum) — TLDR AI (email) (AI)
+- [Claude Fable 5 Is a Beast: The First Setup Guide](https://emergingai.substack.com/p/claude-fable-5-is-a-beast-the-first) — Emerging AI (email) (AI)
+- [SpaceX details its AI1 compute satellite](https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite) — TLDR AI (email) (Tech & Coding)
+- [Can Tech Companies Learn to Love Cheaper AI Models?](https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/) — TLDR AI (email) (AI)
+
+## AI (31)
+- [Claude Fable 5 (Mythos) officially launches](https://www.anthropic.com/news/claude-fable-5-mythos-5) — TLDR AI (email) **NEW**
+  - Anthropic launched Claude Fable 5, also known as Mythos 5 — its most powerful public model yet, with major capability and safety improvements. The launch was widely tested and reviewed on release day.
+  - also: [Simon Willison on Claude Fable 5](https://simonwillison.net/2026/Jun/9/claude-fable-5/) — TLDR AI (email)
+  - also: [Fable 5 / Mythos Vibe Check (Every)](https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check) — Every (email)
+  - also: [Claude Fable 5 and New AI Safety Fables](https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety) — TLDR AI (email)
+  - also: [What It Feels Like to Work With Mythos](https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos) — TLDR AI (email)
+  - also: [Three Labs With a Plan and a Memorandum](https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum) — TLDR AI (email)
+  - also: [Claude Fable 5 Is a Beast: The First Setup Guide](https://emergingai.substack.com/p/claude-fable-5-is-a-beast-the-first) — Emerging AI (email)
+  - also: [Anthropic Mythos AI project Glasswing details emerge](https://www.cnbc.com/2026/06/02/anthropic-mythos-ai-project-glasswing.html) — TLDR AI (email)
+- [Gemini 3.5 launches with Live Translate](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/) — TLDR AI (email) **NEW**
+  - Google released Gemini 3.5 with Live Translate — enabling real-time AI-powered cross-language conversation. A major step toward real-time multimodal AI.
+- [Can Tech Companies Learn to Love Cheaper AI Models?](https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/) — TLDR AI (email) **NEW**
+  - As frontier model prices plummet, TechCrunch examines whether enterprise buyers will shift toward cheaper capable models — and what that means for labs betting on premium pricing.
+  - also: [Anthropic/OpenAI May Be Spending $1,000 for Every $100 You Pay Them](https://ea.rna.nl/2026/06/07/anthropic-openai-may-be-spending-more-than-1000-for-every-100-you-pay-them/) — TLDR AI (email)
+- [OpenAI confidentially files draft S-1 with the SEC](https://www.cnbc.com/2026/06/08/openai-confidentially-files-for-ipo-prepping-wall-street-for-ai-debut.html) — TLDR AI (email)
+  - OpenAI submitted a confidential draft S-1 to the SEC, prepping Wall Street for an AI debut. Anthropic is also reported to have filed confidentially and could reach public markets first.
+  - also: [OpenAI reportedly has a major ChatGPT overhaul in store](https://www.engadget.com/2189038/openai-reportedly-has-a-major-chatgpt-overhaul-in-store/) — TLDR AI (email)
+  - also: [OpenAI files for its IPO](https://www.linkedin.com/news/) — LinkedIn News (email)
+- [Anthropic raises Series H at ~$965B valuation](https://www.anthropic.com/news/series-h) — TLDR AI (email)
+  - Anthropic closed a massive Series H round, reportedly valuing the company near $965 billion — one of the highest valuations ever for a private AI company.
+- [Claude Opus 4.8 launches](https://www.anthropic.com/news/claude-opus-4-8) — TLDR AI (email)
+  - Anthropic launched Claude Opus 4.8, its highest-capability model at the time — focused on extended reasoning and agentic tasks. Now positioned just below the newly released Fable 5.
+- [Simon Willison's Weblog](https://simonwillison.net/) — Simon Willison ★
+  - Daily hands-on notes on LLMs, tooling, and prompt engineering. A primary practitioner source — has a full Atom feed.
+- [Trump administration reportedly taking stake in OpenAI](https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html) — TLDR AI (email)
+  - Reports emerged that the Trump administration is negotiating a direct government equity stake in OpenAI — raising significant questions about AI governance and public-private AI development.
+- [After Automation](https://every.to/p/after-automation) — Every (email)
+  - Dan Shipper argues that AI progress creates more human work, not less — as cheap competence floods in and creates sameness, humans are structurally needed to provide the next layer of judgment and framing.
+- [Latent Space (swyx)](https://www.latent.space/) — Latent Space ★
+  - The canonical AI-engineering publication; also runs the AINews daily digest.
+- [Microsoft launches 7 new MAI models in a 'hillclimbing' release](https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/) — TLDR AI (email)
+  - Microsoft unveiled seven new MAI models simultaneously — a 'hillclimbing' strategy aimed at accelerating AI capability improvements across its product portfolio.
+  - also: [Microsoft rolls out Scout AI agent to frontier users](https://www.testingcatalog.com/early-look-microsoft-rolls-out-scout-ai-agent-to-frontier-users/) — TLDR AI (email)
+  - also: [Microsoft tries to re-enter AI coding with new model](https://sherwood.news/tech/report-microsoft-tries-to-get-back-in-the-ai-coding-game-with-new-model/) — TLDR AI (email)
+- [Open and Closed Models Are on Different Paths](https://www.interconnects.ai/p/open-and-closed-models-are-on-different) — TLDR AI (email)
+  - Nathan Lambert argues that open and closed AI models aren't racing to the same finish line — their cost structures, use cases, and innovation cycles are fundamentally diverging.
+- [AI Is Ready. Organizations Aren't.](https://every.to/p/ai-is-ready-organizations-aren-t) — Every (email)
+  - Every argues the bottleneck on AI adoption has shifted from model capability to organizational readiness — the tech is there, but institutions aren't structured to use it.
+- [ChatGPT failed to kill Google Search](https://sherwood.news/tech/chatgpt-failed-to-kill-google-search/) — TLDR AI (email)
+- [Making Claude a Chemist](https://www.anthropic.com/research/making-claude-a-chemist) — TLDR AI (email)
+- [How Far Behind Are Open Models?](https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models) — TLDR AI (email)
+- [The Eight Levels of AI Adoption](https://every.to/guides/the-eight-levels-of-ai-adoption) — Every (email)
+- [Why We'll Still Be Employed When AI Can Do Everything](https://every.to/context-window/why-we-ll-still-be-employed-when-ai-can-do-everything) — Every (email)
+- [How Microsoft Is Building for a World of Metered Intelligence](https://every.to/also-true-for-humans/how-microsoft-is-building-for-a-world-of-metered-intelligence) — Every (email)
+
+## Design (11)
+- [Sidebar.io — 5 design links a day](https://sidebar.io/) — Sidebar ★
+  - Five hand-picked design links daily. The gold standard for high signal-to-noise curation.
+- [Four Design Jobs AI Created](https://www.nngroup.com/articles/design-jobs-ai-created/) — TLDR Design (email)
+  - Nielsen Norman Group identifies four new design roles that AI has created — including prompt designer and AI experience auditor — rather than simply eliminating traditional positions.
+- [Airbnb CEO bets on design and UX over commodity AI features](https://www.storyboard18.com/brand-makers/airbnb-ceo-bets-on-different-ai-future-focuses-on-design-and-user-experience-100312.htm) — TLDR Design (email)
+  - Brian Chesky argues Airbnb's AI advantage is design and experience quality — betting on AI that elevates human connection rather than chasing commodity AI features competitors can copy.
+- [Photoshop is being eaten by the prompt box](https://www.digitaltrends.com/computing/photoshop-is-being-eaten-by-the-prompt-box/) — TLDR Design (email)
+- [YouTube will auto-label AI-generated videos](https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not) — TLDR Design (email)
+- [Smashing Magazine](https://www.smashingmagazine.com/) — Smashing Magazine ★
+  - Deep web design/dev articles and tutorials; evergreen over trend-chasing.
+- [Nielsen Norman Group — UX research](https://www.nngroup.com/articles/) — NN/g ★
+  - Evidence-based UX guidance. Useful when a design decision needs a citation.
+- [Canva Design Intelligence: AI personalization at Snowflake Summit](https://siliconangle.com/2026/06/04/ai-personalization-canva-design-intelligence-snowflakesummit/) — TLDR Design (email)
+- [How Stripe Uses 4 Developer-First UX Principles](https://raw.studio/blog/how-stripe-uses-4-developer-first-ux-principles-to-drive-massive-adoption/) — TLDR Design (email)
+- [Could AI Help Us Design More Inclusive Digital Experiences?](https://www.vccp.com/news/2026/05/could-ai-help-us-to-design-and-build-more-inclusive-digital-experiences/) — TLDR Design (email)
+- ['This is fine' artist KC Green settles with AI startup Artisan](https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/) — TLDR Design (email)
+
+## AI × Design / Eng (16)
+- [Cursor Design Mode](https://cursor.com/blog/design-mode) — TLDR AI (email)
+  - Cursor launched Design Mode, bringing visual editing directly into the AI-powered IDE — letting developers see and make design changes with direct visual feedback alongside code generation.
+  - also: [Cursor Insights](https://cursor.com/insights) — TLDR AI (email)
+- [Figma Make, Now on Your Local Code](https://www.figma.com/blog/figma-make-now-on-your-local-code/) — TLDR Design (email)
+  - Figma Make now lets designers edit production codebases directly from Figma — visual edits, annotations, and Git-based PR workflows without leaving the design tool. Closes the design-to-code loop two-way.
+  - also: [Set up the Figma remote MCP server](https://help.figma.com/hc/en-us/articles/35281350665623-Figma-MCP-collection-How-to-set-up-the-Figma-remote-MCP-server) — Figma (email)
+  - also: [Figma Check Designs: catch what's off, ship what's right](https://www.figma.com/release-notes/?title=check-designs-catch-whats-off-ship-whats-right) — TLDR Design (email)
+  - also: [What is MCP? (Figma Resource Library)](https://www.figma.com/resource-library/what-is-mcp/) — Figma (email)
+  - also: [Figma Workflow Lab: Code to Canvas](https://help.figma.com/hc/en-us/articles/40219873508247-Workflow-lab-Code-to-canvas) — Figma (email)
+- [Introducing Dynamic Workflows in Claude Code](https://claude.com/blog/introducing-dynamic-workflows-in-claude-code) — TLDR AI (email)
+- [The Next Frontier of Visual AI Is Code](https://a16z.com/the-next-frontier-of-visual-ai-is-code/) — TLDR AI (email)
+  - a16z lays out how AI is bridging visual design and code generation — translating visual intent directly into functional frontend code at scale.
+- [GitHub x Latent Space: AI coding deep dive](https://www.latent.space/p/github) — TLDR AI (email)
+- [Building BADS: The Behavioral Agentic Design System](https://www.designsystemscollective.com/building-bads-the-behavioral-agentic-design-system-5698ff721db1) — TLDR Design (email)
+  - A new design system framework that embeds behavioral and agentic patterns directly into component logic — built for AI-driven interfaces where components must reason about their own state.
+- [How I Validated Design Decisions Before Writing Production Code](https://slack.design/articles/how-i-validated-design-decisions-before-writing-production-code/) — TLDR Design (email)
+- [Speed of Prototyping in the Age of AI](https://darylcecile.net/notes/speed-of-prototyping-age-of-ai) — TLDR Design (email)
+- [Eugene Yan — patterns for building LLM systems & products](https://eugeneyan.com/) — Eugene Yan ★
+  - Practical write-ups on designing and shipping LLM-backed products.
+- [Generative UI: the new frontend for AI agents](https://emergingai.substack.com/) — Emerging AI (email)
+  - How generative UI turns AI agents into visual, interactive tools instead of chat boxes.
+- [Figma Blog — design + AI](https://www.figma.com/blog/) — Figma ★
+  - Product and craft posts; increasingly about vibe-coding and AI-assisted prototyping.
+
+## Tech & Coding (14)
+- [SpaceX details its AI1 compute satellite](https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite) — TLDR AI (email) **NEW**
+  - also: [Google taps SpaceX for $920M/month AI compute deal](https://winbuzzer.com/2026/06/06/google-taps-spacex-for-920m-monthly-ai-compute-deal-xcxwbn/) — TLDR AI (email)
+  - also: [How long is Anthropic's lease with SpaceX? Opinions vary.](https://techcrunch.com/2026/05/28/how-long-is-anthropics-lease-with-spacex-opinions-vary/) — TLDR AI (email)
+- [Apple open-sources its container project](https://github.com/apple/container) — TLDR AI (email) **NEW**
+- [Apple releases Core AI developer documentation](https://developer.apple.com/documentation/coreai/) — TLDR AI (email)
+  - Apple quietly published Core AI documentation for developers, pointing toward deep native on-device AI integration across its ecosystem.
+  - also: [Apple reveals new on-device AI architecture](https://www.macrumors.com/2026/06/08/apple-reveals-new-ai-architecture/) — TLDR AI (email)
+- [SpaceX prices IPO at $135, valuing it at $1.77T](https://tldr.tech/) — TLDR (email)
+  - SpaceX set a $135 IPO price, aiming to raise $74.4B.
+- [Hacker News (front page, 150+ points)](https://news.ycombinator.com/) — Hacker News ★
+  - Real-time dev/startup discussion; pull a high-signal feed via hnrss with a points threshold.
+- [ByteDance is making its own AI chips](https://www.pcgamer.com/hardware/processors/bytedance-has-had-enough-of-waiting-months-for-processors-so-its-going-to-make-them-itself/) — TLDR AI (email)
+- [Mistral CEO wants to design AI chips for data centers](https://www.cnbc.com/2026/05/28/mistral-arthur-mensch-design-chips-ai-data-centers.html) — TLDR AI (email)
+- [My AI coding workflow](https://refactoring.fm/) — Refactoring (email)
+  - Luca Rossi's monthly walkthrough of how he actually codes with AI day to day.
+- [Techmeme](https://www.techmeme.com/) — Techmeme ★
+  - Editor + algorithm hybrid that clusters the top tech headlines with related coverage.
+- [New Amazon Bedrock console experience: Anthropic and OpenAI APIs](https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/) — TLDR AI (email)
+- [Lobste.rs](https://lobste.rs/) — Lobsters ★
+  - Invite-only, tag-filterable technical link aggregator.
+
+---
+Generated by `/news-digest`. Open `digest.html` for the interactive view.

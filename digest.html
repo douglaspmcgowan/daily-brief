@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News Digest — Wednesday, June 10, 2026</title>
+<style>
+  :root {
+    --paper:#f6f3ec; --card:#fffdf8; --ink:#1d1a16;
+    --muted:#6b6357; --rule:#e3ddd0; --anchor:#c8482b;
+    --anchor-soft:#f3ddd4; --link:#1b4d6b;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px 80px; }
+  header.mast { border-bottom:3px solid var(--ink); padding:34px 0 16px; margin-bottom:8px; }
+  .mast-title { font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
+    font-size:54px; line-height:1; letter-spacing:-1px; margin:0; }
+  .mast-title .accent { color:var(--anchor); }
+  .mast-sub { color:var(--muted); margin:10px 0 0; font-size:15px;
+    display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .mast-sub b { color:var(--ink); font-weight:600; }
+  .controls { position:sticky; top:0; background:var(--paper); padding:14px 0;
+    border-bottom:1px solid var(--rule); z-index:5;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .pill { font:inherit; font-size:13.5px; border:1px solid var(--ink); background:transparent;
+    color:var(--ink); padding:6px 12px; border-radius:999px; cursor:pointer; }
+  .pill.active { background:var(--ink); color:var(--paper); }
+  .pill .pc { opacity:.6; font-variant-numeric:tabular-nums; margin-left:4px; }
+  #q { font:inherit; flex:1; min-width:180px; padding:7px 12px; border:1px solid var(--rule);
+    border-radius:8px; background:var(--card); color:var(--ink); }
+  .whatsnew { background:var(--anchor-soft); border:1px solid var(--anchor);
+    border-radius:12px; padding:16px 20px; margin:22px 0; }
+  .whatsnew h2 { margin:0 0 8px; font-size:14px; text-transform:uppercase; letter-spacing:1px;
+    color:var(--anchor); }
+  .whatsnew ol { margin:0; padding-left:20px; }
+  .whatsnew li { margin:5px 0; }
+  .whatsnew a { color:var(--ink); text-decoration:none; font-weight:600; }
+  .whatsnew a:hover { text-decoration:underline; }
+  .new-src { color:var(--muted); font-weight:400; font-size:12.5px; }
+  .topic { margin:34px 0 0; }
+  .topic-h { font-family:Georgia,serif; font-size:26px; margin:0 0 14px;
+    padding-bottom:6px; border-bottom:1px solid var(--rule); }
+  .topic-h .count { font-size:14px; color:var(--muted); font-family:inherit;
+    vertical-align:middle; }
+  .cluster { margin:0 0 14px; }
+  .item { background:var(--card); border:1px solid var(--rule); border-radius:10px;
+    padding:14px 16px; margin:0 0 10px; }
+  .item-head { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .title { color:var(--ink); text-decoration:none; font-size:18px; font-weight:600;
+    font-family:Georgia,serif; }
+  .title:hover { color:var(--link); text-decoration:underline; }
+  .badge { background:var(--anchor); color:#fff; font-size:10.5px; font-weight:700;
+    letter-spacing:.6px; padding:2px 7px; border-radius:4px; }
+  .pin { color:var(--anchor); }
+  .meta { color:var(--muted); font-size:12.5px; margin-top:3px; }
+  .meta .dot { margin:0 6px; }
+  .summary { margin:8px 0 0; color:#3a352d; font-size:15px; }
+  .also-wrap { margin:2px 0 0 2px; }
+  .also-wrap summary { cursor:pointer; color:var(--link); font-size:13px; }
+  .also-list { margin:8px 0 4px; padding-left:18px; }
+  .also-list li { margin:3px 0; font-size:14px; }
+  .also-list a { color:var(--ink); }
+  .also-src { color:var(--muted); font-size:12px; }
+  .empty { color:var(--muted); font-style:italic; }
+  .references { margin:46px 0 0; border-top:3px solid var(--ink); padding-top:18px; }
+  .references h2 { font-family:Georgia,serif; font-size:22px; margin:0 0 4px; }
+  .ref-lead { color:var(--muted); font-size:14px; margin:0 0 12px; }
+  .ref-list { columns:2; column-gap:28px; padding-left:18px; }
+  .ref-list li { margin:0 0 7px; }
+  .ref-note { color:var(--muted); font-size:13px; }
+  a { color:var(--link); }
+  footer.foot { margin-top:40px; color:var(--muted); font-size:12.5px;
+    border-top:1px solid var(--rule); padding-top:14px; }
+  @media (max-width:680px) { .ref-list { columns:1; } .mast-title { font-size:40px; } }
+  html[data-theme="dark"] {
+    --paper:#1c1914; --card:#252017; --ink:#ede9e0;
+    --muted:#9a9088; --rule:#3b342a; --anchor:#e06750;
+    --anchor-soft:#3a1f14; --link:#79b8d8;
+  }
+  html[data-theme="dark"] .summary { color:#c8bfb0; }
+  #theme-btn { font:inherit; font-size:13px; border:1px solid var(--rule); background:transparent;
+    color:var(--muted); padding:5px 11px; border-radius:999px; cursor:pointer; margin-left:auto;
+    transition:border-color .15s,color .15s; }
+  #theme-btn:hover { border-color:var(--ink); color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <h1 class="mast-title">The <span class="accent">Daily</span> Brief</h1>
+    <p class="mast-sub"><b>Wednesday, June 10, 2026</b><span>·</span><span>72 items live</span>
+      <span>·</span><span>11 new</span>
+      <span>·</span><span>AI · Design · AI×Design/Eng · Tech</span></p>
+  </header>
+
+  <div class="controls">
+    <button class="pill active" data-filter="all">All</button>
+    <button class="pill" data-filter="ai">AI <span class="pc">31</span></button><button class="pill" data-filter="design">Design <span class="pc">11</span></button><button class="pill" data-filter="ai_in_design">AI × Design / Eng <span class="pc">16</span></button><button class="pill" data-filter="tech">Tech &amp; Coding <span class="pc">14</span></button>
+    <input id="q" type="search" placeholder="Filter by keyword…" autocomplete="off">
+    <button id="theme-btn" title="Toggle dark mode">Dark</button>
+  </div>
+
+  <section class="whatsnew"><h2>New since last digest</h2><ol><li><a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Claude Fable 5 (Mythos) officially launches</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://simonwillison.net/2026/Jun/9/claude-fable-5/" target="_blank" rel="noopener">Simon Willison on Claude Fable 5</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check" target="_blank" rel="noopener">Fable 5 / Mythos Vibe Check (Every)</a> <span class="new-src">Every (email) · AI</span></li><li><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/" target="_blank" rel="noopener">Gemini 3.5 launches with Live Translate</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety" target="_blank" rel="noopener">Claude Fable 5 and New AI Safety Fables</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos" target="_blank" rel="noopener">What It Feels Like to Work With Mythos</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum" target="_blank" rel="noopener">Three Labs With a Plan and a Memorandum</a> <span class="new-src">TLDR AI (email) · AI</span></li><li><a href="https://emergingai.substack.com/p/claude-fable-5-is-a-beast-the-first" target="_blank" rel="noopener">Claude Fable 5 Is a Beast: The First Setup Guide</a> <span class="new-src">Emerging AI (email) · AI</span></li></ol></section>
+  <section class="topic" data-topic="ai"><h2 class="topic-h">AI <span class="count">31</span></h2><div class="cluster"><article class="item lead" data-search="claude fable 5 (mythos) officially launches anthropic launched claude fable 5, also known as mythos 5 — its most powerful public model yet, with major capability and safety improvements. the launch was widely tested and reviewed on release day. tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Claude Fable 5 (Mythos) officially launches</a>
+    <span class="badge">NEW</span>
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Anthropic launched Claude Fable 5, also known as Mythos 5 — its most powerful public model yet, with major capability and safety improvements. The launch was widely tested and reviewed on release day.</p>
+</article><details class="also-wrap"><summary>+ 7 more on this story</summary><ul class="also-list"><li><a href="https://simonwillison.net/2026/Jun/9/claude-fable-5/" target="_blank" rel="noopener">Simon Willison on Claude Fable 5</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check" target="_blank" rel="noopener">Fable 5 / Mythos Vibe Check (Every)</a> <span class="also-src">Every (email)</span></li><li><a href="https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety" target="_blank" rel="noopener">Claude Fable 5 and New AI Safety Fables</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos" target="_blank" rel="noopener">What It Feels Like to Work With Mythos</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum" target="_blank" rel="noopener">Three Labs With a Plan and a Memorandum</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://emergingai.substack.com/p/claude-fable-5-is-a-beast-the-first" target="_blank" rel="noopener">Claude Fable 5 Is a Beast: The First Setup Guide</a> <span class="also-src">Emerging AI (email)</span></li><li><a href="https://www.cnbc.com/2026/06/02/anthropic-mythos-ai-project-glasswing.html" target="_blank" rel="noopener">Anthropic Mythos AI project Glasswing details emerge</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="gemini 3.5 launches with live translate google released gemini 3.5 with live translate — enabling real-time ai-powered cross-language conversation. a major step toward real-time multimodal ai. tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/" target="_blank" rel="noopener">Gemini 3.5 launches with Live Translate</a>
+    <span class="badge">NEW</span>
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Google released Gemini 3.5 with Live Translate — enabling real-time AI-powered cross-language conversation. A major step toward real-time multimodal AI.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="can tech companies learn to love cheaper ai models? as frontier model prices plummet, techcrunch examines whether enterprise buyers will shift toward cheaper capable models — and what that means for labs betting on premium pricing. tldr ai (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/" target="_blank" rel="noopener">Can Tech Companies Learn to Love Cheaper AI Models?</a>
+    <span class="badge">NEW</span>
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">As frontier model prices plummet, TechCrunch examines whether enterprise buyers will shift toward cheaper capable models — and what that means for labs betting on premium pricing.</p>
+</article><details class="also-wrap"><summary>+ 1 more on this story</summary><ul class="also-list"><li><a href="https://ea.rna.nl/2026/06/07/anthropic-openai-may-be-spending-more-than-1000-for-every-100-you-pay-them/" target="_blank" rel="noopener">Anthropic/OpenAI May Be Spending $1,000 for Every $100 You Pay Them</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="openai confidentially files draft s-1 with the sec openai submitted a confidential draft s-1 to the sec, prepping wall street for an ai debut. anthropic is also reported to have filed confidentially and could reach public markets first. tldr ai (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://www.cnbc.com/2026/06/08/openai-confidentially-files-for-ipo-prepping-wall-street-for-ai-debut.html" target="_blank" rel="noopener">OpenAI confidentially files draft S-1 with the SEC</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">OpenAI submitted a confidential draft S-1 to the SEC, prepping Wall Street for an AI debut. Anthropic is also reported to have filed confidentially and could reach public markets first.</p>
+</article><details class="also-wrap"><summary>+ 2 more on this story</summary><ul class="also-list"><li><a href="https://www.engadget.com/2189038/openai-reportedly-has-a-major-chatgpt-overhaul-in-store/" target="_blank" rel="noopener">OpenAI reportedly has a major ChatGPT overhaul in store</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://www.linkedin.com/news/" target="_blank" rel="noopener">OpenAI files for its IPO</a> <span class="also-src">LinkedIn News (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="anthropic raises series h at ~$965b valuation anthropic closed a massive series h round, reportedly valuing the company near $965 billion — one of the highest valuations ever for a private ai company. tldr ai (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://www.anthropic.com/news/series-h" target="_blank" rel="noopener">Anthropic raises Series H at ~$965B valuation</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Anthropic closed a massive Series H round, reportedly valuing the company near $965 billion — one of the highest valuations ever for a private AI company.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="claude opus 4.8 launches anthropic launched claude opus 4.8, its highest-capability model at the time — focused on extended reasoning and agentic tasks. now positioned just below the newly released fable 5. tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener">Claude Opus 4.8 launches</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Anthropic launched Claude Opus 4.8, its highest-capability model at the time — focused on extended reasoning and agentic tasks. Now positioned just below the newly released Fable 5.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="simon willison&#x27;s weblog daily hands-on notes on llms, tooling, and prompt engineering. a primary practitioner source — has a full atom feed. simon willison ai">
+  <div class="item-head">
+    <a class="title" href="https://simonwillison.net/" target="_blank" rel="noopener">Simon Willison&#x27;s Weblog</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Simon Willison</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Daily hands-on notes on LLMs, tooling, and prompt engineering. A primary practitioner source — has a full Atom feed.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="trump administration reportedly taking stake in openai reports emerged that the trump administration is negotiating a direct government equity stake in openai — raising significant questions about ai governance and public-private ai development. tldr ai (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html" target="_blank" rel="noopener">Trump administration reportedly taking stake in OpenAI</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Reports emerged that the Trump administration is negotiating a direct government equity stake in OpenAI — raising significant questions about AI governance and public-private AI development.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="after automation dan shipper argues that ai progress creates more human work, not less — as cheap competence floods in and creates sameness, humans are structurally needed to provide the next layer of judgment and framing. every (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://every.to/p/after-automation" target="_blank" rel="noopener">After Automation</a>
+    
+  </div>
+  <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Dan Shipper argues that AI progress creates more human work, not less — as cheap competence floods in and creates sameness, humans are structurally needed to provide the next layer of judgment and framing.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="latent space (swyx) the canonical ai-engineering publication; also runs the ainews daily digest. latent space ai ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://www.latent.space/" target="_blank" rel="noopener">Latent Space (swyx)</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Latent Space</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">The canonical AI-engineering publication; also runs the AINews daily digest.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="microsoft launches 7 new mai models in a &#x27;hillclimbing&#x27; release microsoft unveiled seven new mai models simultaneously — a &#x27;hillclimbing&#x27; strategy aimed at accelerating ai capability improvements across its product portfolio. tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank" rel="noopener">Microsoft launches 7 new MAI models in a &#x27;hillclimbing&#x27; release</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Microsoft unveiled seven new MAI models simultaneously — a &#x27;hillclimbing&#x27; strategy aimed at accelerating AI capability improvements across its product portfolio.</p>
+</article><details class="also-wrap"><summary>+ 2 more on this story</summary><ul class="also-list"><li><a href="https://www.testingcatalog.com/early-look-microsoft-rolls-out-scout-ai-agent-to-frontier-users/" target="_blank" rel="noopener">Microsoft rolls out Scout AI agent to frontier users</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://sherwood.news/tech/report-microsoft-tries-to-get-back-in-the-ai-coding-game-with-new-model/" target="_blank" rel="noopener">Microsoft tries to re-enter AI coding with new model</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="open and closed models are on different paths nathan lambert argues that open and closed ai models aren&#x27;t racing to the same finish line — their cost structures, use cases, and innovation cycles are fundamentally diverging. tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://www.interconnects.ai/p/open-and-closed-models-are-on-different" target="_blank" rel="noopener">Open and Closed Models Are on Different Paths</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Nathan Lambert argues that open and closed AI models aren&#x27;t racing to the same finish line — their cost structures, use cases, and innovation cycles are fundamentally diverging.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="ai is ready. organizations aren&#x27;t. every argues the bottleneck on ai adoption has shifted from model capability to organizational readiness — the tech is there, but institutions aren&#x27;t structured to use it. every (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://every.to/p/ai-is-ready-organizations-aren-t" target="_blank" rel="noopener">AI Is Ready. Organizations Aren&#x27;t.</a>
+    
+  </div>
+  <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Every argues the bottleneck on AI adoption has shifted from model capability to organizational readiness — the tech is there, but institutions aren&#x27;t structured to use it.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="chatgpt failed to kill google search  tldr ai (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://sherwood.news/tech/chatgpt-failed-to-kill-google-search/" target="_blank" rel="noopener">ChatGPT failed to kill Google Search</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="making claude a chemist  tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://www.anthropic.com/research/making-claude-a-chemist" target="_blank" rel="noopener">Making Claude a Chemist</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="how far behind are open models?  tldr ai (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models" target="_blank" rel="noopener">How Far Behind Are Open Models?</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="the eight levels of ai adoption  every (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://every.to/guides/the-eight-levels-of-ai-adoption" target="_blank" rel="noopener">The Eight Levels of AI Adoption</a>
+    
+  </div>
+  <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="why we&#x27;ll still be employed when ai can do everything  every (email) ai">
+  <div class="item-head">
+    <a class="title" href="https://every.to/context-window/why-we-ll-still-be-employed-when-ai-can-do-everything" target="_blank" rel="noopener">Why We&#x27;ll Still Be Employed When AI Can Do Everything</a>
+    
+  </div>
+  <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="how microsoft is building for a world of metered intelligence  every (email) ai tech">
+  <div class="item-head">
+    <a class="title" href="https://every.to/also-true-for-humans/how-microsoft-is-building-for-a-world-of-metered-intelligence" target="_blank" rel="noopener">How Microsoft Is Building for a World of Metered Intelligence</a>
+    
+  </div>
+  <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div></section><section class="topic" data-topic="design"><h2 class="topic-h">Design <span class="count">11</span></h2><div class="cluster"><article class="item lead" data-search="sidebar.io — 5 design links a day five hand-picked design links daily. the gold standard for high signal-to-noise curation. sidebar design">
+  <div class="item-head">
+    <a class="title" href="https://sidebar.io/" target="_blank" rel="noopener">Sidebar.io — 5 design links a day</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Sidebar</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Five hand-picked design links daily. The gold standard for high signal-to-noise curation.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="four design jobs ai created nielsen norman group identifies four new design roles that ai has created — including prompt designer and ai experience auditor — rather than simply eliminating traditional positions. tldr design (email) design ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://www.nngroup.com/articles/design-jobs-ai-created/" target="_blank" rel="noopener">Four Design Jobs AI Created</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Nielsen Norman Group identifies four new design roles that AI has created — including prompt designer and AI experience auditor — rather than simply eliminating traditional positions.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="airbnb ceo bets on design and ux over commodity ai features brian chesky argues airbnb&#x27;s ai advantage is design and experience quality — betting on ai that elevates human connection rather than chasing commodity ai features competitors can copy. tldr design (email) design ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://www.storyboard18.com/brand-makers/airbnb-ceo-bets-on-different-ai-future-focuses-on-design-and-user-experience-100312.htm" target="_blank" rel="noopener">Airbnb CEO bets on design and UX over commodity AI features</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Brian Chesky argues Airbnb&#x27;s AI advantage is design and experience quality — betting on AI that elevates human connection rather than chasing commodity AI features competitors can copy.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="photoshop is being eaten by the prompt box  tldr design (email) design ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://www.digitaltrends.com/computing/photoshop-is-being-eaten-by-the-prompt-box/" target="_blank" rel="noopener">Photoshop is being eaten by the prompt box</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="youtube will auto-label ai-generated videos  tldr design (email) design ai">
+  <div class="item-head">
+    <a class="title" href="https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not" target="_blank" rel="noopener">YouTube will auto-label AI-generated videos</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="smashing magazine deep web design/dev articles and tutorials; evergreen over trend-chasing. smashing magazine design">
+  <div class="item-head">
+    <a class="title" href="https://www.smashingmagazine.com/" target="_blank" rel="noopener">Smashing Magazine</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Smashing Magazine</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Deep web design/dev articles and tutorials; evergreen over trend-chasing.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="nielsen norman group — ux research evidence-based ux guidance. useful when a design decision needs a citation. nn/g design">
+  <div class="item-head">
+    <a class="title" href="https://www.nngroup.com/articles/" target="_blank" rel="noopener">Nielsen Norman Group — UX research</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">NN/g</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Evidence-based UX guidance. Useful when a design decision needs a citation.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="canva design intelligence: ai personalization at snowflake summit  tldr design (email) design ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://siliconangle.com/2026/06/04/ai-personalization-canva-design-intelligence-snowflakesummit/" target="_blank" rel="noopener">Canva Design Intelligence: AI personalization at Snowflake Summit</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="how stripe uses 4 developer-first ux principles  tldr design (email) design">
+  <div class="item-head">
+    <a class="title" href="https://raw.studio/blog/how-stripe-uses-4-developer-first-ux-principles-to-drive-massive-adoption/" target="_blank" rel="noopener">How Stripe Uses 4 Developer-First UX Principles</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="could ai help us design more inclusive digital experiences?  tldr design (email) design ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://www.vccp.com/news/2026/05/could-ai-help-us-to-design-and-build-more-inclusive-digital-experiences/" target="_blank" rel="noopener">Could AI Help Us Design More Inclusive Digital Experiences?</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="&#x27;this is fine&#x27; artist kc green settles with ai startup artisan  tldr design (email) design ai">
+  <div class="item-head">
+    <a class="title" href="https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/" target="_blank" rel="noopener">&#x27;This is fine&#x27; artist KC Green settles with AI startup Artisan</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div></section><section class="topic" data-topic="ai_in_design"><h2 class="topic-h">AI × Design / Eng <span class="count">16</span></h2><div class="cluster"><article class="item lead" data-search="cursor design mode cursor launched design mode, bringing visual editing directly into the ai-powered ide — letting developers see and make design changes with direct visual feedback alongside code generation. tldr ai (email) ai_in_design ai">
+  <div class="item-head">
+    <a class="title" href="https://cursor.com/blog/design-mode" target="_blank" rel="noopener">Cursor Design Mode</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Cursor launched Design Mode, bringing visual editing directly into the AI-powered IDE — letting developers see and make design changes with direct visual feedback alongside code generation.</p>
+</article><details class="also-wrap"><summary>+ 1 more on this story</summary><ul class="also-list"><li><a href="https://cursor.com/insights" target="_blank" rel="noopener">Cursor Insights</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="figma make, now on your local code figma make now lets designers edit production codebases directly from figma — visual edits, annotations, and git-based pr workflows without leaving the design tool. closes the design-to-code loop two-way. tldr design (email) ai_in_design design">
+  <div class="item-head">
+    <a class="title" href="https://www.figma.com/blog/figma-make-now-on-your-local-code/" target="_blank" rel="noopener">Figma Make, Now on Your Local Code</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Figma Make now lets designers edit production codebases directly from Figma — visual edits, annotations, and Git-based PR workflows without leaving the design tool. Closes the design-to-code loop two-way.</p>
+</article><details class="also-wrap"><summary>+ 4 more on this story</summary><ul class="also-list"><li><a href="https://help.figma.com/hc/en-us/articles/35281350665623-Figma-MCP-collection-How-to-set-up-the-Figma-remote-MCP-server" target="_blank" rel="noopener">Set up the Figma remote MCP server</a> <span class="also-src">Figma (email)</span></li><li><a href="https://www.figma.com/release-notes/?title=check-designs-catch-whats-off-ship-whats-right" target="_blank" rel="noopener">Figma Check Designs: catch what&#x27;s off, ship what&#x27;s right</a> <span class="also-src">TLDR Design (email)</span></li><li><a href="https://www.figma.com/resource-library/what-is-mcp/" target="_blank" rel="noopener">What is MCP? (Figma Resource Library)</a> <span class="also-src">Figma (email)</span></li><li><a href="https://help.figma.com/hc/en-us/articles/40219873508247-Workflow-lab-Code-to-canvas" target="_blank" rel="noopener">Figma Workflow Lab: Code to Canvas</a> <span class="also-src">Figma (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="introducing dynamic workflows in claude code  tldr ai (email) ai_in_design ai">
+  <div class="item-head">
+    <a class="title" href="https://claude.com/blog/introducing-dynamic-workflows-in-claude-code" target="_blank" rel="noopener">Introducing Dynamic Workflows in Claude Code</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="the next frontier of visual ai is code a16z lays out how ai is bridging visual design and code generation — translating visual intent directly into functional frontend code at scale. tldr ai (email) ai_in_design ai">
+  <div class="item-head">
+    <a class="title" href="https://a16z.com/the-next-frontier-of-visual-ai-is-code/" target="_blank" rel="noopener">The Next Frontier of Visual AI Is Code</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">a16z lays out how AI is bridging visual design and code generation — translating visual intent directly into functional frontend code at scale.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="github x latent space: ai coding deep dive  tldr ai (email) ai_in_design ai">
+  <div class="item-head">
+    <a class="title" href="https://www.latent.space/p/github" target="_blank" rel="noopener">GitHub x Latent Space: AI coding deep dive</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="building bads: the behavioral agentic design system a new design system framework that embeds behavioral and agentic patterns directly into component logic — built for ai-driven interfaces where components must reason about their own state. tldr design (email) ai_in_design design">
+  <div class="item-head">
+    <a class="title" href="https://www.designsystemscollective.com/building-bads-the-behavioral-agentic-design-system-5698ff721db1" target="_blank" rel="noopener">Building BADS: The Behavioral Agentic Design System</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">A new design system framework that embeds behavioral and agentic patterns directly into component logic — built for AI-driven interfaces where components must reason about their own state.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="how i validated design decisions before writing production code  tldr design (email) ai_in_design design">
+  <div class="item-head">
+    <a class="title" href="https://slack.design/articles/how-i-validated-design-decisions-before-writing-production-code/" target="_blank" rel="noopener">How I Validated Design Decisions Before Writing Production Code</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="speed of prototyping in the age of ai  tldr design (email) ai_in_design design">
+  <div class="item-head">
+    <a class="title" href="https://darylcecile.net/notes/speed-of-prototyping-age-of-ai" target="_blank" rel="noopener">Speed of Prototyping in the Age of AI</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="eugene yan — patterns for building llm systems &amp; products practical write-ups on designing and shipping llm-backed products. eugene yan ai_in_design ai">
+  <div class="item-head">
+    <a class="title" href="https://eugeneyan.com/" target="_blank" rel="noopener">Eugene Yan — patterns for building LLM systems &amp; products</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Eugene Yan</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Practical write-ups on designing and shipping LLM-backed products.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="generative ui: the new frontend for ai agents how generative ui turns ai agents into visual, interactive tools instead of chat boxes. emerging ai (email) ai_in_design ai design">
+  <div class="item-head">
+    <a class="title" href="https://emergingai.substack.com/" target="_blank" rel="noopener">Generative UI: the new frontend for AI agents</a>
+    
+  </div>
+  <div class="meta"><span class="src">Emerging AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">How generative UI turns AI agents into visual, interactive tools instead of chat boxes.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="figma blog — design + ai product and craft posts; increasingly about vibe-coding and ai-assisted prototyping. figma ai_in_design design">
+  <div class="item-head">
+    <a class="title" href="https://www.figma.com/blog/" target="_blank" rel="noopener">Figma Blog — design + AI</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Figma</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Product and craft posts; increasingly about vibe-coding and AI-assisted prototyping.</p>
+</article></div></section><section class="topic" data-topic="tech"><h2 class="topic-h">Tech &amp; Coding <span class="count">14</span></h2><div class="cluster"><article class="item lead" data-search="spacex details its ai1 compute satellite  tldr ai (email) tech ai">
+  <div class="item-head">
+    <a class="title" href="https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite" target="_blank" rel="noopener">SpaceX details its AI1 compute satellite</a>
+    <span class="badge">NEW</span>
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article><details class="also-wrap"><summary>+ 2 more on this story</summary><ul class="also-list"><li><a href="https://winbuzzer.com/2026/06/06/google-taps-spacex-for-920m-monthly-ai-compute-deal-xcxwbn/" target="_blank" rel="noopener">Google taps SpaceX for $920M/month AI compute deal</a> <span class="also-src">TLDR AI (email)</span></li><li><a href="https://techcrunch.com/2026/05/28/how-long-is-anthropics-lease-with-spacex-opinions-vary/" target="_blank" rel="noopener">How long is Anthropic&#x27;s lease with SpaceX? Opinions vary.</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="apple open-sources its container project  tldr ai (email) tech">
+  <div class="item-head">
+    <a class="title" href="https://github.com/apple/container" target="_blank" rel="noopener">Apple open-sources its container project</a>
+    <span class="badge">NEW</span>
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="apple releases core ai developer documentation apple quietly published core ai documentation for developers, pointing toward deep native on-device ai integration across its ecosystem. tldr ai (email) tech ai">
+  <div class="item-head">
+    <a class="title" href="https://developer.apple.com/documentation/coreai/" target="_blank" rel="noopener">Apple releases Core AI developer documentation</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Apple quietly published Core AI documentation for developers, pointing toward deep native on-device AI integration across its ecosystem.</p>
+</article><details class="also-wrap"><summary>+ 1 more on this story</summary><ul class="also-list"><li><a href="https://www.macrumors.com/2026/06/08/apple-reveals-new-ai-architecture/" target="_blank" rel="noopener">Apple reveals new on-device AI architecture</a> <span class="also-src">TLDR AI (email)</span></li></ul></details></div><div class="cluster"><article class="item lead" data-search="spacex prices ipo at $135, valuing it at $1.77t spacex set a $135 ipo price, aiming to raise $74.4b. tldr (email) tech">
+  <div class="item-head">
+    <a class="title" href="https://tldr.tech/" target="_blank" rel="noopener">SpaceX prices IPO at $135, valuing it at $1.77T</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">SpaceX set a $135 IPO price, aiming to raise $74.4B.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="hacker news (front page, 150+ points) real-time dev/startup discussion; pull a high-signal feed via hnrss with a points threshold. hacker news tech ai">
+  <div class="item-head">
+    <a class="title" href="https://news.ycombinator.com/" target="_blank" rel="noopener">Hacker News (front page, 150+ points)</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Hacker News</span><span class="dot">·</span><span class="stype">forum</span></div>
+  <p class="summary">Real-time dev/startup discussion; pull a high-signal feed via hnrss with a points threshold.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="bytedance is making its own ai chips  tldr ai (email) tech ai">
+  <div class="item-head">
+    <a class="title" href="https://www.pcgamer.com/hardware/processors/bytedance-has-had-enough-of-waiting-months-for-processors-so-its-going-to-make-them-itself/" target="_blank" rel="noopener">ByteDance is making its own AI chips</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="mistral ceo wants to design ai chips for data centers  tldr ai (email) tech ai">
+  <div class="item-head">
+    <a class="title" href="https://www.cnbc.com/2026/05/28/mistral-arthur-mensch-design-chips-ai-data-centers.html" target="_blank" rel="noopener">Mistral CEO wants to design AI chips for data centers</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="my ai coding workflow luca rossi&#x27;s monthly walkthrough of how he actually codes with ai day to day. refactoring (email) tech ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://refactoring.fm/" target="_blank" rel="noopener">My AI coding workflow</a>
+    
+  </div>
+  <div class="meta"><span class="src">Refactoring (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  <p class="summary">Luca Rossi&#x27;s monthly walkthrough of how he actually codes with AI day to day.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="techmeme editor + algorithm hybrid that clusters the top tech headlines with related coverage. techmeme tech">
+  <div class="item-head">
+    <a class="title" href="https://www.techmeme.com/" target="_blank" rel="noopener">Techmeme</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Techmeme</span><span class="dot">·</span><span class="stype">web</span></div>
+  <p class="summary">Editor + algorithm hybrid that clusters the top tech headlines with related coverage.</p>
+</article></div><div class="cluster"><article class="item lead" data-search="new amazon bedrock console experience: anthropic and openai apis  tldr ai (email) tech ai_in_design">
+  <div class="item-head">
+    <a class="title" href="https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/" target="_blank" rel="noopener">New Amazon Bedrock console experience: Anthropic and OpenAI APIs</a>
+    
+  </div>
+  <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span></div>
+  
+</article></div><div class="cluster"><article class="item lead" data-search="lobste.rs invite-only, tag-filterable technical link aggregator. lobsters tech">
+  <div class="item-head">
+    <a class="title" href="https://lobste.rs/" target="_blank" rel="noopener">Lobste.rs</a>
+    <span class="pin" title="pinned / evergreen">★</span>
+  </div>
+  <div class="meta"><span class="src">Lobsters</span><span class="dot">·</span><span class="stype">forum</span></div>
+  <p class="summary">Invite-only, tag-filterable technical link aggregator.</p>
+</article></div></section>
+  <section class="references">
+  <h2>Reference dashboards &amp; inspiration</h2>
+  <p class="ref-lead">Public aggregators and personal projects worth borrowing from. Full write-up in <code>References &amp; Inspiration.md</code>.</p>
+  <ul class="ref-list"><li><a href="https://www.techmeme.com/" target="_blank" rel="noopener">Techmeme</a> &mdash; <span class="ref-note">Best-in-class story clustering — one story, many sources.</span></li><li><a href="https://ground.news/" target="_blank" rel="noopener">Ground News</a> &mdash; <span class="ref-note">Same-story clustering with source/bias context.</span></li><li><a href="https://tldr.tech/ai" target="_blank" rel="noopener">TLDR AI</a> &mdash; <span class="ref-note">Tight one-paragraph item format; a model for digest brevity.</span></li><li><a href="https://sidebar.io/" target="_blank" rel="noopener">Sidebar.io</a> &mdash; <span class="ref-note">5 links a day — the daily-cap discipline to copy.</span></li><li><a href="https://www.densediscovery.com/" target="_blank" rel="noopener">Dense Discovery</a> &mdash; <span class="ref-note">Thoughtful design/tech/culture weekly.</span></li><li><a href="https://github.com/iliane5/meridian" target="_blank" rel="noopener">Meridian (GitHub)</a> &mdash; <span class="ref-note">Scrape → embeddings → cluster → LLM &#x27;daily brief&#x27;. Study this architecture.</span></li><li><a href="https://github.com/Thysrael/Horizon" target="_blank" rel="noopener">Horizon (GitHub)</a> &mdash; <span class="ref-note">Multi-source radar: HN/RSS/Reddit/X → AI scores 0-10 → dedups → GitHub Pages brief.</span></li><li><a href="https://github.com/finaldie/auto-news" target="_blank" rel="noopener">auto-news (GitHub)</a> &mdash; <span class="ref-note">Personal aggregator: Tweets/RSS/YouTube/Reddit + LLM noise-cutting.</span></li><li><a href="https://github.com/yinan-c/RSSbrew" target="_blank" rel="noopener">RSSbrew (GitHub)</a> &mdash; <span class="ref-note">Self-hosted: aggregate, filter, AI-summarize, roll into daily/weekly digests.</span></li><li><a href="https://github.com/00sapo/better-morning" target="_blank" rel="noopener">better-morning (GitHub)</a> &mdash; <span class="ref-note">TOML feeds → litellm summaries → GitHub Action → email/Release. Literal morning brief.</span></li><li><a href="https://github.com/piqoni/matcha" target="_blank" rel="noopener">matcha (GitHub)</a> &mdash; <span class="ref-note">Daily digest as a markdown file for Obsidian/terminal; local-AI friendly.</span></li><li><a href="https://miniflux.app/" target="_blank" rel="noopener">Miniflux</a> &mdash; <span class="ref-note">Minimal Go RSS reader with a clean API — good backend to bolt AI onto.</span></li><li><a href="https://github.com/FreshRSS/FreshRSS" target="_blank" rel="noopener">FreshRSS (GitHub)</a> &mdash; <span class="ref-note">Self-hosted reader with XPath scraping for feed-less sites.</span></li><li><a href="https://github.com/taielab/awesome-ai-news" target="_blank" rel="noopener">awesome-ai-news</a> &mdash; <span class="ref-note">Catalog of aggregation/digest tools to mine.</span></li></ul>
+</section>
+
+  <footer class="foot">
+    Generated by <code>/news-digest</code> on 2026-06-10. Persistent corpus:
+    <code>corpus.json</code> · Sources: <code>sources.json</code>. Items age out on a per-topic
+    retention window; pinned (★) items stay.
+  </footer>
+</div>
+<script>
+  const pills = document.querySelectorAll('.pill');
+  const topics = document.querySelectorAll('.topic');
+  const q = document.getElementById('q');
+  let active = 'all';
+  function apply() {
+    const term = q.value.trim().toLowerCase();
+    topics.forEach(sec => {
+      const t = sec.dataset.topic;
+      const topicMatch = (active === 'all' || active === t);
+      let anyVisible = false;
+      sec.querySelectorAll('.cluster').forEach(cl => {
+        const blob = cl.querySelector('[data-search]')?.dataset.search || '';
+        const hit = !term || blob.includes(term)
+          || [...cl.querySelectorAll('[data-search]')].some(n => n.dataset.search.includes(term));
+        const show = topicMatch && hit;
+        cl.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
+      });
+      sec.style.display = topicMatch ? '' : 'none';
+      const empty = sec.querySelector('.empty');
+      if (empty) empty.style.display = topicMatch ? '' : 'none';
+    });
+  }
+  pills.forEach(p => p.addEventListener('click', () => {
+    pills.forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    active = p.dataset.filter;
+    apply();
+  }));
+  q.addEventListener('input', apply);
+  const themeBtn = document.getElementById('theme-btn');
+  (function(){
+    const saved = localStorage.getItem('digest-theme');
+    if (saved === 'dark') { document.documentElement.dataset.theme = 'dark'; themeBtn.textContent = 'Light'; }
+  })();
+  themeBtn.addEventListener('click', () => {
+    const dark = document.documentElement.dataset.theme !== 'dark';
+    document.documentElement.dataset.theme = dark ? 'dark' : '';
+    themeBtn.textContent = dark ? 'Light' : 'Dark';
+    localStorage.setItem('digest-theme', dark ? 'dark' : '');
+  });
+</script>
+</body>
+</html>
