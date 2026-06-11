@@ -157,26 +157,29 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
     date_html = (f'<span class="date-stamp" title="{raw_date}">&nbsp;·&nbsp;{esc(age_str)}</span>'
                  ) if age_str else ""
 
-    # card action buttons (lead cards only)
+    # card action buttons and reader trigger (lead cards only)
     if lead and cluster_key:
         k = esc(cluster_key)
+        reader_attr = ' data-reader="1"'
+        ext_link = f'<a class="ext-link" href="{url}" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>'
         actions_html = (
             f'<div class="card-actions">'
             f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read"></button>'
-            f'<button class="card-btn reader-btn" data-url="{url}" data-title="{title}" data-tip="Open in reader (r)">📖</button>'
             f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)">🔖</button>'
             f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)">💤</button>'
             f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)">✓</button>'
             f'</div>'
         )
     else:
+        reader_attr = ""
+        ext_link = ""
         actions_html = ""
 
     return f"""<article class="{cls}" data-search="{search_blob}">
   <div class="item-head">
     <div class="item-head-main">
-      <a class="title" href="{url}" target="_blank" rel="noopener">{title}</a>
-      {new_badge}{pin}
+      <a class="title" href="{url}" target="_blank" rel="noopener"{reader_attr}>{title}</a>
+      {new_badge}{pin}{ext_link}
     </div>
     {actions_html}
   </div>
@@ -356,7 +359,11 @@ def build_html(corpus, run_date):
   .item-head-main {{ flex:1; min-width:0; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }}
   .title {{ color:var(--ink); text-decoration:none; font-size:18px; font-weight:600;
     font-family:Georgia,serif; }}
+  .title[data-reader] {{ cursor:pointer; }}
   .title:hover {{ color:var(--link); text-decoration:underline; }}
+  .ext-link {{ color:var(--muted); font-size:12px; text-decoration:none; opacity:.55;
+    margin-left:5px; flex-shrink:0; vertical-align:middle; transition:opacity .12s; }}
+  .ext-link:hover {{ opacity:1; color:var(--link); }}
   .badge {{ background:var(--anchor); color:#fff; font-size:10.5px; font-weight:700;
     letter-spacing:.6px; padding:2px 7px; border-radius:4px; }}
   .pin {{ color:var(--anchor); }}
@@ -837,12 +844,15 @@ def build_html(corpus, run_date):
     }}
   }});
 
-  // title click → mark read
+  // title click → open reader pane (lead cards only)
   document.addEventListener('click', e => {{
-    const link = e.target.closest('.item.lead .title');
+    const link = e.target.closest('.title[data-reader]');
     if (!link) return;
+    e.preventDefault();
+    e.stopPropagation();
     const cl = link.closest('.cluster[data-key]');
     if (cl) doRead(cl.dataset.key);
+    openInPane(link.href, link.textContent.trim());
   }});
 
   // ring keyboard
@@ -934,8 +944,8 @@ def build_html(corpus, run_date):
       case 'Enter': case 'o':
         e.preventDefault();
         if (!focusedKey) break;
-        const link = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .item.lead .title');
-        if (link) {{ link.click(); doRead(focusedKey); }}
+        const link = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .item.lead .title[data-reader]');
+        if (link) link.click();
         break;
       case 'x': if (focusedKey) doArchive(focusedKey); break;
       case 's': if (focusedKey) doSnooze(focusedKey);  break;
@@ -948,8 +958,8 @@ def build_html(corpus, run_date):
         break;
       case 'r':
         if (focusedKey) {{
-          const rb = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .reader-btn');
-          if (rb) rb.click();
+          const rt = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .item.lead .title[data-reader]');
+          if (rt) rt.click();
         }}
         break;
       case '/': e.preventDefault(); q.focus(); break;
@@ -977,8 +987,7 @@ def build_html(corpus, run_date):
       '<table style="border-collapse:collapse;width:100%">' +
       '<tr><td style="font-family:monospace;color:var(--anchor);width:110px;padding:4px 8px;font-size:13.5px">j / ↓</td><td style="padding:4px 8px;font-size:13.5px">Next card</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">k / ↑</td><td style="padding:4px 8px;font-size:13.5px">Previous card</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Enter / o</td><td style="padding:4px 8px;font-size:13.5px">Open link</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">r</td><td style="padding:4px 8px;font-size:13.5px">Open in reader pane</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Enter / o / r</td><td style="padding:4px 8px;font-size:13.5px">Open in reader pane</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">m</td><td style="padding:4px 8px;font-size:13.5px">Toggle read</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">x</td><td style="padding:4px 8px;font-size:13.5px">Archive</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">s</td><td style="padding:4px 8px;font-size:13.5px">Snooze until tomorrow</td></tr>' +
@@ -1068,14 +1077,6 @@ def build_html(corpus, run_date):
     }}
   }}
 
-  // reader-btn click delegation
-  document.addEventListener('click', e => {{
-    const btn = e.target.closest('.reader-btn');
-    if (!btn) return;
-    e.stopPropagation();
-    e.preventDefault();
-    openInPane(btn.dataset.url, btn.dataset.title);
-  }});
 
   // ── highlights ────────────────────────────────────────────────────────────
   let hlStore  = objOf('digest-highlights');
