@@ -123,7 +123,17 @@ def esc(s):
     return html.escape(str(s or ""))
 
 
-def render_item_html(it, lead=True, cluster_key=""):
+def _age_label(first_seen_date, run_date):
+    if not first_seen_date or not run_date:
+        return ""
+    age = (run_date - first_seen_date).days
+    if age <= 0:   return "today"
+    if age == 1:   return "yesterday"
+    if age < 8:    return f"{age}d ago"
+    return f"{first_seen_date.strftime('%b')} {first_seen_date.day}"
+
+
+def render_item_html(it, lead=True, cluster_key="", run_date=None):
     new_badge = '<span class="badge">NEW</span>' if it.get("is_new") else ""
     src = esc(it.get("source", ""))
     stype = esc(it.get("source_type", ""))
@@ -139,37 +149,65 @@ def render_item_html(it, lead=True, cluster_key=""):
     summ_html = f'<p class="summary">{summary}</p>' if (summary and lead) else ""
     rbtl_html = (f'<p class="rbtl"><span class="rbtl-label">Reading between the lines</span>'
                  f'{rbtl}</p>') if (rbtl and lead) else ""
-    dismiss_btn = (f'<button class="dismiss-btn" data-key="{esc(cluster_key)}" '
-                   f'title="Archive this story" aria-label="Archive">✓</button>'
-                   ) if (lead and cluster_key) else ""
+
+    # date stamp
+    fs_date = parse_date(it.get("first_seen"))
+    age_str = _age_label(fs_date, run_date)
+    raw_date = esc(str(it.get("first_seen", ""))[:10])
+    date_html = (f'<span class="date-stamp" title="{raw_date}">&nbsp;·&nbsp;{esc(age_str)}</span>'
+                 ) if age_str else ""
+
+    # card action buttons (lead cards only)
+    if lead and cluster_key:
+        k = esc(cluster_key)
+        actions_html = (
+            f'<div class="card-actions">'
+            f'<svg class="read-ring" viewBox="0 0 24 24" data-key="{k}"'
+            f' tabindex="0" role="button" title="Mark as read (m)">'
+            f'<circle class="ring-bg" cx="12" cy="12" r="9"/>'
+            f'<circle class="ring-fg" cx="12" cy="12" r="9"/></svg>'
+            f'<button class="card-btn rl-btn" data-key="{k}" title="Save for later (b)">🔖</button>'
+            f'<button class="card-btn snooze-btn" data-key="{k}" title="Snooze until tomorrow (s)">💤</button>'
+            f'<button class="card-btn dismiss-btn" data-key="{k}" title="Archive (x)">✓</button>'
+            f'</div>'
+        )
+    else:
+        actions_html = ""
+
     return f"""<article class="{cls}" data-search="{search_blob}">
-  {dismiss_btn}
   <div class="item-head">
-    <a class="title" href="{url}" target="_blank" rel="noopener">{title}</a>
-    {new_badge}{pin}
+    <div class="item-head-main">
+      <a class="title" href="{url}" target="_blank" rel="noopener">{title}</a>
+      {new_badge}{pin}
+    </div>
+    {actions_html}
   </div>
-  <div class="meta"><span class="src">{src}</span><span class="dot">·</span><span class="stype">{stype}</span></div>
+  <div class="meta"><span class="src">{src}</span><span class="dot">·</span><span class="stype">{stype}</span>{date_html}</div>
   {summ_html}
   {rbtl_html}
 </article>"""
 
 
-def render_cluster_html(cluster):
+def render_cluster_html(cluster, run_date=None):
     key = cluster["key"]
+    key_esc = esc(key)
     lead = cluster["lead"]
-    parts = [render_item_html(lead, lead=True, cluster_key=key)]
+    lead_html = render_item_html(lead, lead=True, cluster_key=key, run_date=run_date)
+    note_area = f'<div class="note-area" data-key="{key_esc}"></div>'
     extras = cluster["members"][1:]
+    also_html = ""
     if extras:
         also = "".join(
             f'<li><a href="{esc(m.get("url","#"))}" target="_blank" rel="noopener">{esc(m.get("title",""))}</a>'
             f' <span class="also-src">{esc(m.get("source",""))}</span></li>'
             for m in extras
         )
-        parts.append(
+        also_html = (
             f'<details class="also-wrap"><summary>+ {len(extras)} more on this story</summary>'
             f'<ul class="also-list">{also}</ul></details>'
         )
-    return f'<div class="cluster" draggable="true" data-key="{esc(key)}">{"".join(parts)}</div>'
+    return (f'<div class="cluster" draggable="true" data-key="{key_esc}">'
+            f'{lead_html}{note_area}{also_html}</div>')
 
 
 def render_references_html(references):
@@ -206,7 +244,7 @@ def build_html(corpus, run_date):
         if not clusters:
             body = '<p class="empty">Nothing new in this lane right now.</p>'
         else:
-            body = "".join(render_cluster_html(c) for c in clusters)
+            body = "".join(render_cluster_html(c, run_date=run_date) for c in clusters)
         sections.append(
             f'<section class="topic" data-topic="{t}">'
             f'<h2 class="topic-h">{esc(TOPIC_LABELS[t])} '
@@ -287,7 +325,8 @@ def build_html(corpus, run_date):
   .cluster {{ margin:0 0 14px; }}
   .item {{ background:var(--card); border:1px solid var(--rule); border-radius:10px;
     padding:14px 16px; margin:0 0 10px; }}
-  .item-head {{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }}
+  .item-head {{ display:flex; align-items:flex-start; gap:8px; flex-wrap:nowrap; }}
+  .item-head-main {{ flex:1; min-width:0; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }}
   .title {{ color:var(--ink); text-decoration:none; font-size:18px; font-weight:600;
     font-family:Georgia,serif; }}
   .title:hover {{ color:var(--link); text-decoration:underline; }}
@@ -336,22 +375,45 @@ def build_html(corpus, run_date):
     .summary {{ font-size:14px; }}
     .whatsnew {{ padding:12px 14px; }}
   }}
-  /* kanban: dismiss + drag-to-reorder */
-  .item.lead {{ position:relative; padding-right:46px; }}
-  .dismiss-btn {{ position:absolute; top:12px; right:12px; width:26px; height:26px;
-    border-radius:50%; border:1px solid var(--rule); background:transparent;
-    color:var(--muted); font-size:14px; line-height:1; cursor:pointer;
+  /* card actions + kanban */
+  .card-actions {{ display:flex; align-items:center; gap:4px; flex-shrink:0; margin-left:6px; }}
+  .read-ring {{ width:22px; height:22px; cursor:pointer; flex-shrink:0; outline:none; }}
+  .ring-bg {{ fill:none; stroke:var(--rule); stroke-width:2.5; }}
+  .ring-fg {{ fill:none; stroke:var(--anchor); stroke-width:2.5;
+    stroke-dasharray:56.55; stroke-dashoffset:56.55;
+    transition:stroke-dashoffset .4s ease; transform:rotate(-90deg); transform-origin:center; }}
+  .cluster.is-read .ring-fg {{ stroke-dashoffset:0; }}
+  .cluster.is-read .ring-bg {{ fill:var(--anchor-soft); }}
+  .cluster.is-read .item.lead {{ opacity:.65; }}
+  .card-btn {{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule);
+    background:transparent; color:var(--muted); font-size:13px; line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    transition:background .15s,border-color .15s,color .15s; }}
-  .dismiss-btn:hover {{ background:var(--anchor); border-color:var(--anchor); color:#fff; }}
+    transition:background .15s,border-color .15s,color .15s; padding:0; }}
+  .card-btn:hover {{ background:var(--card); border-color:var(--ink); color:var(--ink); }}
+  .dismiss-btn:hover {{ background:var(--anchor) !important; border-color:var(--anchor) !important; color:#fff !important; }}
+  .snooze-btn.active {{ border-color:#b8960c; color:#b8960c; }}
+  .rl-btn.active {{ border-color:var(--link); color:var(--link); }}
+  .date-stamp {{ color:var(--muted); font-size:11.5px; }}
   .cluster[draggable] {{ cursor:grab; }}
   .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:12px; }}
   .cluster.dragging {{ opacity:.35; pointer-events:none; }}
+  .cluster.focused {{ box-shadow:0 0 0 2px var(--anchor); border-radius:10px; scroll-margin:90px; }}
   .arc-pill {{ font:inherit; font-size:12px; border:1px solid var(--rule); background:transparent;
     color:var(--muted); padding:4px 10px; border-radius:999px; cursor:pointer;
     white-space:nowrap; transition:border-color .15s,color .15s; }}
   .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
   .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
+  .note-area {{ padding:0 6px 2px; }}
+  .note-trigger {{ color:var(--muted); font-size:12px; cursor:pointer; padding:4px 2px;
+    display:inline-flex; align-items:center; gap:4px; user-select:none; }}
+  .note-trigger:hover {{ color:var(--ink); }}
+  .note-body {{ margin:4px 0; }}
+  .note-input {{ width:100%; font:inherit; font-size:13.5px; resize:none;
+    border:1px solid var(--rule); border-radius:8px; background:var(--card); color:var(--ink);
+    padding:8px 10px; }}
+  .note-display {{ font-size:13.5px; color:var(--ink); white-space:pre-wrap;
+    padding:2px 2px 6px; font-style:italic; display:none; }}
+  .note-display.visible {{ display:block; }}
   html[data-theme="dark"] {{
     --paper:{PALETTE_DARK['paper']}; --card:{PALETTE_DARK['card']}; --ink:{PALETTE_DARK['ink']};
     --muted:{PALETTE_DARK['muted']}; --rule:{PALETTE_DARK['rule']}; --anchor:{PALETTE_DARK['anchor']};
@@ -379,7 +441,8 @@ def build_html(corpus, run_date):
       {pills}
     </div>
     <div class="search-row">
-      <input id="q" type="search" placeholder="Filter…" autocomplete="off">
+      <input id="q" type="search" placeholder="Filter… (/ to focus)" autocomplete="off">
+      <button id="rl-pill" class="arc-pill">Saved</button>
       <button id="arc-pill" class="arc-pill">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>
     </div>
@@ -396,44 +459,138 @@ def build_html(corpus, run_date):
   </footer>
 </div>
 <script>
-  const pills = document.querySelectorAll('.pill');
-  const topics = document.querySelectorAll('.topic');
-  const q = document.getElementById('q');
-  const arcPill = document.getElementById('arc-pill');
-  let active = 'all';
-  let showArchive = false;
+  // ── helpers ──────────────────────────────────────────────────────────────
+  function ls(k) {{ return localStorage.getItem(k); }}
+  function lsSet(k, v) {{ localStorage.setItem(k, JSON.stringify(v)); }}
+  function setOf(k) {{ try {{ return new Set(JSON.parse(ls(k) || '[]')); }} catch(e) {{ return new Set(); }} }}
+  function objOf(k) {{ try {{ return JSON.parse(ls(k) || '{{}}'); }} catch(e) {{ return {{}}; }} }}
+  function esc2(s) {{ return CSS.escape(String(s)); }}
 
-  // --- archive state ---
-  let archived = new Set(JSON.parse(localStorage.getItem('digest-archived') || '[]'));
-  function saveArchived() {{ localStorage.setItem('digest-archived', JSON.stringify([...archived])); }}
+  // ── state ─────────────────────────────────────────────────────────────────
+  const pills    = document.querySelectorAll('.pill');
+  const topicSec = document.querySelectorAll('.topic');
+  const q        = document.getElementById('q');
+  const arcPill  = document.getElementById('arc-pill');
+  const rlPill   = document.getElementById('rl-pill');
+  const themeBtn = document.getElementById('theme-btn');
+  const todayStr = new Date().toISOString().split('T')[0];
 
-  function updateArcPill() {{
-    const n = archived.size;
-    arcPill.textContent = showArchive ? (n ? `Hide (${{n}})` : 'Hide') : (n ? `Archive (${{n}})` : 'Archive');
-    arcPill.classList.toggle('has-arc', n > 0);
+  let active   = 'all';
+  let viewMode = 'normal';  // 'normal' | 'archive' | 'readlater'
+
+  let archived  = setOf('digest-archived');
+  let readSet   = setOf('digest-read');
+  let readLater = setOf('digest-readlater');
+  let snoozed   = objOf('digest-snoozed');
+  let notes     = objOf('digest-notes');
+
+  // expire past snoozes on load
+  Object.keys(snoozed).forEach(k => {{ if (snoozed[k] <= todayStr) delete snoozed[k]; }});
+  lsSet('digest-snoozed', snoozed);
+
+  // ── cluster class sync ────────────────────────────────────────────────────
+  function syncClasses() {{
+    document.querySelectorAll('.cluster[data-key]').forEach(cl => {{
+      const k = cl.dataset.key;
+      cl.classList.toggle('is-read', readSet.has(k));
+      const rlBtn  = cl.querySelector('.rl-btn');
+      const snzBtn = cl.querySelector('.snooze-btn');
+      if (rlBtn)  rlBtn.classList.toggle('active', readLater.has(k));
+      if (snzBtn) snzBtn.classList.toggle('active', !!snoozed[k]);
+    }});
   }}
-  updateArcPill();
+  syncClasses();
 
-  // --- filter (archive-aware) ---
+  // ── notes ─────────────────────────────────────────────────────────────────
+  function buildNotes() {{
+    document.querySelectorAll('.note-area[data-key]').forEach(area => {{
+      if (area.dataset.built) return;
+      area.dataset.built = '1';
+      const k = area.dataset.key;
+
+      const trigger = document.createElement('button');
+      trigger.className = 'note-trigger';
+      const body    = document.createElement('div');
+      body.className = 'note-body';
+      body.style.display = 'none';
+      const ta      = document.createElement('textarea');
+      ta.className  = 'note-input';
+      ta.rows       = 3;
+      ta.placeholder = 'Your thoughts…';
+      if (notes[k]) ta.value = notes[k];
+      const display = document.createElement('div');
+      display.className = 'note-display' + (notes[k] ? ' visible' : '');
+      display.textContent = notes[k] || '';
+
+      function refresh() {{
+        const saved = notes[k] || '';
+        display.textContent = saved;
+        display.classList.toggle('visible', !!saved);
+        trigger.textContent = saved ? '📝 Edit note' : '📝 Add note';
+      }}
+      refresh();
+
+      ta.addEventListener('input', () => {{
+        const v = ta.value.trim();
+        if (v) notes[k] = v; else delete notes[k];
+        lsSet('digest-notes', notes);
+        refresh();
+      }});
+      ta.addEventListener('keydown', e => {{ if (e.key === 'Escape') {{ body.style.display = 'none'; refresh(); }} }});
+
+      trigger.addEventListener('click', () => {{
+        const open = body.style.display === 'none';
+        body.style.display = open ? '' : 'none';
+        if (open) {{ ta.focus(); trigger.textContent = '📝 Cancel'; }}
+        else refresh();
+      }});
+
+      body.appendChild(ta);
+      area.appendChild(trigger);
+      area.appendChild(display);
+      area.appendChild(body);
+    }});
+  }}
+  buildNotes();
+
+  // ── pill counters ─────────────────────────────────────────────────────────
+  function updatePills() {{
+    const rlN  = readLater.size;
+    const arcN = archived.size;
+    rlPill.textContent  = viewMode === 'readlater'
+      ? (rlN ? 'Saved (' + rlN + ') \xd7' : 'Saved \xd7')
+      : (rlN ? 'Saved (' + rlN + ')' : 'Saved');
+    arcPill.textContent = viewMode === 'archive'
+      ? (arcN ? 'Archive (' + arcN + ') \xd7' : 'Archive \xd7')
+      : (arcN ? 'Archive (' + arcN + ')' : 'Archive');
+    rlPill.classList.toggle('has-arc',  rlN > 0  || viewMode === 'readlater');
+    arcPill.classList.toggle('has-arc', arcN > 0 || viewMode === 'archive');
+  }}
+
+  // ── filter / apply ────────────────────────────────────────────────────────
+  function isVisible(k) {{
+    if (viewMode === 'archive')   return archived.has(k);
+    if (viewMode === 'readlater') return readLater.has(k) && !archived.has(k);
+    return !archived.has(k) && !snoozed[k];
+  }}
+
   function apply() {{
     const term = q.value.trim().toLowerCase();
-    topics.forEach(sec => {{
-      const t = sec.dataset.topic;
-      const topicMatch = (active === 'all' || active === t);
+    topicSec.forEach(sec => {{
+      const topicMatch = (active === 'all' || active === sec.dataset.topic);
       sec.querySelectorAll('.cluster').forEach(cl => {{
-        const isArchived = archived.has(cl.dataset.key);
+        const k = cl.dataset.key;
+        const vis = isVisible(k);
         const blob = cl.querySelector('[data-search]')?.dataset.search || '';
         const hit = !term || blob.includes(term)
           || [...cl.querySelectorAll('[data-search]')].some(n => n.dataset.search.includes(term));
-        const show = topicMatch && hit && (!isArchived || showArchive);
-        cl.style.display = show ? '' : 'none';
-        if (isArchived && showArchive && show) cl.style.opacity = '0.45';
-        else cl.style.opacity = '';
+        cl.style.display = (topicMatch && hit && vis) ? '' : 'none';
       }});
       sec.style.display = topicMatch ? '' : 'none';
       const empty = sec.querySelector('.empty');
       if (empty) empty.style.display = topicMatch ? '' : 'none';
     }});
+    updatePills();
   }}
   apply();
 
@@ -445,42 +602,83 @@ def build_html(corpus, run_date):
   }}));
   q.addEventListener('input', apply);
 
-  // --- dismiss (archive) ---
+  rlPill.addEventListener('click',  () => {{ viewMode = viewMode === 'readlater' ? 'normal' : 'readlater'; apply(); }});
+  arcPill.addEventListener('click', () => {{ viewMode = viewMode === 'archive'   ? 'normal' : 'archive';   apply(); }});
+
+  // ── actions ───────────────────────────────────────────────────────────────
+  function doArchive(key) {{
+    archived.add(key); lsSet('digest-archived', [...archived]);
+    if (focusedKey === key) moveFocus(1);
+    apply();
+  }}
+  function doSnooze(key) {{
+    if (snoozed[key]) {{ delete snoozed[key]; }}
+    else {{
+      const d = new Date(); d.setDate(d.getDate() + 1);
+      snoozed[key] = d.toISOString().split('T')[0];
+    }}
+    lsSet('digest-snoozed', snoozed);
+    syncClasses();
+    if (snoozed[key]) {{ if (focusedKey === key) moveFocus(1); apply(); }}
+    else apply();
+  }}
+  function doRL(key) {{
+    if (readLater.has(key)) readLater.delete(key); else readLater.add(key);
+    lsSet('digest-readlater', [...readLater]);
+    syncClasses(); apply();
+  }}
+  function doRead(key) {{
+    if (readSet.has(key)) readSet.delete(key); else readSet.add(key);
+    lsSet('digest-read', [...readSet]);
+    syncClasses();
+  }}
+
+  // button click delegation
   document.addEventListener('click', e => {{
-    const btn = e.target.closest('.dismiss-btn');
-    if (!btn) return;
-    const key = btn.dataset.key;
-    if (!key) return;
-    archived.add(key);
-    saveArchived();
-    updateArcPill();
-    apply();
+    if (e.target.closest('.dismiss-btn')) {{
+      const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doArchive(k); return;
+    }}
+    if (e.target.closest('.snooze-btn')) {{
+      const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doSnooze(k); return;
+    }}
+    if (e.target.closest('.rl-btn')) {{
+      const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doRL(k); return;
+    }}
+    if (e.target.closest('.read-ring')) {{
+      const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doRead(k); return;
+    }}
   }});
 
-  // --- archive pill toggle ---
-  arcPill.addEventListener('click', () => {{
-    showArchive = !showArchive;
-    updateArcPill();
-    apply();
+  // title click → mark read
+  document.addEventListener('click', e => {{
+    const link = e.target.closest('.item.lead .title');
+    if (!link) return;
+    const cl = link.closest('.cluster[data-key]');
+    if (cl) doRead(cl.dataset.key);
   }});
 
-  // --- drag to reorder within topic ---
+  // ring keyboard
+  document.addEventListener('keydown', e => {{
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('read-ring')) {{
+      e.preventDefault();
+      doRead(e.target.dataset.key);
+    }}
+  }});
+
+  // ── drag to reorder ───────────────────────────────────────────────────────
   let dragSrc = null;
   document.addEventListener('dragstart', e => {{
     const cl = e.target.closest('.cluster[draggable]');
     if (!cl) return;
-    dragSrc = cl;
-    cl.classList.add('dragging');
+    dragSrc = cl; cl.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
   }});
   document.addEventListener('dragend', () => {{
-    document.querySelectorAll('.cluster').forEach(c => c.classList.remove('dragging', 'drag-over'));
-    saveDragOrder();
-    dragSrc = null;
+    document.querySelectorAll('.cluster').forEach(c => c.classList.remove('dragging','drag-over'));
+    saveDragOrder(); dragSrc = null;
   }});
   document.addEventListener('dragover', e => {{
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+    e.preventDefault(); e.dataTransfer.dropEffect = 'move';
     const cl = e.target.closest('.cluster[draggable]');
     document.querySelectorAll('.cluster').forEach(c => c.classList.remove('drag-over'));
     if (cl && cl !== dragSrc) cl.classList.add('drag-over');
@@ -488,41 +686,117 @@ def build_html(corpus, run_date):
   document.addEventListener('drop', e => {{
     e.preventDefault();
     const target = e.target.closest('.cluster[draggable]');
-    if (!target || !dragSrc || target === dragSrc) return;
-    const parent = target.parentNode;
-    if (parent !== dragSrc.parentNode) return;
-    const allCl = [...parent.querySelectorAll(':scope > .cluster[draggable]')];
-    const si = allCl.indexOf(dragSrc), ti = allCl.indexOf(target);
-    if (si < ti) parent.insertBefore(dragSrc, target.nextSibling);
-    else parent.insertBefore(dragSrc, target);
+    if (!target || !dragSrc || target === dragSrc || target.parentNode !== dragSrc.parentNode) return;
+    const all = [...target.parentNode.querySelectorAll(':scope > .cluster[draggable]')];
+    const si = all.indexOf(dragSrc), ti = all.indexOf(target);
+    if (si < ti) target.parentNode.insertBefore(dragSrc, target.nextSibling);
+    else target.parentNode.insertBefore(dragSrc, target);
   }});
-
   function saveDragOrder() {{
     const orders = {{}};
-    document.querySelectorAll('.topic').forEach(sec => {{
+    topicSec.forEach(sec => {{
       orders[sec.dataset.topic] = [...sec.querySelectorAll(':scope > .cluster[data-key]')].map(c => c.dataset.key);
     }});
-    localStorage.setItem('digest-order', JSON.stringify(orders));
+    lsSet('digest-order', orders);
   }}
-
-  function restoreDragOrder() {{
-    let saved;
-    try {{ saved = JSON.parse(localStorage.getItem('digest-order') || '{{}}'); }} catch(e) {{ return; }}
-    document.querySelectorAll('.topic').forEach(sec => {{
+  (function restoreDragOrder() {{
+    const saved = objOf('digest-order');
+    topicSec.forEach(sec => {{
       const order = saved[sec.dataset.topic];
       if (!order || !order.length) return;
       order.forEach(key => {{
-        const el = sec.querySelector(`:scope > .cluster[data-key="${{CSS.escape(key)}}"]`);
+        const el = sec.querySelector(':scope > .cluster[data-key="' + esc2(key) + '"]');
         if (el) sec.appendChild(el);
       }});
     }});
-  }}
-  restoreDragOrder();
+  }})();
 
-  // --- dark mode ---
-  const themeBtn = document.getElementById('theme-btn');
-  (function(){{
-    const saved = localStorage.getItem('digest-theme');
+  // ── keyboard navigation ───────────────────────────────────────────────────
+  let focusedKey = null;
+
+  function visibleClusters() {{
+    return [...document.querySelectorAll('.cluster[data-key]')].filter(c => c.style.display !== 'none');
+  }}
+  function moveFocus(delta) {{
+    const list = visibleClusters();
+    if (!list.length) return;
+    let idx = focusedKey ? list.findIndex(c => c.dataset.key === focusedKey) : -1;
+    if (idx === -1) idx = delta > 0 ? -1 : 0;
+    idx = Math.max(0, Math.min(list.length - 1, idx + delta));
+    setFocus(list[idx]);
+  }}
+  function setFocus(cl) {{
+    document.querySelectorAll('.cluster.focused').forEach(c => c.classList.remove('focused'));
+    if (!cl) {{ focusedKey = null; return; }}
+    cl.classList.add('focused');
+    focusedKey = cl.dataset.key;
+    cl.scrollIntoView({{ block: 'nearest', behavior: 'smooth' }});
+  }}
+
+  document.addEventListener('keydown', e => {{
+    const inField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
+    if (inField) {{ if (e.key === 'Escape') e.target.blur(); return; }}
+    switch (e.key) {{
+      case 'ArrowDown': case 'j': e.preventDefault(); moveFocus(1);  break;
+      case 'ArrowUp':   case 'k': e.preventDefault(); moveFocus(-1); break;
+      case 'Enter': case 'o':
+        e.preventDefault();
+        if (!focusedKey) break;
+        const link = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .item.lead .title');
+        if (link) {{ link.click(); doRead(focusedKey); }}
+        break;
+      case 'x': if (focusedKey) doArchive(focusedKey); break;
+      case 's': if (focusedKey) doSnooze(focusedKey);  break;
+      case 'b': if (focusedKey) doRL(focusedKey);      break;
+      case 'm': if (focusedKey) doRead(focusedKey);    break;
+      case 'n':
+        if (!focusedKey) break;
+        const trigger = document.querySelector('.note-area[data-key="' + esc2(focusedKey) + '"] .note-trigger');
+        if (trigger) trigger.click();
+        break;
+      case '/': e.preventDefault(); q.focus(); break;
+      case '?': showShortcuts(); break;
+      case 'Escape': setFocus(null); break;
+    }}
+  }});
+
+  // click cluster body → focus (skip interactive elements)
+  document.addEventListener('click', e => {{
+    if (e.target.closest('button,a,.note-trigger,.read-ring')) return;
+    const cl = e.target.closest('.cluster[data-key]');
+    if (cl) setFocus(cl);
+  }});
+
+  // ── shortcuts overlay ─────────────────────────────────────────────────────
+  function showShortcuts() {{
+    if (document.getElementById('kbd-overlay')) {{ document.getElementById('kbd-overlay').remove(); return; }}
+    const ov = document.createElement('div');
+    ov.id = 'kbd-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:20px 28px;min-width:280px;';
+    box.innerHTML = '<h3 style="margin:0 0 12px;font-family:Georgia,serif;">Keyboard shortcuts</h3>' +
+      '<table style="border-collapse:collapse;width:100%">' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);width:110px;padding:4px 8px;font-size:13.5px">j / ↓</td><td style="padding:4px 8px;font-size:13.5px">Next card</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">k / ↑</td><td style="padding:4px 8px;font-size:13.5px">Previous card</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Enter / o</td><td style="padding:4px 8px;font-size:13.5px">Open link</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">m</td><td style="padding:4px 8px;font-size:13.5px">Toggle read</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">x</td><td style="padding:4px 8px;font-size:13.5px">Archive</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">s</td><td style="padding:4px 8px;font-size:13.5px">Snooze until tomorrow</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">b</td><td style="padding:4px 8px;font-size:13.5px">Save for later</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">n</td><td style="padding:4px 8px;font-size:13.5px">Add / edit note</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">/</td><td style="padding:4px 8px;font-size:13.5px">Focus search</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">?</td><td style="padding:4px 8px;font-size:13.5px">This help</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Esc</td><td style="padding:4px 8px;font-size:13.5px">Clear focus</td></tr>' +
+      '</table><p style="margin:10px 0 0;font-size:12px;color:var(--muted)">Press ? or click outside to close</p>';
+    ov.appendChild(box);
+    ov.addEventListener('click', e => {{ if (e.target === ov) ov.remove(); }});
+    document.body.appendChild(ov);
+  }}
+
+  // ── dark mode ─────────────────────────────────────────────────────────────
+  (function() {{
+    const saved = ls('digest-theme');
     if (saved === 'dark') {{ document.documentElement.dataset.theme = 'dark'; themeBtn.textContent = 'Light'; }}
   }})();
   themeBtn.addEventListener('click', () => {{

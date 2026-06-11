@@ -1,21 +1,21 @@
 # News Digest — 2026-06-11
 
-_83 items live · 22 new since last run._
+_83 items live · 11 new since last run._
 
 ## New since last digest
-- [Claude Fable 5 (Mythos) officially launches](https://www.anthropic.com/news/claude-fable-5-mythos-5) — TLDR AI (email) (AI)
 - [Policy on the AI Exponential](https://darioamodei.com/post/policy-on-the-ai-exponential) — TLDR AI (email) (AI)
-- [Simon Willison on Claude Fable 5](https://simonwillison.net/2026/Jun/9/claude-fable-5/) — TLDR AI (email) (AI)
-- [Fable 5 / Mythos Vibe Check (Every)](https://every.to/vibe-check/anthropic-mythos-our-fable-vibe-check) — Every (email) (AI)
-- [Gemini 3.5 launches with Live Translate](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/) — TLDR AI (email) (AI)
 - [Visa and OpenAI form agentic commerce partnership](https://links.tldrnewsletter.com/2CMa40) — TLDR Fintech (email) (AI)
 - [Mastercard launches Agent Pay for Machines](https://links.tldrnewsletter.com/paryuY) — TLDR Fintech (email) (AI)
-- [Claude Fable 5 and New AI Safety Fables](https://www.interconnects.ai/p/claude-fable-5-and-new-ai-safety) — TLDR AI (email) (AI)
-- [What It Feels Like to Work With Mythos](https://www.oneusefulthing.org/p/what-it-feels-like-to-work-with-mythos) — TLDR AI (email) (AI)
-- [Three Labs With a Plan and a Memorandum](https://thezvi.substack.com/p/three-labs-with-a-plan-and-a-memorandum) — TLDR AI (email) (AI)
+- [Fable 5 system prompt leaked in full](https://links.tldrnewsletter.com/iHUGuo) — TLDR AI (email) (AI)
+- [AI Everywhere, All at Once — Every's Fable 5 verdict](https://every.to/context-window/ai-everywhere-all-at-once) — Every (email) (AI)
+- [Moats Need Models](https://links.tldrnewsletter.com/LktVYs) — TLDR AI (email) (AI)
+- [Building with Claude Managed Agents](https://claude.com/blog/building-with-claude-managed-agents) — TLDR AI (email) (AI)
+- [Palantir's Karp says businesses are 'unhappy' with frontier AI labs](https://www.cnbc.com/2026/06/10/palantir-karp-enterprise-ai.html) — TLDR AI (email) (AI)
+- [EU orders Meta to stop blocking rival AI chatbots on WhatsApp](https://www.engadget.com/2191213/eu-orders-meta-to-stop-blocking-rival-ai-chatbots-on-whatsapp/) — TLDR AI (email) (Tech & Coding)
+- [DiffusionGemma: 4x Faster Text Generation](https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/) — TLDR AI (email) (AI)
 
 ## AI (40)
-- [Claude Fable 5 (Mythos) officially launches](https://www.anthropic.com/news/claude-fable-5-mythos-5) — TLDR AI (email) **NEW**
+- [Claude Fable 5 (Mythos) officially launches](https://www.anthropic.com/news/claude-fable-5-mythos-5) — TLDR AI (email)
   - Anthropic officially launched Claude Fable 5 — the first model in their Fable series and their most capable public release to date. Positioned above Claude 3.7 Sonnet, it delivers major improvements in extended reasoning, agentic task handling, and coding performance. The model shipped with a companion lighter variant for cost-sensitive deployments and was immediately available in the API and Claude.ai across subscription tiers.
   - *Reading between the lines: The dual naming — Fable 5 externally, Mythos 5 internally — and the simultaneous lighter companion reveal a product tiering strategy that mirrors OpenAI's o-series/GPT-4o split. Anthropic is no longer just a safety lab releasing research artifacts; this launch reads like a product organization that has learned to compete on release cadence and market positioning.*
   - also: [Simon Willison on Claude Fable 5](https://simonwillison.net/2026/Jun/9/claude-fable-5/) — TLDR AI (email)
@@ -30,17 +30,10 @@ _83 items live · 22 new since last run._
 - [Policy on the AI Exponential](https://darioamodei.com/post/policy-on-the-ai-exponential) — TLDR AI (email) **NEW**
   - Anthropic CEO Dario Amodei published his most detailed public regulatory roadmap to date, proposing an FAA-style federal AI regulator with mandatory safety testing and stronger cybersecurity standards. He also addresses macroeconomic adaptations for AI-driven growth, tax policy reforms, and ensuring AI development aligns with democratic values globally. The post is one of the most comprehensive AI governance arguments from a sitting lab CEO.
   - *Reading between the lines: Amodei publishing a detailed regulatory blueprint publicly and under his own name is a calculated positioning move: it casts Anthropic as the lab that actively wants to be regulated, which differentiates it from competitors at precisely the moment enterprise procurement teams and government contracting officers are asking hard questions about vendor accountability.*
-- [Gemini 3.5 launches with Live Translate](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/) — TLDR AI (email) **NEW**
-  - Google launched Gemini 3.5 with Live Translate as its flagship feature: real-time speech translation across languages with low latency and natural conversational cadence. The capability is embedded in Google Assistant, Pixel hardware, and Workspace, enabling live multilingual meetings without switching apps or using a third-party service. It represents Google's most consumer-visible AI feature in years.
-  - *Reading between the lines: Live Translate plays to the one advantage no pure-play AI lab can replicate: device-level integration across 2B+ active users, hardware microphone access, and ambient OS embedding. This is Google retaliating against OpenAI's voice and realtime modes on its home turf — and Google's distribution moat is the one structural advantage OpenAI genuinely cannot buy its way into.*
 - [Visa and OpenAI form agentic commerce partnership](https://links.tldrnewsletter.com/2CMa40) — TLDR Fintech (email) **NEW**
   - Visa announced a partnership with OpenAI to provide its global payment network, credentialing infrastructure, and security capabilities for agent-initiated transactions. The integration will be built directly into ChatGPT and the OpenAI API, enabling developers and merchants to accept Visa payments initiated by AI agents without building separate payment infrastructure. It marks the first time a major card network has formally embedded its rails into a frontier AI platform.
   - *Reading between the lines: Visa embedding its payment rails into ChatGPT's agent layer is the financial industry's opening move in the race to capture agentic commerce — whoever sets the standard for how agents pay becomes the invisible intermediary for every autonomous transaction, and that volume will eventually dwarf human-initiated digital commerce.*
   - also: [Mastercard launches Agent Pay for Machines](https://links.tldrnewsletter.com/paryuY) — TLDR Fintech (email)
-- [Can Tech Companies Learn to Love Cheaper AI Models?](https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/) — TLDR AI (email) **NEW**
-  - A wave of analysis has documented the dramatic pace of AI inference cost deflation: token prices for frontier-model-quality inference have fallen 10–100x in under two years, driven by hardware improvements, model distillation, and fierce competitive pressure from open-weight alternatives. Tasks requiring expensive GPT-4 API calls in 2023 can now be run cost-effectively using smaller or open models. The floor is still falling.
-  - *Reading between the lines: Inference cost deflation is quietly the most important structural shift in AI deployment: it transforms AI from a capability story into a volume story. The business model question is no longer 'can we afford AI' but 'what defensible value sits above commoditized inference' — and most current AI SaaS startups are being built on margin compression they haven't fully priced in.*
-  - also: [Anthropic/OpenAI May Be Spending $1,000 for Every $100 You Pay Them](https://ea.rna.nl/2026/06/07/anthropic-openai-may-be-spending-more-than-1000-for-every-100-you-pay-them/) — TLDR AI (email)
 - [Moats Need Models](https://links.tldrnewsletter.com/LktVYs) — TLDR AI (email) **NEW**
   - A widely-circulated essay argues that defensibility in AI products comes from owning the full feedback loop — model, harness, workflow, and evaluation — rather than renting frontier capability from third parties. The piece contends that model, tooling, and evaluation are no longer separable stack pieces but co-design surfaces that compound together over time.
   - *Reading between the lines: The 'moat comes from the loop' argument is the business-case version of what Anthropic and OpenAI have been building toward architecturally: if you rent their frontier model, they own your feedback loop. Companies that understand this will treat evaluation infrastructure as a strategic asset, not an afterthought — and those that don't are building on rented ground.*
@@ -64,6 +57,9 @@ _83 items live · 22 new since last run._
   - *Reading between the lines: Releasing Opus 4.8 alongside Fable 5 in the same window creates a two-tier product lineup that mirrors how enterprises actually buy: one model for benchmarks and RFPs, another for cost-sensitive production. The Claude Code dynamic workflow additions are the more strategically important signal — Anthropic is betting that owning the agentic coding runtime is the highest-margin position in the near term.*
 - [Simon Willison's Weblog](https://simonwillison.net/) — Simon Willison ★
   - Daily hands-on notes on LLMs, tooling, and prompt engineering. A primary practitioner source — has a full Atom feed.
+- [Gemini 3.5 launches with Live Translate](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/) — TLDR AI (email)
+  - Google launched Gemini 3.5 with Live Translate as its flagship feature: real-time speech translation across languages with low latency and natural conversational cadence. The capability is embedded in Google Assistant, Pixel hardware, and Workspace, enabling live multilingual meetings without switching apps or using a third-party service. It represents Google's most consumer-visible AI feature in years.
+  - *Reading between the lines: Live Translate plays to the one advantage no pure-play AI lab can replicate: device-level integration across 2B+ active users, hardware microphone access, and ambient OS embedding. This is Google retaliating against OpenAI's voice and realtime modes on its home turf — and Google's distribution moat is the one structural advantage OpenAI genuinely cannot buy its way into.*
 - [Trump administration reportedly taking stake in OpenAI](https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html) — TLDR AI (email)
   - Reports emerged that the Trump administration is pursuing a government equity stake in OpenAI, with the arrangement involving preferential national security access to OpenAI models in exchange for investment or favorable regulatory treatment. The deal would be the first known case of a U.S. government taking equity in a major AI lab and would coincide with OpenAI's IPO preparations.
   - *Reading between the lines: Government equity in an AI lab is without modern precedent and fundamentally changes OpenAI's independence calculus: once the state is a stakeholder, decisions about model capabilities, export controls, and safety commitments become subject to political interests in ways that safety-focused competitors like Anthropic and DeepMind can now credibly use as a differentiator with international and enterprise customers.*
@@ -72,6 +68,10 @@ _83 items live · 22 new since last run._
   - *Reading between the lines: The argument is compelling but quietly concentrates its benefits: the workers whose output becomes more valuable are those who already had the leverage and skill to direct AI rather than compete with it. Workers displaced from the routine tasks being automated are not the same ones who get to move up to the judgment layer — and that distribution problem is the piece this narrative consistently sidesteps.*
 - [Latent Space (swyx)](https://www.latent.space/) — Latent Space ★
   - The canonical AI-engineering publication; also runs the AINews daily digest.
+- [Can Tech Companies Learn to Love Cheaper AI Models?](https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/) — TLDR AI (email)
+  - A wave of analysis has documented the dramatic pace of AI inference cost deflation: token prices for frontier-model-quality inference have fallen 10–100x in under two years, driven by hardware improvements, model distillation, and fierce competitive pressure from open-weight alternatives. Tasks requiring expensive GPT-4 API calls in 2023 can now be run cost-effectively using smaller or open models. The floor is still falling.
+  - *Reading between the lines: Inference cost deflation is quietly the most important structural shift in AI deployment: it transforms AI from a capability story into a volume story. The business model question is no longer 'can we afford AI' but 'what defensible value sits above commoditized inference' — and most current AI SaaS startups are being built on margin compression they haven't fully priced in.*
+  - also: [Anthropic/OpenAI May Be Spending $1,000 for Every $100 You Pay Them](https://ea.rna.nl/2026/06/07/anthropic-openai-may-be-spending-more-than-1000-for-every-100-you-pay-them/) — TLDR AI (email)
 - [Microsoft launches 7 new MAI models in a 'hillclimbing' release](https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/) — TLDR AI (email)
   - Microsoft announced a portfolio of seven proprietary MAI (Microsoft AI) models spanning different capability tiers — from small, edge-deployable reasoning models to large multimodal flagships — aimed at covering enterprise AI workloads without full dependency on OpenAI's model family. Several target specific verticals including code generation, document understanding, and vision tasks. The lineup is available through Azure AI and Copilot integrations.
   - *Reading between the lines: Seven models is a hedge, not a product strategy. Microsoft is building parallel model capability specifically so that if OpenAI's post-IPO pricing changes, exclusivity terms shift, or the partnership sours, Microsoft can silently route enterprise workloads to its own stack. This is the most strategically important AI supply-chain story most coverage is missing — Microsoft is quietly ending its dependency on OpenAI.*
@@ -147,13 +147,12 @@ _83 items live · 22 new since last run._
   - Product and craft posts; increasingly about vibe-coding and AI-assisted prototyping.
 
 ## Tech & Coding (15)
-- [SpaceX details its AI1 compute satellite](https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite) — TLDR AI (email) **NEW**
+- [EU orders Meta to stop blocking rival AI chatbots on WhatsApp](https://www.engadget.com/2191213/eu-orders-meta-to-stop-blocking-rival-ai-chatbots-on-whatsapp/) — TLDR AI (email) **NEW**
+- [SpaceX details its AI1 compute satellite](https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite) — TLDR AI (email)
   - SpaceX revealed plans for an AI compute satellite constellation, provisioning distributed machine learning infrastructure from orbit outside traditional data center constraints. Google signed a major agreement to lease capacity from the constellation, and Anthropic is reportedly in discussions for similar arrangements. The architecture would allow model inference and training workloads to operate in geosynchronous or low-Earth orbit.
   - *Reading between the lines: Orbital AI compute is a geopolitical play as much as a technical one — infrastructure physically located outside any jurisdiction, harder to regulate, inspect, or shut down than ground-based data centers. Whoever controls orbital compute infrastructure in the next decade is positioning to set the terms for where AI governance actually applies, and current AI governance frameworks were not designed with this scenario in mind.*
   - also: [Google taps SpaceX for $920M/month AI compute deal](https://winbuzzer.com/2026/06/06/google-taps-spacex-for-920m-monthly-ai-compute-deal-xcxwbn/) — TLDR AI (email)
   - also: [How long is Anthropic's lease with SpaceX? Opinions vary.](https://techcrunch.com/2026/05/28/how-long-is-anthropics-lease-with-spacex-opinions-vary/) — TLDR AI (email)
-- [EU orders Meta to stop blocking rival AI chatbots on WhatsApp](https://www.engadget.com/2191213/eu-orders-meta-to-stop-blocking-rival-ai-chatbots-on-whatsapp/) — TLDR AI (email) **NEW**
-- [Apple open-sources its container project](https://github.com/apple/container) — TLDR AI (email) **NEW**
 - [Apple releases Core AI developer documentation](https://developer.apple.com/documentation/coreai/) — TLDR AI (email)
   - Apple unveiled the architecture of Apple Intelligence, centering on on-device inference, Private Cloud Compute (a privacy-preserving cloud extension that processes requests without Apple seeing the data), and deeply integrated system-level AI features across iOS, macOS, and hardware. The strategy prioritizes user privacy and seamless integration over raw model capability, with most features designed to work without an internet connection.
   - *Reading between the lines: Apple's privacy-first AI positioning is both genuine and strategically brilliant — it differentiates on the one dimension where OpenAI and Google structurally cannot compete without abandoning their core business models. With 2B+ active devices, Apple doesn't need to win the benchmark race; they need to win the trust race, and they are running it with an insurmountable distribution head start.*
@@ -169,6 +168,7 @@ _83 items live · 22 new since last run._
 - [Techmeme](https://www.techmeme.com/) — Techmeme ★
   - Editor + algorithm hybrid that clusters the top tech headlines with related coverage.
 - [New Amazon Bedrock console experience: Anthropic and OpenAI APIs](https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/) — TLDR AI (email)
+- [Apple open-sources its container project](https://github.com/apple/container) — TLDR AI (email)
 - [Lobste.rs](https://lobste.rs/) — Lobsters ★
   - Invite-only, tag-filterable technical link aggregator.
 
