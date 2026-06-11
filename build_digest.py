@@ -166,6 +166,7 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
             f' tabindex="0" role="button" data-tip="Mark read (m)">'
             f'<circle class="ring-bg" cx="12" cy="12" r="9"/>'
             f'<circle class="ring-fg" cx="12" cy="12" r="9"/></svg>'
+            f'<button class="card-btn reader-btn" data-url="{url}" data-title="{title}" data-tip="Open in reader">📖</button>'
             f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)">🔖</button>'
             f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)">💤</button>'
             f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)">✓</button>'
@@ -482,6 +483,60 @@ def build_html(corpus, run_date):
     color:var(--muted); padding:5px 11px; border-radius:999px; cursor:pointer;
     transition:border-color .15s,color .15s; touch-action:manipulation; white-space:nowrap; }}
   #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
+  /* ── reading pane ──────────────────────────────────────────────────────── */
+  .reading-pane {{ display:none; position:fixed; top:0; right:0; width:44vw; height:100vh;
+    background:var(--card); border-left:2px solid var(--rule); z-index:50;
+    flex-direction:column; box-shadow:-6px 0 32px rgba(0,0,0,.10); }}
+  .reading-pane.open {{ display:flex; }}
+  body.pane-open .wrap {{ padding-right:calc(44vw + 8px); }}
+  .pane-toolbar {{ display:flex; align-items:center; padding:10px 14px; border-bottom:1px solid var(--rule);
+    gap:8px; flex-shrink:0; position:sticky; top:0; background:var(--card); z-index:2; }}
+  .pane-site {{ font-size:11.5px; color:var(--muted); font-family:monospace; }}
+  .pane-close,.pane-newtab {{ width:28px; height:28px; border-radius:50%; border:1px solid var(--rule);
+    background:transparent; color:var(--muted); font-size:16px; cursor:pointer; display:flex;
+    align-items:center; justify-content:center;
+    transition:border-color .15s,color .15s; text-decoration:none; flex-shrink:0; }}
+  .pane-close:hover,.pane-newtab:hover {{ border-color:var(--ink); color:var(--ink); }}
+  .pane-body {{ flex:1; overflow-y:auto; padding:22px 26px 60px; }}
+  .pane-loading {{ color:var(--muted); font-style:italic; padding:24px 0; animation:pulse 1.4s ease infinite; }}
+  @keyframes pulse {{ 0%,100% {{ opacity:.5; }} 50% {{ opacity:1; }} }}
+  .pane-error {{ color:var(--anchor); font-size:14px; padding:8px 0 4px; line-height:1.5; }}
+  .pane-error a {{ color:var(--link); }}
+  .pane-title {{ font-family:Georgia,serif; font-size:21px; font-weight:700; line-height:1.3;
+    margin:0 0 8px; color:var(--ink); }}
+  .pane-byline {{ font-size:12px; color:var(--muted); margin-bottom:16px; padding-bottom:14px;
+    border-bottom:1px solid var(--rule); }}
+  .pane-content {{ font-size:15.5px; line-height:1.75; color:var(--ink); }}
+  .pane-content p {{ margin:0 0 1em; }}
+  .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{
+    font-family:Georgia,serif; margin:1.4em 0 .5em; line-height:1.25; }}
+  .pane-content h1 {{ font-size:1.4em; }} .pane-content h2 {{ font-size:1.2em; }}
+  .pane-content h3 {{ font-size:1.05em; }}
+  .pane-content a {{ color:var(--link); }}
+  .pane-content img {{ max-width:100%; height:auto; border-radius:6px; margin:8px 0; display:block; }}
+  .pane-content figure {{ margin:1em 0; }}
+  .pane-content figcaption {{ font-size:13px; color:var(--muted); margin-top:4px; }}
+  .pane-content blockquote {{ border-left:3px solid var(--anchor); margin:1em 0;
+    padding-left:14px; color:var(--muted); font-style:italic; }}
+  .pane-content pre {{ background:var(--paper); border-radius:6px; padding:14px; overflow-x:auto;
+    font-size:13px; border:1px solid var(--rule); }}
+  .pane-content code {{ background:var(--paper); border-radius:3px; padding:1px 5px;
+    font-size:.88em; }}
+  .pane-content pre code {{ background:none; padding:0; }}
+  .pane-content ul,.pane-content ol {{ padding-left:22px; margin:0 0 1em; }}
+  .pane-content li {{ margin:.3em 0; }}
+  .pane-content mark.hl {{ background:#fff176; color:inherit; border-radius:2px; padding:0 1px; }}
+  html[data-theme="dark"] .pane-content mark.hl {{ background:#4a3d00; }}
+  /* highlight tooltip */
+  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:7px;
+    padding:3px 4px; z-index:200; box-shadow:0 2px 8px rgba(0,0,0,.2); }}
+  #hl-btn {{ background:none; border:none; color:var(--paper); cursor:pointer;
+    font-size:12px; padding:3px 8px; white-space:nowrap; font-family:inherit; }}
+  #hl-btn:hover {{ opacity:.8; }}
+  @media (max-width:900px) {{
+    .reading-pane {{ width:100vw; border-left:none; }}
+    body.pane-open .wrap {{ padding-right:0; }}
+  }}
 </style>
 </head>
 <body>
@@ -527,6 +582,25 @@ def build_html(corpus, run_date):
     <code>corpus.json</code> · Sources: <code>sources.json</code>. Items age out on a per-topic
     retention window; pinned (★) items stay.
   </footer>
+</div>
+
+<div id="reading-pane" class="reading-pane" role="complementary" aria-label="Article reader">
+  <div class="pane-toolbar">
+    <span class="pane-site"></span>
+    <div style="flex:1"></div>
+    <a class="pane-newtab" target="_blank" rel="noopener" href="#" data-tip="Open in new tab">↗</a>
+    <button class="pane-close" data-tip="Close (Esc)" aria-label="Close reader">×</button>
+  </div>
+  <div class="pane-body">
+    <div class="pane-loading">Loading…</div>
+    <div class="pane-error" style="display:none"></div>
+    <h1 class="pane-title"></h1>
+    <div class="pane-byline"></div>
+    <div class="pane-content"></div>
+  </div>
+  <div class="hl-tooltip" id="hl-tooltip" style="display:none">
+    <button id="hl-btn">✦ Highlight</button>
+  </div>
 </div>
 <script>
   // ── helpers ──────────────────────────────────────────────────────────────
@@ -880,6 +954,151 @@ def build_html(corpus, run_date):
     themeBtn.textContent = dark ? 'Light' : 'Dark';
     localStorage.setItem('digest-theme', dark ? 'dark' : '');
   }});
+
+  // ── reading pane ──────────────────────────────────────────────────────────
+  const readPane   = document.getElementById('reading-pane');
+  const paneTitle  = readPane.querySelector('.pane-title');
+  const paneCont   = readPane.querySelector('.pane-content');
+  const paneByline = readPane.querySelector('.pane-byline');
+  const paneSiteEl = readPane.querySelector('.pane-site');
+  const paneLoad   = readPane.querySelector('.pane-loading');
+  const paneErr    = readPane.querySelector('.pane-error');
+  const paneNewTab = readPane.querySelector('.pane-newtab');
+  const paneBody   = readPane.querySelector('.pane-body');
+  let currentPaneUrl = '';
+
+  readPane.querySelector('.pane-close').addEventListener('click', closePane);
+
+  function closePane() {{
+    readPane.classList.remove('open');
+    document.body.classList.remove('pane-open');
+    currentPaneUrl = '';
+    hlTooltip.style.display = 'none';
+  }}
+
+  async function openInPane(url, title) {{
+    if (currentPaneUrl === url && readPane.classList.contains('open')) {{ closePane(); return; }}
+    currentPaneUrl = url;
+    readPane.classList.add('open');
+    document.body.classList.add('pane-open');
+    paneTitle.textContent = title || '';
+    paneByline.textContent = '';
+    paneCont.innerHTML = '';
+    paneSiteEl.textContent = '';
+    paneNewTab.href = url;
+    paneErr.style.display = 'none';
+    paneLoad.style.display = '';
+    paneBody.scrollTop = 0;
+
+    try {{
+      const res  = await fetch('/api/reader?url=' + encodeURIComponent(url));
+      const data = await res.json();
+      paneLoad.style.display = 'none';
+      if (!res.ok || data.error) {{
+        paneErr.style.display = '';
+        paneErr.innerHTML = (data.error || 'Could not load.') +
+          ' <a href="' + url + '" target="_blank" rel="noopener">Open in new tab ↗</a>';
+        return;
+      }}
+      paneTitle.textContent    = data.title    || title || '';
+      paneByline.textContent   = [data.byline, data.siteName].filter(Boolean).join(' \xb7 ');
+      paneSiteEl.textContent   = data.siteName || '';
+      paneCont.innerHTML       = data.content  || '';
+      paneNewTab.href          = url;
+      applyStoredHighlights(url);
+    }} catch (err) {{
+      paneLoad.style.display = 'none';
+      paneErr.style.display  = '';
+      paneErr.innerHTML = 'Network error. <a href="' + url + '" target="_blank" rel="noopener">Open in new tab ↗</a>';
+    }}
+  }}
+
+  // reader-btn click delegation
+  document.addEventListener('click', e => {{
+    const btn = e.target.closest('.reader-btn');
+    if (!btn) return;
+    e.stopPropagation();
+    e.preventDefault();
+    openInPane(btn.dataset.url, btn.dataset.title);
+  }});
+
+  // ── highlights ────────────────────────────────────────────────────────────
+  let hlStore  = objOf('digest-highlights');
+  const hlTooltip = document.getElementById('hl-tooltip');
+  const hlBtn     = document.getElementById('hl-btn');
+  let pendingRange = null;
+
+  paneCont.addEventListener('mouseup', () => {{
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) {{ hlTooltip.style.display = 'none'; return; }}
+    const text = sel.toString().trim();
+    if (!text || text.length < 3) {{ hlTooltip.style.display = 'none'; return; }}
+    pendingRange = sel.getRangeAt(0).cloneRange();
+    const rect = sel.getRangeAt(0).getBoundingClientRect();
+    hlTooltip.style.display  = '';
+    hlTooltip.style.top  = (rect.top  + window.scrollY - 42) + 'px';
+    hlTooltip.style.left = (rect.left + rect.width / 2 - hlTooltip.offsetWidth / 2) + 'px';
+  }});
+
+  document.addEventListener('mousedown', e => {{
+    if (!hlBtn.contains(e.target)) hlTooltip.style.display = 'none';
+  }});
+
+  hlBtn.addEventListener('click', () => {{
+    if (!pendingRange || !currentPaneUrl) return;
+    const text = pendingRange.toString().trim();
+    if (!text) return;
+    const mark = document.createElement('mark');
+    mark.className = 'hl';
+    try {{
+      pendingRange.surroundContents(mark);
+    }} catch (e) {{
+      const frag = pendingRange.extractContents();
+      mark.appendChild(frag);
+      pendingRange.insertNode(mark);
+    }}
+    if (!hlStore[currentPaneUrl]) hlStore[currentPaneUrl] = [];
+    if (!hlStore[currentPaneUrl].find(h => h.t === text))
+      hlStore[currentPaneUrl].push({{ t: text }});
+    lsSet('digest-highlights', hlStore);
+    hlTooltip.style.display = 'none';
+    window.getSelection().removeAllRanges();
+  }});
+
+  function applyStoredHighlights(url) {{
+    const list = hlStore[url];
+    if (!list || !list.length) return;
+    list.forEach(h => {{
+      const text = h.t;
+      if (!text) return;
+      const walker = document.createTreeWalker(paneCont, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {{
+        if (node.parentNode && node.parentNode.nodeName === 'MARK') continue;
+        const idx = node.nodeValue.indexOf(text);
+        if (idx === -1) continue;
+        const before = node.nodeValue.slice(0, idx);
+        const after  = node.nodeValue.slice(idx + text.length);
+        const mark   = document.createElement('mark');
+        mark.className = 'hl';
+        mark.textContent = text;
+        const parent = node.parentNode, next = node.nextSibling;
+        parent.removeChild(node);
+        if (before) parent.insertBefore(document.createTextNode(before), next);
+        parent.insertBefore(mark, next);
+        if (after)  parent.insertBefore(document.createTextNode(after),  next);
+        break;
+      }}
+    }});
+  }}
+
+  // override Escape to close pane first
+  document.addEventListener('keydown', e => {{
+    if (e.key === 'Escape' && readPane.classList.contains('open')) {{
+      e.stopImmediatePropagation();
+      closePane();
+    }}
+  }}, true);  // capture phase so it runs before the nav keydown
 </script>
 </body>
 </html>"""
