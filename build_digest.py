@@ -516,11 +516,11 @@ def build_html(corpus, run_date):
     transition:border-color .15s,color .15s; touch-action:manipulation; white-space:nowrap; }}
   #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
   /* ── reading pane ──────────────────────────────────────────────────────── */
-  .reading-pane {{ display:none; position:fixed; top:0; right:0; width:44vw; height:100vh;
+  .reading-pane {{ display:none; position:fixed; top:0; right:0; width:40vw; height:100vh;
     background:var(--card); border-left:2px solid var(--rule); z-index:50;
     flex-direction:column; box-shadow:-6px 0 32px rgba(0,0,0,.10); }}
   .reading-pane.open {{ display:flex; }}
-  body.pane-open .wrap {{ padding-right:calc(44vw + 8px); }}
+  body.pane-open .wrap {{ margin-right:calc(40vw + 8px); }}
   .pane-toolbar {{ display:flex; align-items:center; padding:10px 14px; border-bottom:1px solid var(--rule);
     gap:8px; flex-shrink:0; position:sticky; top:0; background:var(--card); z-index:2; }}
   .pane-site {{ font-size:11.5px; color:var(--muted); font-family:monospace; }}
@@ -567,7 +567,7 @@ def build_html(corpus, run_date):
   #hl-btn:hover {{ opacity:.8; }}
   @media (max-width:900px) {{
     .reading-pane {{ width:100vw; border-left:none; }}
-    body.pane-open .wrap {{ padding-right:0; }}
+    body.pane-open .wrap {{ margin-right:0; }}
   }}
 </style>
 </head>
