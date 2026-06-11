@@ -423,10 +423,11 @@ def build_html(corpus, run_date):
   .mast-logo {{ width:44px; height:44px; color:var(--ink); flex-shrink:0; }}
   /* card actions + kanban */
   .card-actions {{ display:flex; align-items:center; gap:4px; flex-shrink:0; margin-left:6px; }}
-  /* per-card read toggle */
-  .read-btn::before {{ content:'○'; }}
-  .cluster.is-read .read-btn::before {{ content:'●'; }}
-  .cluster.is-read .read-btn {{ color:var(--anchor); border-color:var(--anchor-soft); }}
+  /* per-card read toggle — checkmark, not a ring */
+  .read-btn::before {{ content:'✓'; font-size:12px; }}
+  .read-btn {{ opacity:.35; }}
+  .read-btn:hover {{ opacity:1 !important; }}
+  .cluster.is-read .read-btn {{ opacity:1; color:var(--anchor); border-color:var(--anchor); background:var(--anchor-soft); }}
   .cluster.is-read .item.lead {{ opacity:.65; }}
   .card-btn {{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule);
     background:transparent; color:var(--muted); font-size:13px; line-height:1; cursor:pointer;
