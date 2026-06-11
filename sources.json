@@ -51,21 +51,33 @@
     "ai_in_design": [
       { "name": "Figma Blog",        "url": "https://www.figma.com/blog/",            "rss": "https://www.figma.com/blog/feed/",             "weight": 2 },
       { "name": "Vercel Blog",       "url": "https://vercel.com/blog",                "rss": "https://vercel.com/atom",                      "weight": 2, "note": "v0, generative UI." },
-      { "name": "Eugene Yan",        "url": "https://eugeneyan.com/",                 "rss": "https://eugeneyan.com/rss/",                   "weight": 2, "note": "Patterns for building LLM systems & products." }
+      { "name": "Eugene Yan",        "url": "https://eugeneyan.com/",                 "rss": "https://eugeneyan.com/rss/",                   "weight": 2, "note": "Patterns for building LLM systems & products." },
+      { "name": "Matt Pocock (TotalTypeScript)", "url": "https://www.totaltypescript.com/articles", "rss": "https://www.totaltypescript.com/rss.xml", "weight": 2, "note": "TypeScript type-level patterns and advanced techniques — Boris-Cherny-adjacent depth." },
+      { "name": "Josh Comeau",       "url": "https://www.joshwcomeau.com/",           "rss": "https://www.joshwcomeau.com/rss.xml",          "weight": 2, "note": "Deep interactive CSS/JS explainers; practical frontend tricks." }
     ],
     "tech": [
       { "name": "Hacker News (top)", "url": "https://news.ycombinator.com/",          "rss": "https://hnrss.org/frontpage?points=150",       "weight": 3, "note": "Points threshold keeps it high-signal." },
+      { "name": "Hacker News (Show HN)", "url": "https://news.ycombinator.com/show", "rss": "https://hnrss.org/show?points=50",             "weight": 2, "note": "People sharing what they built — primary source for new use cases and notable repos." },
       { "name": "Techmeme",          "url": "https://www.techmeme.com/",              "rss": "https://www.techmeme.com/feed.xml",            "weight": 2, "note": "Best story-clustering reference." },
-      { "name": "Lobste.rs",         "url": "https://lobste.rs/",                     "rss": "https://lobste.rs/rss",                        "weight": 2, "note": "Tag-filterable, high-signal." }
+      { "name": "Lobste.rs",         "url": "https://lobste.rs/",                     "rss": "https://lobste.rs/rss",                        "weight": 2, "note": "Tag-filterable, high-signal." },
+      { "name": "GitHub Trending",   "url": "https://github.com/trending",            "rss": null,                                           "weight": 3, "note": "Top repos by stars today/this week. HTML only — WebFetch and parse the repo name + description + star count from the article.relative-link and p.col-9 elements. Route high-star repos to tech; AI-focused repos to ai." },
+      { "name": "Julia Evans (b0rk)","url": "https://jvns.ca/",                       "rss": "https://jvns.ca/atom.xml",                    "weight": 3, "note": "Zines + posts on debugging, systems internals, and coding tools — the clearest explainer of tricky CS concepts anywhere." },
+      { "name": "Hillel Wayne",      "url": "https://www.hillelwayne.com/post/",      "rss": "https://www.hillelwayne.com/post/index.xml",   "weight": 2, "note": "Software correctness, formal methods, testing strategies — counterintuitive and well-researched." },
+      { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/", "rss": "https://newsletter.pragmaticengineer.com/feed", "weight": 2, "note": "Gergely Orosz — engineering culture, big-tech deep-dives, often architecture + process strategy." },
+      { "name": "Bytebytego Blog",   "url": "https://blog.bytebytego.com/",           "rss": "https://blog.bytebytego.com/feed",             "weight": 2, "note": "System design patterns and architecture diagrams — visual + concrete." }
     ]
   },
 
   "reddit": [
     { "name": "r/LocalLLaMA",       "rss": "https://www.reddit.com/r/LocalLLaMA/top/.rss?t=day",            "topics": ["ai"],            "weight": 3, "note": "New model families trend here first." },
     { "name": "r/MachineLearning",  "rss": "https://www.reddit.com/r/MachineLearning/top/.rss?t=day",       "topics": ["ai"],            "weight": 2 },
+    { "name": "r/ClaudeAI",         "rss": "https://www.reddit.com/r/ClaudeAI/top/.rss?t=day",              "topics": ["ai"],            "weight": 2, "note": "Real use-case demos, prompting tricks, agentic workflows — high signal for 'what are people actually doing with Claude'." },
     { "name": "r/artificial",       "rss": "https://www.reddit.com/r/artificial/top/.rss?t=day",            "topics": ["ai"],            "weight": 1 },
     { "name": "r/ChatGPT",          "rss": "https://www.reddit.com/r/ChatGPT/top/.rss?t=day",               "topics": ["ai"],            "weight": 1 },
     { "name": "r/PromptEngineering","rss": "https://www.reddit.com/r/PromptEngineering/top/.rss?t=week",     "topics": ["ai"],            "weight": 1 },
+    { "name": "r/programming",      "rss": "https://www.reddit.com/r/programming/top/.rss?t=day",            "topics": ["tech"],          "weight": 2, "note": "Coding techniques, language patterns, tooling discussion." },
+    { "name": "r/ExperiencedDevs", "rss": "https://www.reddit.com/r/ExperiencedDevs/top/.rss?t=week",       "topics": ["tech"],          "weight": 2, "note": "Senior-engineer perspective: architecture, strategy, career patterns — good Boris-Cherny-adjacent signal." },
+    { "name": "r/github",           "rss": "https://www.reddit.com/r/github/top/.rss?t=week",                "topics": ["tech"],          "weight": 2, "note": "Notable repos, GitHub features, tooling discoveries." },
     { "name": "r/UXDesign",         "rss": "https://www.reddit.com/r/UXDesign/top/.rss?t=week",              "topics": ["design"],        "weight": 2 },
     { "name": "r/web_design",       "rss": "https://www.reddit.com/r/web_design/top/.rss?t=week",            "topics": ["design"],        "weight": 1 },
     { "name": "r/generative",       "rss": "https://www.reddit.com/r/generative/top/.rss?t=week",            "topics": ["ai_in_design"],  "weight": 1 }
@@ -75,13 +87,17 @@
     "_comment": "CORROBORATION-ONLY: an X post is surfaced ONLY when a non-X source in the same run covers the same story (shares its cluster key). Standalone X posts with no corroborating article are dropped. Use these handles as pointers to find the underlying story, then cite the underlying source. X has no open RSS — pull via a live nitter mirror (rotate instances) or WebFetch the public profile, or skip if unreachable; never block the digest on X.",
     "corroboration_only": true,
     "accounts": [
-      { "handle": "@simonw",   "name": "Simon Willison",   "topics": ["ai"],            "weight": 3 },
-      { "handle": "@swyx",     "name": "swyx",             "topics": ["ai", "ai_in_design"], "weight": 2 },
-      { "handle": "@karpathy", "name": "Andrej Karpathy",  "topics": ["ai"],            "weight": 2 },
-      { "handle": "@sama",     "name": "Sam Altman",       "topics": ["ai"],            "weight": 1 },
-      { "handle": "@AnthropicAI","name": "Anthropic",      "topics": ["ai"],            "weight": 2 },
-      { "handle": "@OpenAI",   "name": "OpenAI",           "topics": ["ai"],            "weight": 2 },
-      { "handle": "@figma",    "name": "Figma",            "topics": ["design", "ai_in_design"], "weight": 1 }
+      { "handle": "@simonw",       "name": "Simon Willison",    "topics": ["ai"],                     "weight": 3 },
+      { "handle": "@swyx",         "name": "swyx",              "topics": ["ai", "ai_in_design"],     "weight": 2 },
+      { "handle": "@karpathy",     "name": "Andrej Karpathy",   "topics": ["ai"],                     "weight": 2 },
+      { "handle": "@sama",         "name": "Sam Altman",        "topics": ["ai"],                     "weight": 1 },
+      { "handle": "@AnthropicAI",  "name": "Anthropic",         "topics": ["ai"],                     "weight": 2 },
+      { "handle": "@OpenAI",       "name": "OpenAI",            "topics": ["ai"],                     "weight": 2 },
+      { "handle": "@figma",        "name": "Figma",             "topics": ["design", "ai_in_design"], "weight": 1 },
+      { "handle": "@BorisCherny",  "name": "Boris Cherny",      "topics": ["tech", "ai_in_design"],   "weight": 2, "note": "Programming TypeScript author; posts deep type-system patterns and coding strategy." },
+      { "handle": "@mattpocock",   "name": "Matt Pocock",       "topics": ["tech", "ai_in_design"],   "weight": 2, "note": "TypeScript wizard; links to TotalTypeScript articles and short type tricks." },
+      { "handle": "@b0rk",         "name": "Julia Evans",       "topics": ["tech"],                   "weight": 3, "note": "Zines and posts on debugging, systems, and coding tools — pointer to jvns.ca articles." },
+      { "handle": "@hillelogram",  "name": "Hillel Wayne",      "topics": ["tech"],                   "weight": 2, "note": "Software correctness, formal methods. Corroboration pointer to his blog." }
     ],
     "nitter_instances": ["https://nitter.net", "https://nitter.poast.org"]
   },
