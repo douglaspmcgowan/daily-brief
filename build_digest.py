@@ -162,11 +162,8 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         k = esc(cluster_key)
         actions_html = (
             f'<div class="card-actions">'
-            f'<svg class="read-ring" viewBox="0 0 24 24" data-key="{k}"'
-            f' tabindex="0" role="button" data-tip="Mark read (m)">'
-            f'<circle class="ring-bg" cx="12" cy="12" r="9"/>'
-            f'<circle class="ring-fg" cx="12" cy="12" r="9"/></svg>'
-            f'<button class="card-btn reader-btn" data-url="{url}" data-title="{title}" data-tip="Open in reader">📖</button>'
+            f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read"></button>'
+            f'<button class="card-btn reader-btn" data-url="{url}" data-title="{title}" data-tip="Open in reader (r)">📖</button>'
             f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)">🔖</button>'
             f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)">💤</button>'
             f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)">✓</button>'
@@ -242,15 +239,25 @@ def build_html(corpus, run_date):
     counts = {}
     for t in TOPICS:
         clusters = cluster_items(by_topic.get(t, []))
+        cluster_count = len(clusters)
         counts[t] = sum(len(c["members"]) for c in clusters)
         if not clusters:
             body = '<p class="empty">Nothing new in this lane right now.</p>'
         else:
             body = "".join(render_cluster_html(c, run_date=run_date) for c in clusters)
+        topic_ring_html = (
+            f'<span class="topic-progress" data-topic="{t}" title="Read progress">'
+            f'<svg class="topic-ring" viewBox="0 0 24 24" aria-hidden="true">'
+            f'<circle class="ring-bg" cx="12" cy="12" r="9"/>'
+            f'<circle class="ring-fg" cx="12" cy="12" r="9"/></svg>'
+            f'<span class="topic-ring-label">0/{cluster_count}</span>'
+            f'</span>'
+        )
         sections.append(
             f'<section class="topic" data-topic="{t}">'
             f'<h2 class="topic-h">{esc(TOPIC_LABELS[t])} '
-            f'<span class="count">{counts[t]}</span></h2>{body}</section>'
+            f'<span class="count">{counts[t]}</span>'
+            f'{topic_ring_html}</h2>{body}</section>'
         )
 
     # "what's new" rail
@@ -296,6 +303,7 @@ def build_html(corpus, run_date):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='6' width='29' height='32' rx='5' stroke='%23c8482b' stroke-width='2.5'/><line x1='10' y1='15' x2='26' y2='15' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='21' x2='26' y2='21' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='27' x2='20' y2='27' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><circle cx='36' cy='11' r='7' fill='%23c8482b'/><circle cx='36' cy='11' r='3.5' fill='white' opacity='.9'/></svg>" type="image/svg+xml">
 <title>News Digest — {stamp}</title>
 <style>
   :root {{
@@ -393,28 +401,44 @@ def build_html(corpus, run_date):
     .item {{ padding:12px 13px; }}
     .summary {{ font-size:14px; }}
     .whatsnew {{ padding:12px 14px; }}
+    .card-btn {{ width:32px; height:32px; font-size:14px; }}
+    .card-actions {{ gap:5px; margin-left:4px; }}
+    .drag-handle {{ opacity:.35; left:-14px; }}
+    .topic-ring {{ width:16px; height:16px; }}
+    .topic-ring-label {{ font-size:10px; }}
+  }}
+  @media (hover:none) {{
+    .drag-handle {{ opacity:.3; }}
+    .cluster:hover .drag-handle {{ opacity:.3; }}
   }}
   /* masthead logo */
   .mast-logo-row {{ display:flex; align-items:center; gap:14px; }}
   .mast-logo {{ width:44px; height:44px; color:var(--ink); flex-shrink:0; }}
   /* card actions + kanban */
   .card-actions {{ display:flex; align-items:center; gap:4px; flex-shrink:0; margin-left:6px; }}
-  .read-ring {{ width:22px; height:22px; cursor:pointer; flex-shrink:0; outline:none; }}
-  .ring-bg {{ fill:none; stroke:var(--rule); stroke-width:2.5; }}
-  .ring-fg {{ fill:none; stroke:var(--anchor); stroke-width:2.5;
-    stroke-dasharray:56.55; stroke-dashoffset:56.55;
-    transition:stroke-dashoffset .4s ease; transform:rotate(-90deg); transform-origin:center; }}
-  .cluster.is-read .ring-fg {{ stroke-dashoffset:0; }}
-  .cluster.is-read .ring-bg {{ fill:var(--anchor-soft); }}
+  /* per-card read toggle */
+  .read-btn::before {{ content:'○'; }}
+  .cluster.is-read .read-btn::before {{ content:'●'; }}
+  .cluster.is-read .read-btn {{ color:var(--anchor); border-color:var(--anchor-soft); }}
   .cluster.is-read .item.lead {{ opacity:.65; }}
   .card-btn {{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule);
     background:transparent; color:var(--muted); font-size:13px; line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    transition:background .15s,border-color .15s,color .15s; padding:0; }}
+    transition:background .15s,border-color .15s,color .15s; padding:0;
+    touch-action:manipulation; }}
   .card-btn:hover {{ background:var(--card); border-color:var(--ink); color:var(--ink); }}
   .dismiss-btn:hover {{ background:var(--anchor) !important; border-color:var(--anchor) !important; color:#fff !important; }}
   .snooze-btn.active {{ border-color:#b8960c; color:#b8960c; }}
   .rl-btn.active {{ border-color:var(--link); color:var(--link); }}
+  /* topic-level read progress ring */
+  .topic-progress {{ display:inline-flex; align-items:center; gap:5px; margin-left:12px;
+    vertical-align:middle; opacity:.85; }}
+  .topic-ring {{ width:20px; height:20px; flex-shrink:0; }}
+  .topic-ring .ring-bg {{ fill:none; stroke:var(--rule); stroke-width:2.5; }}
+  .topic-ring .ring-fg {{ fill:none; stroke:var(--anchor); stroke-width:2.5;
+    stroke-dasharray:56.55; stroke-dashoffset:56.55;
+    transition:stroke-dashoffset .5s ease; transform:rotate(-90deg); transform-origin:center; }}
+  .topic-ring-label {{ font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }}
   .date-stamp {{ color:var(--muted); font-size:11.5px; }}
   /* drag handle */
   .cluster {{ position:relative; }}
@@ -644,6 +668,7 @@ def build_html(corpus, run_date):
     }});
   }}
   syncClasses();
+  updateTopicRings();
 
   // ── notes ─────────────────────────────────────────────────────────────────
   function buildNotes() {{
@@ -712,6 +737,22 @@ def build_html(corpus, run_date):
     arcPill.classList.toggle('has-arc', arcN > 0 || viewMode === 'archive');
   }}
 
+  // ── topic read-progress rings ─────────────────────────────────────────────
+  function updateTopicRings() {{
+    document.querySelectorAll('.topic[data-topic]').forEach(sec => {{
+      const prog = sec.querySelector('.topic-progress');
+      if (!prog) return;
+      const all = [...sec.querySelectorAll('.cluster[data-key]')];
+      const visible = all.filter(c => c.style.display !== 'none');
+      const total = visible.length;
+      const read  = visible.filter(c => readSet.has(c.dataset.key)).length;
+      const fg  = prog.querySelector('.ring-fg');
+      const lbl = prog.querySelector('.topic-ring-label');
+      if (fg) fg.style.strokeDashoffset = total ? String(56.55 * (1 - read / total)) : '56.55';
+      if (lbl) lbl.textContent = read + '/' + total;
+    }});
+  }}
+
   // ── filter / apply ────────────────────────────────────────────────────────
   function isVisible(k) {{
     if (viewMode === 'archive')   return archived.has(k);
@@ -736,6 +777,7 @@ def build_html(corpus, run_date):
       if (empty) empty.style.display = topicMatch ? '' : 'none';
     }});
     updatePills();
+    updateTopicRings();
   }}
   apply();
 
@@ -776,6 +818,7 @@ def build_html(corpus, run_date):
     if (readSet.has(key)) readSet.delete(key); else readSet.add(key);
     lsSet('digest-read', [...readSet]);
     syncClasses();
+    updateTopicRings();
   }}
 
   // button click delegation
@@ -789,7 +832,7 @@ def build_html(corpus, run_date):
     if (e.target.closest('.rl-btn')) {{
       const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doRL(k); return;
     }}
-    if (e.target.closest('.read-ring')) {{
+    if (e.target.closest('.read-btn')) {{
       const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doRead(k); return;
     }}
   }});
@@ -804,7 +847,7 @@ def build_html(corpus, run_date):
 
   // ring keyboard
   document.addEventListener('keydown', e => {{
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('read-ring')) {{
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('read-btn')) {{
       e.preventDefault();
       doRead(e.target.dataset.key);
     }}
@@ -903,6 +946,12 @@ def build_html(corpus, run_date):
         const trigger = document.querySelector('.note-area[data-key="' + esc2(focusedKey) + '"] .note-trigger');
         if (trigger) trigger.click();
         break;
+      case 'r':
+        if (focusedKey) {{
+          const rb = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .reader-btn');
+          if (rb) rb.click();
+        }}
+        break;
       case '/': e.preventDefault(); q.focus(); break;
       case '?': showShortcuts(); break;
       case 'Escape': setFocus(null); break;
@@ -929,6 +978,7 @@ def build_html(corpus, run_date):
       '<tr><td style="font-family:monospace;color:var(--anchor);width:110px;padding:4px 8px;font-size:13.5px">j / ↓</td><td style="padding:4px 8px;font-size:13.5px">Next card</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">k / ↑</td><td style="padding:4px 8px;font-size:13.5px">Previous card</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Enter / o</td><td style="padding:4px 8px;font-size:13.5px">Open link</td></tr>' +
+      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">r</td><td style="padding:4px 8px;font-size:13.5px">Open in reader pane</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">m</td><td style="padding:4px 8px;font-size:13.5px">Toggle read</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">x</td><td style="padding:4px 8px;font-size:13.5px">Archive</td></tr>' +
       '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">s</td><td style="padding:4px 8px;font-size:13.5px">Snooze until tomorrow</td></tr>' +
@@ -1008,6 +1058,11 @@ def build_html(corpus, run_date):
       applyStoredHighlights(url);
     }} catch (err) {{
       paneLoad.style.display = 'none';
+      if (window.location.protocol === 'file:') {{
+        closePane();
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }}
       paneErr.style.display  = '';
       paneErr.innerHTML = 'Network error. <a href="' + url + '" target="_blank" rel="noopener">Open in new tab ↗</a>';
     }}
