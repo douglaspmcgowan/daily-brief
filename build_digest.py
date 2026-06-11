@@ -123,7 +123,7 @@ def esc(s):
     return html.escape(str(s or ""))
 
 
-def render_item_html(it, lead=True):
+def render_item_html(it, lead=True, cluster_key=""):
     new_badge = '<span class="badge">NEW</span>' if it.get("is_new") else ""
     src = esc(it.get("source", ""))
     stype = esc(it.get("source_type", ""))
@@ -139,7 +139,11 @@ def render_item_html(it, lead=True):
     summ_html = f'<p class="summary">{summary}</p>' if (summary and lead) else ""
     rbtl_html = (f'<p class="rbtl"><span class="rbtl-label">Reading between the lines</span>'
                  f'{rbtl}</p>') if (rbtl and lead) else ""
+    dismiss_btn = (f'<button class="dismiss-btn" data-key="{esc(cluster_key)}" '
+                   f'title="Archive this story" aria-label="Archive">✓</button>'
+                   ) if (lead and cluster_key) else ""
     return f"""<article class="{cls}" data-search="{search_blob}">
+  {dismiss_btn}
   <div class="item-head">
     <a class="title" href="{url}" target="_blank" rel="noopener">{title}</a>
     {new_badge}{pin}
@@ -151,8 +155,9 @@ def render_item_html(it, lead=True):
 
 
 def render_cluster_html(cluster):
+    key = cluster["key"]
     lead = cluster["lead"]
-    parts = [render_item_html(lead, lead=True)]
+    parts = [render_item_html(lead, lead=True, cluster_key=key)]
     extras = cluster["members"][1:]
     if extras:
         also = "".join(
@@ -164,7 +169,7 @@ def render_cluster_html(cluster):
             f'<details class="also-wrap"><summary>+ {len(extras)} more on this story</summary>'
             f'<ul class="also-list">{also}</ul></details>'
         )
-    return f'<div class="cluster">{"".join(parts)}</div>'
+    return f'<div class="cluster" draggable="true" data-key="{esc(key)}">{"".join(parts)}</div>'
 
 
 def render_references_html(references):
@@ -331,6 +336,22 @@ def build_html(corpus, run_date):
     .summary {{ font-size:14px; }}
     .whatsnew {{ padding:12px 14px; }}
   }}
+  /* kanban: dismiss + drag-to-reorder */
+  .item.lead {{ position:relative; padding-right:46px; }}
+  .dismiss-btn {{ position:absolute; top:12px; right:12px; width:26px; height:26px;
+    border-radius:50%; border:1px solid var(--rule); background:transparent;
+    color:var(--muted); font-size:14px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s,border-color .15s,color .15s; }}
+  .dismiss-btn:hover {{ background:var(--anchor); border-color:var(--anchor); color:#fff; }}
+  .cluster[draggable] {{ cursor:grab; }}
+  .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:12px; }}
+  .cluster.dragging {{ opacity:.35; pointer-events:none; }}
+  .arc-pill {{ font:inherit; font-size:12px; border:1px solid var(--rule); background:transparent;
+    color:var(--muted); padding:4px 10px; border-radius:999px; cursor:pointer;
+    white-space:nowrap; transition:border-color .15s,color .15s; }}
+  .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
+  .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
   html[data-theme="dark"] {{
     --paper:{PALETTE_DARK['paper']}; --card:{PALETTE_DARK['card']}; --ink:{PALETTE_DARK['ink']};
     --muted:{PALETTE_DARK['muted']}; --rule:{PALETTE_DARK['rule']}; --anchor:{PALETTE_DARK['anchor']};
@@ -359,6 +380,7 @@ def build_html(corpus, run_date):
     </div>
     <div class="search-row">
       <input id="q" type="search" placeholder="Filter…" autocomplete="off">
+      <button id="arc-pill" class="arc-pill">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>
     </div>
   </div>
@@ -377,26 +399,44 @@ def build_html(corpus, run_date):
   const pills = document.querySelectorAll('.pill');
   const topics = document.querySelectorAll('.topic');
   const q = document.getElementById('q');
+  const arcPill = document.getElementById('arc-pill');
   let active = 'all';
+  let showArchive = false;
+
+  // --- archive state ---
+  let archived = new Set(JSON.parse(localStorage.getItem('digest-archived') || '[]'));
+  function saveArchived() {{ localStorage.setItem('digest-archived', JSON.stringify([...archived])); }}
+
+  function updateArcPill() {{
+    const n = archived.size;
+    arcPill.textContent = showArchive ? (n ? `Hide (${{n}})` : 'Hide') : (n ? `Archive (${{n}})` : 'Archive');
+    arcPill.classList.toggle('has-arc', n > 0);
+  }}
+  updateArcPill();
+
+  // --- filter (archive-aware) ---
   function apply() {{
     const term = q.value.trim().toLowerCase();
     topics.forEach(sec => {{
       const t = sec.dataset.topic;
       const topicMatch = (active === 'all' || active === t);
-      let anyVisible = false;
       sec.querySelectorAll('.cluster').forEach(cl => {{
+        const isArchived = archived.has(cl.dataset.key);
         const blob = cl.querySelector('[data-search]')?.dataset.search || '';
         const hit = !term || blob.includes(term)
           || [...cl.querySelectorAll('[data-search]')].some(n => n.dataset.search.includes(term));
-        const show = topicMatch && hit;
+        const show = topicMatch && hit && (!isArchived || showArchive);
         cl.style.display = show ? '' : 'none';
-        if (show) anyVisible = true;
+        if (isArchived && showArchive && show) cl.style.opacity = '0.45';
+        else cl.style.opacity = '';
       }});
       sec.style.display = topicMatch ? '' : 'none';
       const empty = sec.querySelector('.empty');
       if (empty) empty.style.display = topicMatch ? '' : 'none';
     }});
   }}
+  apply();
+
   pills.forEach(p => p.addEventListener('click', () => {{
     pills.forEach(x => x.classList.remove('active'));
     p.classList.add('active');
@@ -404,6 +444,82 @@ def build_html(corpus, run_date):
     apply();
   }}));
   q.addEventListener('input', apply);
+
+  // --- dismiss (archive) ---
+  document.addEventListener('click', e => {{
+    const btn = e.target.closest('.dismiss-btn');
+    if (!btn) return;
+    const key = btn.dataset.key;
+    if (!key) return;
+    archived.add(key);
+    saveArchived();
+    updateArcPill();
+    apply();
+  }});
+
+  // --- archive pill toggle ---
+  arcPill.addEventListener('click', () => {{
+    showArchive = !showArchive;
+    updateArcPill();
+    apply();
+  }});
+
+  // --- drag to reorder within topic ---
+  let dragSrc = null;
+  document.addEventListener('dragstart', e => {{
+    const cl = e.target.closest('.cluster[draggable]');
+    if (!cl) return;
+    dragSrc = cl;
+    cl.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }});
+  document.addEventListener('dragend', () => {{
+    document.querySelectorAll('.cluster').forEach(c => c.classList.remove('dragging', 'drag-over'));
+    saveDragOrder();
+    dragSrc = null;
+  }});
+  document.addEventListener('dragover', e => {{
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const cl = e.target.closest('.cluster[draggable]');
+    document.querySelectorAll('.cluster').forEach(c => c.classList.remove('drag-over'));
+    if (cl && cl !== dragSrc) cl.classList.add('drag-over');
+  }});
+  document.addEventListener('drop', e => {{
+    e.preventDefault();
+    const target = e.target.closest('.cluster[draggable]');
+    if (!target || !dragSrc || target === dragSrc) return;
+    const parent = target.parentNode;
+    if (parent !== dragSrc.parentNode) return;
+    const allCl = [...parent.querySelectorAll(':scope > .cluster[draggable]')];
+    const si = allCl.indexOf(dragSrc), ti = allCl.indexOf(target);
+    if (si < ti) parent.insertBefore(dragSrc, target.nextSibling);
+    else parent.insertBefore(dragSrc, target);
+  }});
+
+  function saveDragOrder() {{
+    const orders = {{}};
+    document.querySelectorAll('.topic').forEach(sec => {{
+      orders[sec.dataset.topic] = [...sec.querySelectorAll(':scope > .cluster[data-key]')].map(c => c.dataset.key);
+    }});
+    localStorage.setItem('digest-order', JSON.stringify(orders));
+  }}
+
+  function restoreDragOrder() {{
+    let saved;
+    try {{ saved = JSON.parse(localStorage.getItem('digest-order') || '{{}}'); }} catch(e) {{ return; }}
+    document.querySelectorAll('.topic').forEach(sec => {{
+      const order = saved[sec.dataset.topic];
+      if (!order || !order.length) return;
+      order.forEach(key => {{
+        const el = sec.querySelector(`:scope > .cluster[data-key="${{CSS.escape(key)}}"]`);
+        if (el) sec.appendChild(el);
+      }});
+    }});
+  }}
+  restoreDragOrder();
+
+  // --- dark mode ---
   const themeBtn = document.getElementById('theme-btn');
   (function(){{
     const saved = localStorage.getItem('digest-theme');

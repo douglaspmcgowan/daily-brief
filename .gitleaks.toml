@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated HTML digest files — data-key attributes contain model slugs, not secrets"
+paths = [
+  '''digest\.html''',
+  '''index\.html''',
+]
