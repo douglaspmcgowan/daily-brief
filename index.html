@@ -26,7 +26,10 @@
   .controls { position:sticky; top:0; background:var(--paper); padding:10px 0;
     border-bottom:1px solid var(--rule); z-index:5;
     display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-  .pills-row { display:flex; flex-wrap:wrap; gap:7px; align-items:center; flex:1; min-width:0; }
+  .pills-row { display:flex; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; gap:7px; align-items:center; flex:1; min-width:0; }
+  .pills-row::-webkit-scrollbar { display:none; }
+  .pill { flex-shrink:0; }
   .pill { font:inherit; font-size:13.5px; border:1px solid var(--ink); background:transparent;
     color:var(--ink); padding:6px 12px; border-radius:999px; cursor:pointer;
     touch-action:manipulation; }
@@ -309,7 +312,7 @@
       <a class="title" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener" data-reader="1">Claude Fable 5 (Mythos) officially launches</a>
       <a class="ext-link" href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-fable-5" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-fable-5" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-fable-5" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-fable-5" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-fable-5" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-fable-5" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-fable-5" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-fable-5" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-10">&nbsp;·&nbsp;yesterday</span></div>
   <p class="summary">Anthropic officially launched Claude Fable 5 — the first model in their Fable series and their most capable public release to date. Positioned above Claude 3.7 Sonnet, it delivers major improvements in extended reasoning, agentic task handling, and coding performance. The model shipped with a companion lighter variant for cost-sensitive deployments and was immediately available in the API and Claude.ai across subscription tiers.</p>
@@ -320,7 +323,7 @@
       <a class="title" href="https://darioamodei.com/post/policy-on-the-ai-exponential" target="_blank" rel="noopener" data-reader="1">Policy on the AI Exponential</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://darioamodei.com/post/policy-on-the-ai-exponential" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-policy-2026" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-policy-2026" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-policy-2026" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-policy-2026" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-policy-2026" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-policy-2026" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-policy-2026" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-policy-2026" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   <p class="summary">Anthropic CEO Dario Amodei published his most detailed public regulatory roadmap to date, proposing an FAA-style federal AI regulator with mandatory safety testing and stronger cybersecurity standards. He also addresses macroeconomic adaptations for AI-driven growth, tax policy reforms, and ensuring AI development aligns with democratic values globally. The post is one of the most comprehensive AI governance arguments from a sitting lab CEO.</p>
@@ -331,7 +334,7 @@
       <a class="title" href="https://links.tldrnewsletter.com/2CMa40" target="_blank" rel="noopener" data-reader="1">Visa and OpenAI form agentic commerce partnership</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://links.tldrnewsletter.com/2CMa40" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-agent-payments" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-agent-payments" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-agent-payments" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-agent-payments" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-agent-payments" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-agent-payments" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-agent-payments" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-agent-payments" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Fintech (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   <p class="summary">Visa announced a partnership with OpenAI to provide its global payment network, credentialing infrastructure, and security capabilities for agent-initiated transactions. The integration will be built directly into ChatGPT and the OpenAI API, enabling developers and merchants to accept Visa payments initiated by AI agents without building separate payment infrastructure. It marks the first time a major card network has formally embedded its rails into a frontier AI platform.</p>
@@ -342,7 +345,7 @@
       <a class="title" href="https://links.tldrnewsletter.com/LktVYs" target="_blank" rel="noopener" data-reader="1">Moats Need Models</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://links.tldrnewsletter.com/LktVYs" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="moats-need-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="moats-need-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="moats-need-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="moats-need-models" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="moats-need-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="moats-need-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="moats-need-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="moats-need-models" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   <p class="summary">A widely-circulated essay argues that defensibility in AI products comes from owning the full feedback loop — model, harness, workflow, and evaluation — rather than renting frontier capability from third parties. The piece contends that model, tooling, and evaluation are no longer separable stack pieces but co-design surfaces that compound together over time.</p>
@@ -353,7 +356,7 @@
       <a class="title" href="https://claude.com/blog/building-with-claude-managed-agents" target="_blank" rel="noopener" data-reader="1">Building with Claude Managed Agents</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://claude.com/blog/building-with-claude-managed-agents" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-managed-agents" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-managed-agents" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-managed-agents" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-managed-agents" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-managed-agents" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-managed-agents" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-managed-agents" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-managed-agents" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   <p class="summary">Anthropic published a guide to Claude Managed Agents — composable APIs with integrated infrastructure for production-grade agentic systems. The post covers how managed agents simplify orchestration, handle tool use and memory persistence, and enable reliable long-horizon workflows without custom infrastructure management.</p>
@@ -364,7 +367,7 @@
       <a class="title" href="https://www.cnbc.com/2026/06/10/palantir-karp-enterprise-ai.html" target="_blank" rel="noopener" data-reader="1">Palantir&#x27;s Karp says businesses are &#x27;unhappy&#x27; with frontier AI labs</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://www.cnbc.com/2026/06/10/palantir-karp-enterprise-ai.html" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="palantir-karp-ai-labs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="palantir-karp-ai-labs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="palantir-karp-ai-labs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="palantir-karp-ai-labs" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="palantir-karp-ai-labs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="palantir-karp-ai-labs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="palantir-karp-ai-labs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="palantir-karp-ai-labs" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   <p class="summary">Palantir CEO Alex Karp stated publicly that the company&#x27;s enterprise customers are &#x27;unhappy&#x27; with how frontier AI labs operate, claiming the labs focus on burning through tokens as a proxy for productivity rather than generating real enterprise ROI. He argues accelerating AI costs are raising alarms among businesses and fueling efficiency concerns about whether frontier models are actually delivering value.</p>
@@ -375,7 +378,7 @@
       <a class="title" href="https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/" target="_blank" rel="noopener" data-reader="1">DiffusionGemma: 4x Faster Text Generation</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="diffusion-gemma-faster" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="diffusion-gemma-faster" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="diffusion-gemma-faster" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="diffusion-gemma-faster" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="diffusion-gemma-faster" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="diffusion-gemma-faster" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="diffusion-gemma-faster" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="diffusion-gemma-faster" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   
@@ -386,7 +389,7 @@
       <a class="title" href="https://www.cnbc.com/2026/06/08/openai-confidentially-files-for-ipo-prepping-wall-street-for-ai-debut.html" target="_blank" rel="noopener" data-reader="1">OpenAI confidentially files draft S-1 with the SEC</a>
       <a class="ext-link" href="https://www.cnbc.com/2026/06/08/openai-confidentially-files-for-ipo-prepping-wall-street-for-ai-debut.html" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="openai-ipo" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="openai-ipo" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="openai-ipo" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="openai-ipo" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="openai-ipo" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="openai-ipo" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="openai-ipo" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="openai-ipo" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">OpenAI filed a confidential S-1 with the SEC to begin the formal IPO process, targeting a valuation in the hundreds of billions. The filing follows OpenAI&#x27;s recent conversion from a nonprofit-capped-profit to a for-profit benefit corporation — a prerequisite for going public. The IPO would be among the largest tech listings in history, giving OpenAI permanent access to capital markets and a new class of accountability: public shareholders.</p>
@@ -397,7 +400,7 @@
       <a class="title" href="https://www.anthropic.com/news/series-h" target="_blank" rel="noopener" data-reader="1">Anthropic raises Series H at ~$965B valuation</a>
       <a class="ext-link" href="https://www.anthropic.com/news/series-h" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="anthropic-series-h" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="anthropic-series-h" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="anthropic-series-h" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="anthropic-series-h" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="anthropic-series-h" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="anthropic-series-h" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="anthropic-series-h" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="anthropic-series-h" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   <p class="summary">Anthropic closed a massive Series H funding round at a valuation approaching $1 trillion, making it one of the most highly valued private companies in history. The round was led by major institutional investors and technology conglomerates, giving Anthropic a multi-year runway for compute, research, and commercialization. Total capital raised now exceeds what most frontier AI labs have collectively accumulated.</p>
@@ -408,7 +411,7 @@
       <a class="title" href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener" data-reader="1">Claude Opus 4.8 launches</a>
       <a class="ext-link" href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-opus-48" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-opus-48" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-opus-48" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-opus-48" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-opus-48" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-opus-48" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-opus-48" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-opus-48" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   <p class="summary">Anthropic released Claude Opus 4.8, upgrading their top-tier model with substantial gains in complex multi-step reasoning, long-horizon agentic workflows, and extended context handling. The release shipped alongside Claude Code updates that introduce dynamic, conditional workflow structures — letting agents branch, retry, and self-correct mid-task without manual intervention. Together they represent Anthropic&#x27;s most complete push into agentic developer tooling.</p>
@@ -419,7 +422,7 @@
       <a class="title" href="https://simonwillison.net/" target="_blank" rel="noopener" data-reader="1">Simon Willison&#x27;s Weblog</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://simonwillison.net/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="simonw" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="simonw" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="simonw" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="simonw" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="simonw" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="simonw" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="simonw" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="simonw" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Simon Willison</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Daily hands-on notes on LLMs, tooling, and prompt engineering. A primary practitioner source — has a full Atom feed.</p>
@@ -430,7 +433,7 @@
       <a class="title" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/" target="_blank" rel="noopener" data-reader="1">Gemini 3.5 launches with Live Translate</a>
       <a class="ext-link" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-live-3-5-translate/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="gemini-35" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="gemini-35" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="gemini-35" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="gemini-35" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="gemini-35" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="gemini-35" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="gemini-35" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="gemini-35" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-10">&nbsp;·&nbsp;yesterday</span></div>
   <p class="summary">Google launched Gemini 3.5 with Live Translate as its flagship feature: real-time speech translation across languages with low latency and natural conversational cadence. The capability is embedded in Google Assistant, Pixel hardware, and Workspace, enabling live multilingual meetings without switching apps or using a third-party service. It represents Google&#x27;s most consumer-visible AI feature in years.</p>
@@ -441,7 +444,7 @@
       <a class="title" href="https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html" target="_blank" rel="noopener" data-reader="1">Trump administration reportedly taking stake in OpenAI</a>
       <a class="ext-link" href="https://www.cnbc.com/2026/06/05/trump-open-ai-altman-stake.html" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="openai-trump-stake" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="openai-trump-stake" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="openai-trump-stake" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="openai-trump-stake" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="openai-trump-stake" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="openai-trump-stake" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="openai-trump-stake" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="openai-trump-stake" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-08">&nbsp;·&nbsp;3d ago</span></div>
   <p class="summary">Reports emerged that the Trump administration is pursuing a government equity stake in OpenAI, with the arrangement involving preferential national security access to OpenAI models in exchange for investment or favorable regulatory treatment. The deal would be the first known case of a U.S. government taking equity in a major AI lab and would coincide with OpenAI&#x27;s IPO preparations.</p>
@@ -452,7 +455,7 @@
       <a class="title" href="https://every.to/p/after-automation" target="_blank" rel="noopener" data-reader="1">After Automation</a>
       <a class="ext-link" href="https://every.to/p/after-automation" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="every-after-automation" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-after-automation" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-after-automation" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-after-automation" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="every-after-automation" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-after-automation" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-after-automation" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-after-automation" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-21">&nbsp;·&nbsp;May 21</span></div>
   <p class="summary">Every editor Dan Shipper argues that advanced AI automation creates more meaningful human work rather than less, as the premium on distinctly human contributions — taste, judgment, relationships, framing the right question — rises when AI handles routine cognitive tasks. The essay draws on knowledge workers already operating with heavy AI assistance and finds that the most productive adapt by directing AI rather than competing with it. Shipper frames this as a structural shift in what expertise means.</p>
@@ -463,7 +466,7 @@
       <a class="title" href="https://www.latent.space/" target="_blank" rel="noopener" data-reader="1">Latent Space (swyx)</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://www.latent.space/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="latent-space" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="latent-space" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="latent-space" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="latent-space" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="latent-space" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="latent-space" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="latent-space" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="latent-space" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Latent Space</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">The canonical AI-engineering publication; also runs the AINews daily digest.</p>
@@ -474,7 +477,7 @@
       <a class="title" href="https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/" target="_blank" rel="noopener" data-reader="1">Can Tech Companies Learn to Love Cheaper AI Models?</a>
       <a class="ext-link" href="https://techcrunch.com/2026/06/09/can-tech-companies-learn-to-love-cheaper-models/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-costs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-costs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-costs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-costs" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-costs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-costs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-costs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-costs" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-10">&nbsp;·&nbsp;yesterday</span></div>
   <p class="summary">A wave of analysis has documented the dramatic pace of AI inference cost deflation: token prices for frontier-model-quality inference have fallen 10–100x in under two years, driven by hardware improvements, model distillation, and fierce competitive pressure from open-weight alternatives. Tasks requiring expensive GPT-4 API calls in 2023 can now be run cost-effectively using smaller or open models. The floor is still falling.</p>
@@ -485,7 +488,7 @@
       <a class="title" href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank" rel="noopener" data-reader="1">Microsoft launches 7 new MAI models in a &#x27;hillclimbing&#x27; release</a>
       <a class="ext-link" href="https://microsoft.ai/news/building-a-hillclimbing-machine-launching-seven-new-mai-models/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="microsoft-ai-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="microsoft-ai-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="microsoft-ai-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="microsoft-ai-models" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="microsoft-ai-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="microsoft-ai-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="microsoft-ai-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="microsoft-ai-models" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-03">&nbsp;·&nbsp;Jun 3</span></div>
   <p class="summary">Microsoft announced a portfolio of seven proprietary MAI (Microsoft AI) models spanning different capability tiers — from small, edge-deployable reasoning models to large multimodal flagships — aimed at covering enterprise AI workloads without full dependency on OpenAI&#x27;s model family. Several target specific verticals including code generation, document understanding, and vision tasks. The lineup is available through Azure AI and Copilot integrations.</p>
@@ -496,7 +499,7 @@
       <a class="title" href="https://www.interconnects.ai/p/open-and-closed-models-are-on-different" target="_blank" rel="noopener" data-reader="1">Open and Closed Models Are on Different Paths</a>
       <a class="ext-link" href="https://www.interconnects.ai/p/open-and-closed-models-are-on-different" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="open-vs-closed-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="open-vs-closed-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="open-vs-closed-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="open-vs-closed-models" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="open-vs-closed-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="open-vs-closed-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="open-vs-closed-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="open-vs-closed-models" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-03">&nbsp;·&nbsp;Jun 3</span></div>
   <p class="summary">Interconnects author Nathan Lambert argues that the open vs. closed AI model debate has become less about capability gaps — which are narrowing — and more about deployment infrastructure, safety accountability, and commercial ecosystem dynamics. He contends that open-weight models are winning at the application layer while closed models retain advantages in reasoning benchmarks and enterprise trust. The distinction increasingly matters at the policy and procurement level.</p>
@@ -507,7 +510,7 @@
       <a class="title" href="https://every.to/p/ai-is-ready-organizations-aren-t" target="_blank" rel="noopener" data-reader="1">AI Is Ready. Organizations Aren&#x27;t.</a>
       <a class="ext-link" href="https://every.to/p/ai-is-ready-organizations-aren-t" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="every-ai-ready-orgs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-ai-ready-orgs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-ai-ready-orgs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-ai-ready-orgs" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="every-ai-ready-orgs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-ai-ready-orgs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-ai-ready-orgs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-ai-ready-orgs" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-07">&nbsp;·&nbsp;4d ago</span></div>
   <p class="summary">Every published analysis on what organizational structures and cultures produce the highest AI adoption ROI, based on patterns across companies making measurable AI-driven productivity gains. Three factors distinguish high-adoption organizations: centralized AI coordination paired with decentralized experimentation, a culture of written-first documentation that AI agents can act on, and executive teams who personally use AI tools rather than just sponsoring initiatives.</p>
@@ -518,7 +521,7 @@
       <a class="title" href="https://sherwood.news/tech/chatgpt-failed-to-kill-google-search/" target="_blank" rel="noopener" data-reader="1">ChatGPT failed to kill Google Search</a>
       <a class="ext-link" href="https://sherwood.news/tech/chatgpt-failed-to-kill-google-search/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="chatgpt-search-fail" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="chatgpt-search-fail" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="chatgpt-search-fail" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="chatgpt-search-fail" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="chatgpt-search-fail" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="chatgpt-search-fail" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="chatgpt-search-fail" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="chatgpt-search-fail" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   
@@ -529,7 +532,7 @@
       <a class="title" href="https://www.anthropic.com/research/making-claude-a-chemist" target="_blank" rel="noopener" data-reader="1">Making Claude a Chemist</a>
       <a class="ext-link" href="https://www.anthropic.com/research/making-claude-a-chemist" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="anthropic-claude-chemist" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="anthropic-claude-chemist" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="anthropic-claude-chemist" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="anthropic-claude-chemist" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="anthropic-claude-chemist" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="anthropic-claude-chemist" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="anthropic-claude-chemist" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="anthropic-claude-chemist" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-08">&nbsp;·&nbsp;3d ago</span></div>
   
@@ -540,7 +543,7 @@
       <a class="title" href="https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models" target="_blank" rel="noopener" data-reader="1">How Far Behind Are Open Models?</a>
       <a class="ext-link" href="https://www.lesswrong.com/posts/rJcCrXyEsJKmmDpWG/how-far-behind-are-open-models" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="how-far-open-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="how-far-open-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="how-far-open-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="how-far-open-models" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="how-far-open-models" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="how-far-open-models" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="how-far-open-models" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="how-far-open-models" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   
@@ -551,7 +554,7 @@
       <a class="title" href="https://every.to/guides/the-eight-levels-of-ai-adoption" target="_blank" rel="noopener" data-reader="1">The Eight Levels of AI Adoption</a>
       <a class="ext-link" href="https://every.to/guides/the-eight-levels-of-ai-adoption" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="every-eight-levels" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-eight-levels" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-eight-levels" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-eight-levels" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="every-eight-levels" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-eight-levels" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-eight-levels" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-eight-levels" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-07">&nbsp;·&nbsp;4d ago</span></div>
   
@@ -562,7 +565,7 @@
       <a class="title" href="https://every.to/context-window/why-we-ll-still-be-employed-when-ai-can-do-everything" target="_blank" rel="noopener" data-reader="1">Why We&#x27;ll Still Be Employed When AI Can Do Everything</a>
       <a class="ext-link" href="https://every.to/context-window/why-we-ll-still-be-employed-when-ai-can-do-everything" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="every-still-employed" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-still-employed" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-still-employed" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-still-employed" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="every-still-employed" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-still-employed" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-still-employed" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-still-employed" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-07">&nbsp;·&nbsp;4d ago</span></div>
   
@@ -573,7 +576,7 @@
       <a class="title" href="https://every.to/also-true-for-humans/how-microsoft-is-building-for-a-world-of-metered-intelligence" target="_blank" rel="noopener" data-reader="1">How Microsoft Is Building for a World of Metered Intelligence</a>
       <a class="ext-link" href="https://every.to/also-true-for-humans/how-microsoft-is-building-for-a-world-of-metered-intelligence" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="every-metered-intelligence" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-metered-intelligence" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-metered-intelligence" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-metered-intelligence" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="every-metered-intelligence" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="every-metered-intelligence" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="every-metered-intelligence" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="every-metered-intelligence" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Every (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-07">&nbsp;·&nbsp;4d ago</span></div>
   
@@ -584,7 +587,7 @@
       <a class="title" href="https://sidebar.io/" target="_blank" rel="noopener" data-reader="1">Sidebar.io — 5 design links a day</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://sidebar.io/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="sidebar" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="sidebar" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="sidebar" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="sidebar" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="sidebar" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="sidebar" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="sidebar" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="sidebar" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Sidebar</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Five hand-picked design links daily. The gold standard for high signal-to-noise curation.</p>
@@ -595,7 +598,7 @@
       <a class="title" href="https://www.nngroup.com/articles/design-jobs-ai-created/" target="_blank" rel="noopener" data-reader="1">Four Design Jobs AI Created</a>
       <a class="ext-link" href="https://www.nngroup.com/articles/design-jobs-ai-created/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="nngroup-ai-design-jobs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="nngroup-ai-design-jobs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="nngroup-ai-design-jobs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="nngroup-ai-design-jobs" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="nngroup-ai-design-jobs" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="nngroup-ai-design-jobs" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="nngroup-ai-design-jobs" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="nngroup-ai-design-jobs" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">Nielsen Norman Group published research on how AI is restructuring UX and product design roles based on practitioner surveys across industries. The study documents a measurable shift: designers are spending less time on production deliverables and significantly more time on direction-setting, AI output curation, research synthesis, and quality review. Four new role patterns are emerging — AI Director, AI Validator, AI Collaborator, and AI Delegator — each representing a different relationship with AI tooling.</p>
@@ -606,7 +609,7 @@
       <a class="title" href="https://www.storyboard18.com/brand-makers/airbnb-ceo-bets-on-different-ai-future-focuses-on-design-and-user-experience-100312.htm" target="_blank" rel="noopener" data-reader="1">Airbnb CEO bets on design and UX over commodity AI features</a>
       <a class="ext-link" href="https://www.storyboard18.com/brand-makers/airbnb-ceo-bets-on-different-ai-future-focuses-on-design-and-user-experience-100312.htm" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="airbnb-ceo-ai-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="airbnb-ceo-ai-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="airbnb-ceo-ai-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="airbnb-ceo-ai-design" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="airbnb-ceo-ai-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="airbnb-ceo-ai-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="airbnb-ceo-ai-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="airbnb-ceo-ai-design" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">Airbnb CEO Brian Chesky publicly stated that AI is actively replacing product managers and beginning to reshape designer roles within Airbnb&#x27;s product organization. He described the shift as enabling faster, more direct product iteration with smaller, more senior teams — and argued this pattern will accelerate across the industry. Chesky cited Airbnb&#x27;s own internal use of AI design workflows as evidence that the transition is already underway.</p>
@@ -617,7 +620,7 @@
       <a class="title" href="https://www.digitaltrends.com/computing/photoshop-is-being-eaten-by-the-prompt-box/" target="_blank" rel="noopener" data-reader="1">Photoshop is being eaten by the prompt box</a>
       <a class="ext-link" href="https://www.digitaltrends.com/computing/photoshop-is-being-eaten-by-the-prompt-box/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="photoshop-prompt-box" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="photoshop-prompt-box" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="photoshop-prompt-box" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="photoshop-prompt-box" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="photoshop-prompt-box" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="photoshop-prompt-box" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="photoshop-prompt-box" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="photoshop-prompt-box" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   
@@ -628,7 +631,7 @@
       <a class="title" href="https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not" target="_blank" rel="noopener" data-reader="1">YouTube will auto-label AI-generated videos</a>
       <a class="ext-link" href="https://thenextweb.com/news/youtube-will-now-automatically-label-ai-generated-videos-whether-creators-disclose-them-or-not" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="youtube-ai-labels" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="youtube-ai-labels" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="youtube-ai-labels" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="youtube-ai-labels" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="youtube-ai-labels" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="youtube-ai-labels" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="youtube-ai-labels" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="youtube-ai-labels" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   
@@ -639,7 +642,7 @@
       <a class="title" href="https://www.smashingmagazine.com/" target="_blank" rel="noopener" data-reader="1">Smashing Magazine</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://www.smashingmagazine.com/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="smashing" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="smashing" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="smashing" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="smashing" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="smashing" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="smashing" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="smashing" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="smashing" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Smashing Magazine</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Deep web design/dev articles and tutorials; evergreen over trend-chasing.</p>
@@ -650,7 +653,7 @@
       <a class="title" href="https://www.nngroup.com/articles/" target="_blank" rel="noopener" data-reader="1">Nielsen Norman Group — UX research</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://www.nngroup.com/articles/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="nngroup" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="nngroup" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="nngroup" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="nngroup" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="nngroup" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="nngroup" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="nngroup" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="nngroup" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">NN/g</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Evidence-based UX guidance. Useful when a design decision needs a citation.</p>
@@ -661,7 +664,7 @@
       <a class="title" href="https://siliconangle.com/2026/06/04/ai-personalization-canva-design-intelligence-snowflakesummit/" target="_blank" rel="noopener" data-reader="1">Canva Design Intelligence: AI personalization at Snowflake Summit</a>
       <a class="ext-link" href="https://siliconangle.com/2026/06/04/ai-personalization-canva-design-intelligence-snowflakesummit/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="canva-design-intelligence" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="canva-design-intelligence" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="canva-design-intelligence" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="canva-design-intelligence" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="canva-design-intelligence" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="canva-design-intelligence" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="canva-design-intelligence" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="canva-design-intelligence" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-04">&nbsp;·&nbsp;7d ago</span></div>
   
@@ -672,7 +675,7 @@
       <a class="title" href="https://raw.studio/blog/how-stripe-uses-4-developer-first-ux-principles-to-drive-massive-adoption/" target="_blank" rel="noopener" data-reader="1">How Stripe Uses 4 Developer-First UX Principles</a>
       <a class="ext-link" href="https://raw.studio/blog/how-stripe-uses-4-developer-first-ux-principles-to-drive-massive-adoption/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="stripe-developer-ux" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="stripe-developer-ux" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="stripe-developer-ux" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="stripe-developer-ux" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="stripe-developer-ux" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="stripe-developer-ux" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="stripe-developer-ux" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="stripe-developer-ux" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   
@@ -683,7 +686,7 @@
       <a class="title" href="https://www.vccp.com/news/2026/05/could-ai-help-us-to-design-and-build-more-inclusive-digital-experiences/" target="_blank" rel="noopener" data-reader="1">Could AI Help Us Design More Inclusive Digital Experiences?</a>
       <a class="ext-link" href="https://www.vccp.com/news/2026/05/could-ai-help-us-to-design-and-build-more-inclusive-digital-experiences/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-inclusive-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-inclusive-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-inclusive-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-inclusive-design" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="ai-inclusive-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="ai-inclusive-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="ai-inclusive-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="ai-inclusive-design" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   
@@ -694,7 +697,7 @@
       <a class="title" href="https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/" target="_blank" rel="noopener" data-reader="1">&#x27;This is fine&#x27; artist KC Green settles with AI startup Artisan</a>
       <a class="ext-link" href="https://techcrunch.com/2026/05/31/this-is-fine-artist-kc-green-reaches-agreement-with-ai-startup-artisan/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="kc-green-artisan-settlement" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="kc-green-artisan-settlement" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="kc-green-artisan-settlement" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="kc-green-artisan-settlement" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="kc-green-artisan-settlement" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="kc-green-artisan-settlement" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="kc-green-artisan-settlement" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="kc-green-artisan-settlement" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   
@@ -705,7 +708,7 @@
       <a class="title" href="https://cursor.com/blog/bugbot-updates-june-2026" target="_blank" rel="noopener" data-reader="1">Faster Code Review with Cursor&#x27;s Bugbot</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://cursor.com/blog/bugbot-updates-june-2026" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="cursor-bugbot-update" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="cursor-bugbot-update" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="cursor-bugbot-update" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="cursor-bugbot-update" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="cursor-bugbot-update" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="cursor-bugbot-update" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="cursor-bugbot-update" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="cursor-bugbot-update" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   
@@ -716,7 +719,7 @@
       <a class="title" href="https://cursor.com/blog/design-mode" target="_blank" rel="noopener" data-reader="1">Cursor Design Mode</a>
       <a class="ext-link" href="https://cursor.com/blog/design-mode" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="cursor-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="cursor-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="cursor-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="cursor-design" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="cursor-design" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="cursor-design" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="cursor-design" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="cursor-design" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-08">&nbsp;·&nbsp;3d ago</span></div>
   <p class="summary">Cursor released Design Mode, a visual interface layer inside the AI code editor that lets developers click UI elements, describe changes in natural language, and have those edits propagate directly into the codebase. The feature bridges the traditional gap between design tools and the IDE, enabling iterative visual refinement without leaving the code environment. It works across component libraries and can read the existing code structure to apply changes in context.</p>
@@ -727,7 +730,7 @@
       <a class="title" href="https://www.figma.com/blog/figma-make-now-on-your-local-code/" target="_blank" rel="noopener" data-reader="1">Figma Make, Now on Your Local Code</a>
       <a class="ext-link" href="https://www.figma.com/blog/figma-make-now-on-your-local-code/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="figma-mcp" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="figma-mcp" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="figma-mcp" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="figma-mcp" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="figma-mcp" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="figma-mcp" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="figma-mcp" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="figma-mcp" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-01">&nbsp;·&nbsp;Jun 1</span></div>
   <p class="summary">Figma launched Make on Local Code, an integration that applies design changes from Figma directly to an existing local codebase, maintaining a live connection between design source-of-truth and shipped code. Alongside it, Figma shipped Check Designs (AI-powered design critique and consistency checking) and a remote MCP server that lets external AI agents query Figma data programmatically. The three features together constitute Figma&#x27;s most significant AI infrastructure expansion.</p>
@@ -738,7 +741,7 @@
       <a class="title" href="https://claude.com/blog/introducing-dynamic-workflows-in-claude-code" target="_blank" rel="noopener" data-reader="1">Introducing Dynamic Workflows in Claude Code</a>
       <a class="ext-link" href="https://claude.com/blog/introducing-dynamic-workflows-in-claude-code" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-opus-48" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-opus-48" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-opus-48" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-opus-48" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="claude-opus-48" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="claude-opus-48" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="claude-opus-48" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="claude-opus-48" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   
@@ -749,7 +752,7 @@
       <a class="title" href="https://a16z.com/the-next-frontier-of-visual-ai-is-code/" target="_blank" rel="noopener" data-reader="1">The Next Frontier of Visual AI Is Code</a>
       <a class="ext-link" href="https://a16z.com/the-next-frontier-of-visual-ai-is-code/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="a16z-visual-ai-code" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="a16z-visual-ai-code" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="a16z-visual-ai-code" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="a16z-visual-ai-code" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="a16z-visual-ai-code" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="a16z-visual-ai-code" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="a16z-visual-ai-code" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="a16z-visual-ai-code" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-03">&nbsp;·&nbsp;Jun 3</span></div>
   <p class="summary">Andreessen Horowitz published analysis examining how AI is collapsing the gap between visual design and code — with tools like Cursor Design Mode, Vercel v0, and Figma MCP enabling design-to-code and code-to-design workflows that previously required separate specialist handoffs. The piece argues this convergence represents a fundamental change in how digital products are built, with AI serving as the translation layer between intent and implementation.</p>
@@ -760,7 +763,7 @@
       <a class="title" href="https://www.latent.space/p/github" target="_blank" rel="noopener" data-reader="1">GitHub x Latent Space: AI coding deep dive</a>
       <a class="ext-link" href="https://www.latent.space/p/github" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="latent-space-github" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="latent-space-github" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="latent-space-github" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="latent-space-github" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="latent-space-github" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="latent-space-github" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="latent-space-github" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="latent-space-github" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-03">&nbsp;·&nbsp;Jun 3</span></div>
   <p class="summary">The Latent Space podcast published a deep-dive on GitHub&#x27;s AI coding strategy, examining how Copilot has evolved from a tab-completion tool to an agentic coding assistant capable of multi-file edits, PR reviews, and autonomous task execution. The episode covers GitHub&#x27;s positioning against Cursor, Windsurf, and Claude Code, and how the combination of GitHub&#x27;s code index and Microsoft&#x27;s model access creates structural advantages.</p>
@@ -771,7 +774,7 @@
       <a class="title" href="https://www.designsystemscollective.com/building-bads-the-behavioral-agentic-design-system-5698ff721db1" target="_blank" rel="noopener" data-reader="1">Building BADS: The Behavioral Agentic Design System</a>
       <a class="ext-link" href="https://www.designsystemscollective.com/building-bads-the-behavioral-agentic-design-system-5698ff721db1" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="bads-agentic-design-system" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="bads-agentic-design-system" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="bads-agentic-design-system" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="bads-agentic-design-system" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="bads-agentic-design-system" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="bads-agentic-design-system" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="bads-agentic-design-system" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="bads-agentic-design-system" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">BADS (Behavior-first Agentic Design System) introduces a framework for designing UI component libraries where AI agents are treated as first-class interactors alongside human users. Rather than designing purely for human click paths, BADS proposes that each component should expose behavioral APIs — declaring its capabilities, constraints, and interaction affordances — so agents can navigate and operate UIs programmatically. The framework addresses a real gap as AI agents increasingly operate production interfaces.</p>
@@ -782,7 +785,7 @@
       <a class="title" href="https://slack.design/articles/how-i-validated-design-decisions-before-writing-production-code/" target="_blank" rel="noopener" data-reader="1">How I Validated Design Decisions Before Writing Production Code</a>
       <a class="ext-link" href="https://slack.design/articles/how-i-validated-design-decisions-before-writing-production-code/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="slack-ai-design-validation" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="slack-ai-design-validation" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="slack-ai-design-validation" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="slack-ai-design-validation" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="slack-ai-design-validation" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="slack-ai-design-validation" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="slack-ai-design-validation" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="slack-ai-design-validation" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">Slack shared how its design team uses AI to validate UI changes at scale before shipping — running automated checks for consistency, accessibility, and design system compliance across component variants. The workflow integrates AI review as a pre-merge step in the design pipeline, catching issues that would previously require manual design review or post-ship QA. The approach has reduced design review cycles while increasing consistency across Slack&#x27;s component library.</p>
@@ -793,7 +796,7 @@
       <a class="title" href="https://darylcecile.net/notes/speed-of-prototyping-age-of-ai" target="_blank" rel="noopener" data-reader="1">Speed of Prototyping in the Age of AI</a>
       <a class="ext-link" href="https://darylcecile.net/notes/speed-of-prototyping-age-of-ai" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="speed-of-prototyping-ai" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="speed-of-prototyping-ai" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="speed-of-prototyping-ai" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="speed-of-prototyping-ai" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="speed-of-prototyping-ai" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="speed-of-prototyping-ai" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="speed-of-prototyping-ai" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="speed-of-prototyping-ai" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR Design (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">Analysis of how AI tools — from v0 and Bolt to Claude and Cursor — are compressing the prototyping timeline from days to hours, enabling product teams to explore 10x more design directions before committing to implementation. The piece documents specific workflows where AI generates functional prototypes from briefs or sketches, with humans iterating on the result rather than building from scratch. The shift changes what counts as &#x27;done&#x27; at the prototype stage.</p>
@@ -804,7 +807,7 @@
       <a class="title" href="https://eugeneyan.com/" target="_blank" rel="noopener" data-reader="1">Eugene Yan — patterns for building LLM systems &amp; products</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://eugeneyan.com/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="eugene-yan" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="eugene-yan" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="eugene-yan" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="eugene-yan" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="eugene-yan" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="eugene-yan" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="eugene-yan" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="eugene-yan" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Eugene Yan</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Practical write-ups on designing and shipping LLM-backed products.</p>
@@ -815,7 +818,7 @@
       <a class="title" href="https://emergingai.substack.com/" target="_blank" rel="noopener" data-reader="1">Generative UI: the new frontend for AI agents</a>
       <a class="ext-link" href="https://emergingai.substack.com/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="generative-ui" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="generative-ui" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="generative-ui" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="generative-ui" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="generative-ui" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="generative-ui" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="generative-ui" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="generative-ui" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Emerging AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-05">&nbsp;·&nbsp;6d ago</span></div>
   <p class="summary">How generative UI turns AI agents into visual, interactive tools instead of chat boxes.</p>
@@ -826,7 +829,7 @@
       <a class="title" href="https://www.figma.com/blog/" target="_blank" rel="noopener" data-reader="1">Figma Blog — design + AI</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://www.figma.com/blog/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="figma-blog" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="figma-blog" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="figma-blog" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="figma-blog" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="figma-blog" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="figma-blog" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="figma-blog" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="figma-blog" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Figma</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Product and craft posts; increasingly about vibe-coding and AI-assisted prototyping.</p>
@@ -837,7 +840,7 @@
       <a class="title" href="https://www.engadget.com/2191213/eu-orders-meta-to-stop-blocking-rival-ai-chatbots-on-whatsapp/" target="_blank" rel="noopener" data-reader="1">EU orders Meta to stop blocking rival AI chatbots on WhatsApp</a>
       <span class="badge">NEW</span><a class="ext-link" href="https://www.engadget.com/2191213/eu-orders-meta-to-stop-blocking-rival-ai-chatbots-on-whatsapp/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="eu-meta-whatsapp-chatbots" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-11">&nbsp;·&nbsp;today</span></div>
   
@@ -848,7 +851,7 @@
       <a class="title" href="https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite" target="_blank" rel="noopener" data-reader="1">SpaceX details its AI1 compute satellite</a>
       <a class="ext-link" href="https://www.tomshardware.com/tech-industry/spacex-details-its-ai1-compute-satellite" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="spacex-ai-compute" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="spacex-ai-compute" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="spacex-ai-compute" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="spacex-ai-compute" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="spacex-ai-compute" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="spacex-ai-compute" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="spacex-ai-compute" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="spacex-ai-compute" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-10">&nbsp;·&nbsp;yesterday</span></div>
   <p class="summary">SpaceX revealed plans for an AI compute satellite constellation, provisioning distributed machine learning infrastructure from orbit outside traditional data center constraints. Google signed a major agreement to lease capacity from the constellation, and Anthropic is reportedly in discussions for similar arrangements. The architecture would allow model inference and training workloads to operate in geosynchronous or low-Earth orbit.</p>
@@ -859,7 +862,7 @@
       <a class="title" href="https://developer.apple.com/documentation/coreai/" target="_blank" rel="noopener" data-reader="1">Apple releases Core AI developer documentation</a>
       <a class="ext-link" href="https://developer.apple.com/documentation/coreai/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="apple-ai-strategy" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="apple-ai-strategy" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="apple-ai-strategy" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="apple-ai-strategy" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="apple-ai-strategy" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="apple-ai-strategy" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="apple-ai-strategy" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="apple-ai-strategy" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-09">&nbsp;·&nbsp;2d ago</span></div>
   <p class="summary">Apple unveiled the architecture of Apple Intelligence, centering on on-device inference, Private Cloud Compute (a privacy-preserving cloud extension that processes requests without Apple seeing the data), and deeply integrated system-level AI features across iOS, macOS, and hardware. The strategy prioritizes user privacy and seamless integration over raw model capability, with most features designed to work without an internet connection.</p>
@@ -870,7 +873,7 @@
       <a class="title" href="https://tldr.tech/" target="_blank" rel="noopener" data-reader="1">SpaceX prices IPO at $135, valuing it at $1.77T</a>
       <a class="ext-link" href="https://tldr.tech/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="spacex-ipo" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="spacex-ipo" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="spacex-ipo" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="spacex-ipo" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="spacex-ipo" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="spacex-ipo" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="spacex-ipo" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="spacex-ipo" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-04">&nbsp;·&nbsp;7d ago</span></div>
   <p class="summary">SpaceX set a $135 IPO price, aiming to raise $74.4B.</p>
@@ -881,7 +884,7 @@
       <a class="title" href="https://news.ycombinator.com/" target="_blank" rel="noopener" data-reader="1">Hacker News (front page, 150+ points)</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://news.ycombinator.com/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="hn" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="hn" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="hn" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="hn" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="hn" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="hn" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="hn" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="hn" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Hacker News</span><span class="dot">·</span><span class="stype">forum</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Real-time dev/startup discussion; pull a high-signal feed via hnrss with a points threshold.</p>
@@ -892,7 +895,7 @@
       <a class="title" href="https://www.pcgamer.com/hardware/processors/bytedance-has-had-enough-of-waiting-months-for-processors-so-its-going-to-make-them-itself/" target="_blank" rel="noopener" data-reader="1">ByteDance is making its own AI chips</a>
       <a class="ext-link" href="https://www.pcgamer.com/hardware/processors/bytedance-has-had-enough-of-waiting-months-for-processors-so-its-going-to-make-them-itself/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="bytedance-chips" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="bytedance-chips" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="bytedance-chips" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="bytedance-chips" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="bytedance-chips" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="bytedance-chips" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="bytedance-chips" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="bytedance-chips" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   
@@ -903,7 +906,7 @@
       <a class="title" href="https://www.cnbc.com/2026/05/28/mistral-arthur-mensch-design-chips-ai-data-centers.html" target="_blank" rel="noopener" data-reader="1">Mistral CEO wants to design AI chips for data centers</a>
       <a class="ext-link" href="https://www.cnbc.com/2026/05/28/mistral-arthur-mensch-design-chips-ai-data-centers.html" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="mistral-chips" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="mistral-chips" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="mistral-chips" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="mistral-chips" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="mistral-chips" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="mistral-chips" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="mistral-chips" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="mistral-chips" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-05-29">&nbsp;·&nbsp;May 29</span></div>
   
@@ -914,7 +917,7 @@
       <a class="title" href="https://refactoring.fm/" target="_blank" rel="noopener" data-reader="1">My AI coding workflow</a>
       <a class="ext-link" href="https://refactoring.fm/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="refactoring-ai-workflow" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="refactoring-ai-workflow" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="refactoring-ai-workflow" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="refactoring-ai-workflow" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="refactoring-ai-workflow" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="refactoring-ai-workflow" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="refactoring-ai-workflow" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="refactoring-ai-workflow" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Refactoring (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-03">&nbsp;·&nbsp;Jun 3</span></div>
   <p class="summary">Luca Rossi&#x27;s monthly walkthrough of how he actually codes with AI day to day.</p>
@@ -925,7 +928,7 @@
       <a class="title" href="https://www.techmeme.com/" target="_blank" rel="noopener" data-reader="1">Techmeme</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://www.techmeme.com/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="techmeme" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="techmeme" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="techmeme" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="techmeme" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="techmeme" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="techmeme" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="techmeme" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="techmeme" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Techmeme</span><span class="dot">·</span><span class="stype">web</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Editor + algorithm hybrid that clusters the top tech headlines with related coverage.</p>
@@ -936,7 +939,7 @@
       <a class="title" href="https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/" target="_blank" rel="noopener" data-reader="1">New Amazon Bedrock console experience: Anthropic and OpenAI APIs</a>
       <a class="ext-link" href="https://aws.amazon.com/blogs/aws/try-the-new-console-experience-in-amazon-bedrock-optimized-for-anthropic-and-openai-compatible-apis/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="aws-bedrock-console" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="aws-bedrock-console" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="aws-bedrock-console" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="aws-bedrock-console" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="aws-bedrock-console" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="aws-bedrock-console" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="aws-bedrock-console" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="aws-bedrock-console" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-08">&nbsp;·&nbsp;3d ago</span></div>
   
@@ -947,7 +950,7 @@
       <a class="title" href="https://github.com/apple/container" target="_blank" rel="noopener" data-reader="1">Apple open-sources its container project</a>
       <a class="ext-link" href="https://github.com/apple/container" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="apple-container-gh" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="apple-container-gh" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="apple-container-gh" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="apple-container-gh" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="apple-container-gh" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="apple-container-gh" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="apple-container-gh" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="apple-container-gh" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">TLDR AI (email)</span><span class="dot">·</span><span class="stype">email</span><span class="date-stamp" title="2026-06-10">&nbsp;·&nbsp;yesterday</span></div>
   
@@ -958,7 +961,7 @@
       <a class="title" href="https://lobste.rs/" target="_blank" rel="noopener" data-reader="1">Lobste.rs</a>
       <span class="pin" title="pinned / evergreen">★</span><a class="ext-link" href="https://lobste.rs/" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>
     </div>
-    <div class="card-actions"><button class="card-btn read-btn" data-key="lobsters" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="lobsters" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="lobsters" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="lobsters" data-tip="Archive (x)">✓</button></div>
+    <div class="card-actions"><button class="card-btn read-btn" data-key="lobsters" data-tip="Mark read (m)" aria-label="Mark read"></button><button class="card-btn rl-btn" data-key="lobsters" data-tip="Save for later (b)">🔖</button><button class="card-btn snooze-btn" data-key="lobsters" data-tip="Snooze until tomorrow (s)">💤</button><button class="card-btn dismiss-btn" data-key="lobsters" data-tip="Archive (x)">×</button></div>
   </div>
   <div class="meta"><span class="src">Lobsters</span><span class="dot">·</span><span class="stype">forum</span><span class="date-stamp" title="2026-01-01">&nbsp;·&nbsp;Jan 1</span></div>
   <p class="summary">Invite-only, tag-filterable technical link aggregator.</p>
