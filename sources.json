@@ -64,7 +64,9 @@
       { "name": "Julia Evans (b0rk)","url": "https://jvns.ca/",                       "rss": "https://jvns.ca/atom.xml",                    "weight": 3, "note": "Zines + posts on debugging, systems internals, and coding tools — the clearest explainer of tricky CS concepts anywhere." },
       { "name": "Hillel Wayne",      "url": "https://www.hillelwayne.com/post/",      "rss": "https://www.hillelwayne.com/post/index.xml",   "weight": 2, "note": "Software correctness, formal methods, testing strategies — counterintuitive and well-researched." },
       { "name": "The Pragmatic Engineer", "url": "https://newsletter.pragmaticengineer.com/", "rss": "https://newsletter.pragmaticengineer.com/feed", "weight": 2, "note": "Gergely Orosz — engineering culture, big-tech deep-dives, often architecture + process strategy." },
-      { "name": "Bytebytego Blog",   "url": "https://blog.bytebytego.com/",           "rss": "https://blog.bytebytego.com/feed",             "weight": 2, "note": "System design patterns and architecture diagrams — visual + concrete." }
+      { "name": "Bytebytego Blog",   "url": "https://blog.bytebytego.com/",           "rss": "https://blog.bytebytego.com/feed",             "weight": 2, "note": "System design patterns and architecture diagrams — visual + concrete." },
+      { "name": "awesome-claude-code (commits)", "url": "https://github.com/hesreallyhim/awesome-claude-code", "rss": "https://github.com/hesreallyhim/awesome-claude-code/commits/main.atom", "weight": 3, "note": "Every new entry added to the curated Claude Code skills/hooks/MCP directory. Atom feed of repo commits — each commit message describes what was added. Route to ai_in_design." },
+      { "name": "GitHub: new claude-code skills", "url": "https://api.github.com/search/repositories?q=topic:claude-code+topic:skill&sort=updated&order=desc", "rss": null, "weight": 3, "note": "JSON API. Parse: items[].full_name, items[].description, items[].html_url, items[].stargazers_count. Filter to repos updated in the last 7 days. Score by stars. Route to ai_in_design. Call with Accept: application/vnd.github+json header." }
     ]
   },
 

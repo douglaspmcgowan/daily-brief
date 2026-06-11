@@ -163,12 +163,12 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         actions_html = (
             f'<div class="card-actions">'
             f'<svg class="read-ring" viewBox="0 0 24 24" data-key="{k}"'
-            f' tabindex="0" role="button" title="Mark as read (m)">'
+            f' tabindex="0" role="button" data-tip="Mark read (m)">'
             f'<circle class="ring-bg" cx="12" cy="12" r="9"/>'
             f'<circle class="ring-fg" cx="12" cy="12" r="9"/></svg>'
-            f'<button class="card-btn rl-btn" data-key="{k}" title="Save for later (b)">🔖</button>'
-            f'<button class="card-btn snooze-btn" data-key="{k}" title="Snooze until tomorrow (s)">💤</button>'
-            f'<button class="card-btn dismiss-btn" data-key="{k}" title="Archive (x)">✓</button>'
+            f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)">🔖</button>'
+            f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)">💤</button>'
+            f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)">✓</button>'
             f'</div>'
         )
     else:
@@ -206,8 +206,9 @@ def render_cluster_html(cluster, run_date=None):
             f'<details class="also-wrap"><summary>+ {len(extras)} more on this story</summary>'
             f'<ul class="also-list">{also}</ul></details>'
         )
+    drag_handle = '<div class="drag-handle" data-tip="Drag to reorder">⠿</div>'
     return (f'<div class="cluster" draggable="true" data-key="{key_esc}">'
-            f'{lead_html}{note_area}{also_html}</div>')
+            f'{drag_handle}{lead_html}{note_area}{also_html}</div>')
 
 
 def render_references_html(references):
@@ -262,6 +263,23 @@ def build_html(corpus, run_date):
         whats_new = f'<section class="whatsnew"><h2>New since last digest</h2><ol>{new_rows}</ol></section>'
     else:
         whats_new = ""
+
+    # daily insight — top-scored new item with an rbtl
+    top_rbtl = sorted([it for it in items if it.get("is_new") and it.get("rbtl")],
+                      key=score, reverse=True)
+    if top_rbtl:
+        ins = top_rbtl[0]
+        insight_html = (
+            f'<section class="insight-card">'
+            f'<div class="insight-label">Today\'s insight</div>'
+            f'<blockquote class="insight-quote">{esc(ins.get("rbtl",""))}</blockquote>'
+            f'<div class="insight-src"><a href="{esc(ins.get("url","#"))}" target="_blank" rel="noopener">'
+            f'{esc(ins.get("title",""))}</a>'
+            f'<span class="insight-from"> — {esc(ins.get("source",""))}</span></div>'
+            f'</section>'
+        )
+    else:
+        insight_html = ""
 
     pills = "".join(
         f'<button class="pill" data-filter="{t}">{esc(TOPIC_LABELS[t])} '
@@ -375,6 +393,9 @@ def build_html(corpus, run_date):
     .summary {{ font-size:14px; }}
     .whatsnew {{ padding:12px 14px; }}
   }}
+  /* masthead logo */
+  .mast-logo-row {{ display:flex; align-items:center; gap:14px; }}
+  .mast-logo {{ width:44px; height:44px; color:var(--ink); flex-shrink:0; }}
   /* card actions + kanban */
   .card-actions {{ display:flex; align-items:center; gap:4px; flex-shrink:0; margin-left:6px; }}
   .read-ring {{ width:22px; height:22px; cursor:pointer; flex-shrink:0; outline:none; }}
@@ -394,26 +415,63 @@ def build_html(corpus, run_date):
   .snooze-btn.active {{ border-color:#b8960c; color:#b8960c; }}
   .rl-btn.active {{ border-color:var(--link); color:var(--link); }}
   .date-stamp {{ color:var(--muted); font-size:11.5px; }}
-  .cluster[draggable] {{ cursor:grab; }}
+  /* drag handle */
+  .cluster {{ position:relative; }}
+  .drag-handle {{ position:absolute; top:10px; left:-18px; color:var(--muted); font-size:14px;
+    cursor:grab; opacity:0; transition:opacity .15s; line-height:1; user-select:none; padding:2px 4px; }}
+  .cluster:hover .drag-handle {{ opacity:1; }}
+  .cluster[draggable] {{ cursor:default; }}
   .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:12px; }}
   .cluster.dragging {{ opacity:.35; pointer-events:none; }}
-  .cluster.focused {{ box-shadow:0 0 0 2px var(--anchor); border-radius:10px; scroll-margin:90px; }}
+  /* focus state — left accent bar instead of outline */
+  .cluster.focused > .item.lead {{ border-left:3px solid var(--anchor); padding-left:13px;
+    background:var(--anchor-soft); transition:background .2s; scroll-margin:90px; }}
+  .cluster:hover > .item.lead {{ background:color-mix(in srgb, var(--card) 90%, var(--anchor) 10%); }}
+  .cluster.focused:hover > .item.lead {{ background:var(--anchor-soft); }}
+  /* tooltips */
+  [data-tip] {{ position:relative; }}
+  [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
+    left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper);
+    font-size:11px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-weight:400; padding:4px 8px; border-radius:5px; white-space:nowrap;
+    pointer-events:none; opacity:0; transition:opacity .12s; z-index:20; }}
+  [data-tip]:hover::after {{ opacity:1; }}
   .arc-pill {{ font:inherit; font-size:12px; border:1px solid var(--rule); background:transparent;
     color:var(--muted); padding:4px 10px; border-radius:999px; cursor:pointer;
     white-space:nowrap; transition:border-color .15s,color .15s; }}
   .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
   .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
-  .note-area {{ padding:0 6px 2px; }}
-  .note-trigger {{ color:var(--muted); font-size:12px; cursor:pointer; padding:4px 2px;
-    display:inline-flex; align-items:center; gap:4px; user-select:none; }}
-  .note-trigger:hover {{ color:var(--ink); }}
-  .note-body {{ margin:4px 0; }}
+  #help-btn {{ width:28px; height:28px; padding:0; display:inline-flex; align-items:center;
+    justify-content:center; font-size:13px; font-weight:700; }}
+  /* note area */
+  .note-area {{ padding:2px 6px 4px; }}
+  .note-trigger {{ font:inherit; font-size:12px; color:var(--muted); background:transparent;
+    border:1px solid var(--rule); border-radius:999px; cursor:pointer;
+    padding:3px 10px; display:inline-flex; align-items:center; gap:5px;
+    transition:border-color .15s,color .15s,background .15s; user-select:none; margin:2px 0; }}
+  .note-trigger:hover {{ border-color:var(--ink); color:var(--ink); }}
+  .note-trigger.has-note {{ border-color:var(--link); color:var(--link); }}
+  .note-body {{ margin:6px 0 4px; }}
   .note-input {{ width:100%; font:inherit; font-size:13.5px; resize:none;
     border:1px solid var(--rule); border-radius:8px; background:var(--card); color:var(--ink);
     padding:8px 10px; }}
-  .note-display {{ font-size:13.5px; color:var(--ink); white-space:pre-wrap;
-    padding:2px 2px 6px; font-style:italic; display:none; }}
+  .note-input:focus {{ outline:2px solid var(--anchor); border-color:transparent; }}
+  .note-display {{ font-size:13.5px; color:var(--muted); white-space:pre-wrap;
+    padding:4px 4px 6px; font-style:italic; display:none; border-left:2px solid var(--rule);
+    margin-left:2px; padding-left:10px; }}
   .note-display.visible {{ display:block; }}
+  /* insight card */
+  .insight-card {{ margin:22px 0 10px; padding:18px 22px 16px; border-radius:12px;
+    background:linear-gradient(135deg,var(--anchor-soft) 0%,var(--card) 100%);
+    border:1px solid var(--anchor); }}
+  .insight-label {{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
+    color:var(--anchor); margin-bottom:8px; }}
+  .insight-quote {{ margin:0 0 10px; font-family:Georgia,serif; font-size:16px; line-height:1.6;
+    color:var(--ink); font-style:italic; }}
+  .insight-src {{ font-size:13px; color:var(--muted); }}
+  .insight-src a {{ color:var(--ink); font-weight:600; text-decoration:none; }}
+  .insight-src a:hover {{ text-decoration:underline; }}
+  .insight-from {{ color:var(--muted); }}
   html[data-theme="dark"] {{
     --paper:{PALETTE_DARK['paper']}; --card:{PALETTE_DARK['card']}; --ink:{PALETTE_DARK['ink']};
     --muted:{PALETTE_DARK['muted']}; --rule:{PALETTE_DARK['rule']}; --anchor:{PALETTE_DARK['anchor']};
@@ -429,7 +487,17 @@ def build_html(corpus, run_date):
 <body>
 <div class="wrap">
   <header class="mast">
-    <h1 class="mast-title">The <span class="accent">Daily</span> Brief</h1>
+    <div class="mast-logo-row">
+      <svg class="mast-logo" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="3" y="6" width="29" height="32" rx="5" stroke="currentColor" stroke-width="2.5"/>
+        <line x1="10" y1="15" x2="26" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="10" y1="21" x2="26" y2="21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="10" y1="27" x2="20" y2="27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="36" cy="11" r="7" fill="var(--anchor)"/>
+        <circle cx="36" cy="11" r="3.5" fill="white" opacity=".9"/>
+      </svg>
+      <h1 class="mast-title">The <span class="accent">Daily</span> Brief</h1>
+    </div>
     <p class="mast-sub"><b>{stamp}</b><span>·</span><span>{len(items)} items live</span>
       <span>·</span><span>{new_count} new</span>
       <span>·</span><span class="mast-topics">AI · Design · AI×Design/Eng · Tech</span></p>
@@ -445,9 +513,11 @@ def build_html(corpus, run_date):
       <button id="rl-pill" class="arc-pill">Saved</button>
       <button id="arc-pill" class="arc-pill">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>
+      <button id="help-btn" class="arc-pill" data-tip="Keyboard shortcuts" aria-label="Help">?</button>
     </div>
   </div>
 
+  {insight_html}
   {whats_new}
   {''.join(sections)}
   {refs_html}
@@ -526,7 +596,8 @@ def build_html(corpus, run_date):
         const saved = notes[k] || '';
         display.textContent = saved;
         display.classList.toggle('visible', !!saved);
-        trigger.textContent = saved ? '📝 Edit note' : '📝 Add note';
+        trigger.classList.toggle('has-note', !!saved);
+        trigger.textContent = saved ? '✏️ Edit note' : '✏️ Add note';
       }}
       refresh();
 
@@ -541,7 +612,7 @@ def build_html(corpus, run_date):
       trigger.addEventListener('click', () => {{
         const open = body.style.display === 'none';
         body.style.display = open ? '' : 'none';
-        if (open) {{ ta.focus(); trigger.textContent = '📝 Cancel'; }}
+        if (open) {{ ta.focus(); trigger.textContent = '✏️ Cancel'; }}
         else refresh();
       }});
 
@@ -665,9 +736,13 @@ def build_html(corpus, run_date):
     }}
   }});
 
+  // ── help button ───────────────────────────────────────────────────────────
+  document.getElementById('help-btn').addEventListener('click', showShortcuts);
+
   // ── drag to reorder ───────────────────────────────────────────────────────
   let dragSrc = null;
   document.addEventListener('dragstart', e => {{
+    if (!e.target.closest('.drag-handle')) {{ e.preventDefault(); return; }}
     const cl = e.target.closest('.cluster[draggable]');
     if (!cl) return;
     dragSrc = cl; cl.classList.add('dragging');
