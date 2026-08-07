@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run": "2026-06-11",
+  "last_run": "2026-06-15",
   "retention_days": {
     "default": 14,
     "design": 21,
@@ -1397,6 +1397,518 @@
       "last_seen": "2026-06-11",
       "cluster": null,
       "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "anthropic-fable-shutdown-govt",
+      "title": "Anthropic Disables Fable and Mythos for All Users Following U.S. Export-Control Directive",
+      "url": "https://www.anthropic.com/news/fable-mythos-access",
+      "source": "TLDR AI (email) / Anthropic",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Anthropic disabled both Claude Fable 5 (and its companion Mythos model) for all global users on June 13–15, 2026 after receiving a U.S. government export-control directive tied to national security concerns. The shutdown was abrupt and total — every API consumer and end user lost access simultaneously, with Anthropic citing legal compliance rather than technical failure. Internal reporting describes heated disagreements within Anthropic leadership about how to respond, with the directive arriving with little advance warning. Anthropic has stated it is working to restore access where legally permissible.",
+      "rbtl": "A government export-control order that can switch off the world's most capable commercial AI models in 48 hours changes the risk calculus for every enterprise AI procurement decision. The U.S. has now demonstrated it treats frontier AI capability as a controlled national security asset — and every AI company now knows its flagship product can be switched off by regulators at any moment, independent of its own choices.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 10,
+      "pinned": false
+    },
+    {
+      "id": "simonw-anthropic-clashes",
+      "title": "'They Screwed Us': Personality Clashes Sent Anthropic's Models Offline",
+      "url": "https://simonwillison.net/2026/Jun/15/axios-clashes-anthropics/",
+      "source": "Simon Willison",
+      "source_type": "rss",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Simon Willison links to an Axios report claiming that internal personality clashes between Anthropic leadership — particularly over how to respond to the U.S. export-control directive — contributed to the speed and abruptness of the Fable/Mythos shutdown. Sources describe heated disagreements about compliance versus resistance, with the export-control directive arriving with little warning and Anthropic's response being less coordinated than its public statements suggest.",
+      "rbtl": "Leadership fracture under regulatory pressure is a structural risk that investors and enterprise customers almost never model into their AI vendor evaluations. The speed of the shutdown and the internal discord signals that Anthropic's decision-making under regulatory duress is less orderly than its public communications suggest — relevant for any organization building mission-critical systems on top of Anthropic APIs.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 8,
+      "pinned": false
+    },
+    {
+      "id": "ainews-fable-too-dangerous",
+      "title": "[AINews] Fable and Mythos Officially Too Dangerous to Release",
+      "url": "https://www.latent.space/p/ainews-fable-and-mythos-officially",
+      "source": "Latent Space",
+      "source_type": "rss",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Latent Space's AINews aggregation covers the Anthropic Fable/Mythos shutdown with the framing that both models were deemed by the U.S. government to be too capable to export without restriction, effectively classifying them as dual-use technology. The piece aggregates reaction from the research and policy communities, tracking the speed with which the story moved from a compliance notice to a full model shutdown.",
+      "rbtl": "The framing of Fable/Mythos as 'too dangerous to release' is the government's framing, not Anthropic's — and that distinction matters enormously. If the U.S. government can unilaterally classify a commercial AI model as a national security export-controlled asset, the frontier AI industry's revenue model changes fundamentally: global API products become geopolitically conditional.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 8,
+      "pinned": false
+    },
+    {
+      "id": "interconnects-agi-governance",
+      "title": "Welcome to the AGI Era of AI Governance",
+      "url": "https://www.interconnects.ai/p/welcome-to-the-agi-era-of-ai-governance",
+      "source": "Interconnects",
+      "source_type": "rss",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Nathan Lambert argues in Interconnects that the Fable/Mythos shutdown marks the beginning of a new phase — what he calls the 'AGI era' of AI governance — where governments treat frontier AI models as sovereign assets rather than commercial products. The piece maps how export controls, chip restrictions, and model access controls are converging into a coherent geopolitical framework around AI capability, and examines what this means for labs, researchers, and enterprise adopters.",
+      "rbtl": "Lambert is pointing at the structural shift underneath the policy noise: once a government designates a commercial AI model as a national security asset, the entire industry's business model changes. Companies can no longer treat API access as a reliable revenue stream; enterprise customers must model political risk into their AI dependency chains the same way they model supply chain risk.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "ai-policy-2026",
+      "score": 8,
+      "pinned": false
+    },
+    {
+      "id": "every-moral-of-fable",
+      "title": "The Moral of Fable",
+      "url": "https://every.to/chain-of-thought/the-moral-of-fable",
+      "source": "Every (Chain of Thought)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Every's Chain of Thought newsletter reflects on what the Fable 5 story — including its abrupt shutdown — reveals about the shape of AI's impact on knowledge work. The piece examines Fable as a preview of what broad AI capability deployment looks like at scale, and what it means when that capability can be retracted by government directive.",
+      "rbtl": "Every's reflection is culturally diagnostic: Fable was the first mass-market AI model that felt genuinely general, and its abrupt removal showed how thin the line is between 'AI as a utility' and 'AI as a geopolitically controlled resource.' That's the moral of Fable.",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "anthropic-walks-back-policy",
+      "title": "Anthropic Walks Back Policy Sabotaging Its Own Research",
+      "url": "https://www.engadget.com/2192004/anthropic-walks-back-policy-sabotaging-research/",
+      "source": "TLDR AI (email) / Engadget",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Engadget reports that Anthropic reversed a recently enacted internal policy that had been restricting its own researchers from publishing findings that could inform third-party AI safety work. The reversal came after internal and external pushback from researchers who argued the policy was counterproductive to both safety progress and Anthropic's stated mission.",
+      "rbtl": "An AI safety company creating policies that inhibit safety research is a contradiction that compounds reputationally — the reversal signals that Anthropic's internal coherence around its mission is being stress-tested, and the Fable shutdown is happening in this same environment of internal friction.",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "openai-acquires-ona",
+      "title": "OpenAI to Acquire Ona for Secure Cloud Execution in Codex",
+      "url": "https://links.tldrnewsletter.com/5Hp3Rk",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "OpenAI announced it will acquire Ona, a startup building secure cloud execution and orchestration infrastructure, to integrate its capabilities directly into the Codex platform. The acquisition adds hardened compute environments and reliable task handoff mechanisms to Codex, addressing a key reliability gap in long-horizon agentic workflows. Pricing and timeline were not disclosed.",
+      "rbtl": "OpenAI buying Ona signals that the bottleneck in agentic coding is no longer model quality but infrastructure reliability — specifically, secure, deterministic execution environments where agents can run untrusted code without manual oversight. Whoever owns that runtime layer captures the most durable value in the agentic stack.",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": "openai-ona",
+      "score": 8,
+      "pinned": false
+    },
+    {
+      "id": "simonw-ai-engineers-not-replaced",
+      "title": "Why AI Hasn't Replaced Software Engineers — and Won't",
+      "url": "https://simonwillison.net/2026/Jun/14/why-ai-hasnt-replaced-software-engineers/",
+      "source": "Simon Willison",
+      "source_type": "rss",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Simon Willison argues that the persistent gap between AI's capability at isolated coding tasks and its failure to replace human engineers comes down to the nature of software work itself: engineering is primarily about judgment, context-setting, and architectural trade-offs, not code generation. AI excels at the latter while humans remain essential for the former, and no current model can reliably navigate the social, organizational, and constraint-management aspects of building production systems.",
+      "rbtl": "This is the clearest short statement of why AI augments rather than automates software engineering: the bottleneck is always the judgment layer above the code, and that layer is exactly where current LLMs are weakest. The implication for AI-in-design-engineering contexts is that tools should be optimizing for human judgment amplification, not task automation.",
+      "first_seen": "2026-06-14",
+      "last_seen": "2026-06-14",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "xiaomi-mimo-code",
+      "title": "Xiaomi MiMo Code Beats Claude Code at Ultra-Long 200-Step Tasks",
+      "url": "https://venturebeat.com/technology/xiaomis-new-open-source-agentic-ai-coding-harness-mimo-code-beats-claude-code-at-ultra-long-200-step-tasks",
+      "source": "TLDR AI (email) / VentureBeat",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Xiaomi released MiMo Code, an open-source agentic AI coding harness that outperforms Claude Code on benchmark tasks requiring 200+ sequential steps. MiMo Code uses a novel 'multi-intention, multi-output' architecture that breaks long-horizon coding tasks into structured sub-intentions before executing, reducing error accumulation across complex multi-file operations.",
+      "rbtl": "The benchmark-beating claim matters less than the architecture insight: structured sub-intention decomposition before execution is likely the right approach for long-horizon agentic tasks, and if Xiaomi's open-source approach catches on it will pressure Anthropic to expose more of Claude Code's internal planning state to developers.",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "andrew-trask-frontier-ai",
+      "title": "Breaking: Today's Frontier AI Companies Face a Structural Dilemma",
+      "url": "https://andrewtrask.substack.com/p/breaking-todays-frontier-ai-companies",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "Andrew Trask, OpenMined founder and privacy-preserving ML researcher, argues that frontier AI companies face a structural dilemma: they must train on increasingly sensitive data to stay competitive, while simultaneously claiming to protect that data. The piece maps the tension between capability scaling and the privacy/security constraints that enterprise and government customers increasingly require.",
+      "rbtl": "Trask's frame is sharper than most policy commentary: the frontier labs' business models are structurally dependent on data practices that their enterprise customers cannot permit. That gap doesn't close gradually — it resolves either through technical breakthroughs (federated/private training) or regulatory forcing functions.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "ai-policy-2026",
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "nngroup-context-architecture",
+      "title": "Context Architecture: The Next Discipline for AI Product Design",
+      "url": "https://www.nngroup.com/articles/context-architecture/",
+      "source": "NN/g / TLDR Design (email)",
+      "source_type": "rss",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "NN Group argues that AI product design is evolving from prompt engineering to 'context architecture' — the discipline of organizing instructions, knowledge, tools, memory, and state so that autonomous AI systems retrieve the right information and behave reliably. The piece applies classic information architecture principles (hierarchy, labeling, taxonomy) to the design of AI agent contexts, treating it as the highest-leverage skill for AI product designers building complex multi-step AI systems.",
+      "rbtl": "Context architecture as a UX discipline is the most direct throughline between tacit-knowledge research and mainstream AI design practice: the same problem of capturing and structuring expert context that makes an AI agent reliable in one domain is the problem that makes expert knowledge transferable in engineering. This is the design challenge worth Douglas's closest attention.",
+      "first_seen": "2026-06-13",
+      "last_seen": "2026-06-13",
+      "cluster": null,
+      "score": 8,
+      "pinned": false
+    },
+    {
+      "id": "nngroup-ai-era-critique",
+      "title": "The Core Skill of Design in the AI Era: Critique",
+      "url": "https://www.nngroup.com/articles/ai-era-critique/",
+      "source": "NN/g",
+      "source_type": "rss",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "NN Group argues that critique — the structured, evidence-grounded evaluation of design decisions — is the skill that AI tools amplify least and designers must therefore strengthen most. As AI handles more generative tasks (copywriting, layout, prototyping), the human value-add concentrates in knowing whether what was generated is actually good and why, which requires a well-developed critical vocabulary.",
+      "rbtl": "The move from generation to critique as the primary human design skill maps cleanly onto what's happened in software engineering: the engineer's job is now mostly reviewing AI output, not writing from scratch. Both fields are converging on the same human-AI pairing structure.",
+      "first_seen": "2026-06-13",
+      "last_seen": "2026-06-13",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "emerging-ai-loop-engineering",
+      "title": "Loop Engineering: Why Every AI Engineer Is Learning It",
+      "url": "https://emergingai.substack.com/p/loop-engineering-why-every-ai-engineer",
+      "source": "Emerging AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "Emerging AI argues that the shift from writing prompts to designing loops — the decision structure, retry logic, and verification checkpoints that guide an agent across multi-step tasks — is the fundamental skill transition for AI engineers. Loop engineering is presented as a meta-layer above prompting: rather than optimizing individual prompt text, practitioners define the loop architecture that makes agent outcomes reliable and auditable across complex workflows.",
+      "rbtl": "This framing maps directly onto how Douglas uses Claude Code with workflows — the value of the work is in the loop structure that makes outcomes reliable and auditable, not the individual prompt. The practitioners who build repeatable loop architectures will dominate the next phase of AI-augmented engineering work.",
+      "first_seen": "2026-06-11",
+      "last_seen": "2026-06-11",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "emerging-ai-claude-md-guide",
+      "title": "Learn Markdown Files: CLAUDE.md, AGENTS.md, SKILL.md and More",
+      "url": "https://emergingai.substack.com/p/learn-markdown-files-claudemd-agentsmd",
+      "source": "Emerging AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "ai"
+      ],
+      "summary": "Emerging AI surveys the emerging convention of using structured markdown files (CLAUDE.md, AGENTS.md, SKILL.md) to give AI coding assistants persistent context, behavioral rules, and skill definitions. The piece explains when each file type is appropriate and how the combination of these files enables durable, session-independent agent behavior for complex codebases.",
+      "rbtl": "",
+      "first_seen": "2026-06-11",
+      "last_seen": "2026-06-11",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "figma-web-capture-extension",
+      "title": "Figma Chrome Extension: Capture Webpages as Editable Figma Layers",
+      "url": "https://www.figma.com/release-notes/?title=figma-chrome-extension",
+      "source": "TLDR Design (email) / Figma",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "Figma released a Chrome extension that captures any live webpage and brings it into Figma as fully editable layers — not a static screenshot, but a structured design file that mirrors the page's visual structure. The extension is designed for competitive research, design audits, and rapid prototyping workflows where designers need to work with live web content as a starting point.",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "figma-mcp",
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "design-system-as-promise",
+      "title": "Every Component in Your Design System Is a Promise",
+      "url": "https://blog.murphytrueman.com/every-component-in-your-design-system-is-a-promise/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "design"
+      ],
+      "summary": "Murphy Trueman argues that design system components are not just reusable building blocks — they are contractual promises to users, developers, and stakeholders about how a product will behave. Treating components as promises (with explicit acceptance criteria, documented edge cases, and versioned contracts) creates design systems that AI tools can reason about reliably. The piece introduces uSpec, a lightweight specification format for describing component behavior in natural language.",
+      "rbtl": "The 'component as contract' framing is directly relevant to AI-readable design systems: if components carry machine-readable behavioral specifications, AI agents can validate implementations against them — collapsing the gap between design intent and code behavior. This is an early-stage signal of where design engineering tooling is heading.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "openrouter-fusion-api",
+      "title": "OpenRouter Fusion: Multi-Model Routing with Automatic Fallback",
+      "url": "https://openrouter.ai/openrouter/fusion",
+      "source": "HN Frontpage",
+      "source_type": "forum",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "OpenRouter launched Fusion, a routing layer that automatically selects the best available model for a given request based on cost, latency, and capability, with automatic fallback if a model is unavailable. Fusion appeared on HN and surfaced as especially timely given the Anthropic Fable/Mythos shutdown — an API that routes around model unavailability has obvious appeal when flagship models can disappear overnight.",
+      "rbtl": "Fusion's timing is almost certainly opportunistic: the Fable shutdown is the best possible advertisement for a multi-model routing product. If the export-control pattern repeats with other models, infrastructure that abstracts over individual model availability becomes essential rather than optional.",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "fox-buys-roku",
+      "title": "Fox to Acquire Roku in Streaming Consolidation Deal",
+      "url": "https://www.wsj.com/business/deals/fox-roku-deal-f6e564f9",
+      "source": "HN Frontpage / WSJ",
+      "source_type": "forum",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "Fox Corporation announced a deal to acquire Roku, the connected TV platform with over 80 million active accounts. The acquisition gives Fox direct control over a major streaming hardware and software distribution platform, positioning it to compete with Amazon Fire TV and Apple TV in the living-room OS wars.",
+      "rbtl": "",
+      "first_seen": "2026-06-13",
+      "last_seen": "2026-06-13",
+      "cluster": null,
+      "score": 7,
+      "pinned": false
+    },
+    {
+      "id": "we-stopped-clicking-ai-internet",
+      "title": "We Stopped Clicking, and AI Became the Internet",
+      "url": "https://links.tldrnewsletter.com/Ste7Uc",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "emerging-ai-50-claude-prompts",
+      "title": "My 50-Prompt Claude Library with Anthropic-Level Engineering",
+      "url": "https://emergingai.substack.com/p/my-50-prompt-claude-library-with",
+      "source": "Emerging AI (email)",
+      "source_type": "email",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-11",
+      "last_seen": "2026-06-11",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "apple-icon-composer-2",
+      "title": "Apple Icon Composer 2 and SF Symbols 8 Now Available as Betas",
+      "url": "https://9to5mac.com/2026/06/12/icon-composer-2-and-sf-symbols-8-now-available-as-betas/",
+      "source": "TLDR Design (email) / 9to5Mac",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": "apple-wwdc26",
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "apple-siri-missing-wwdc",
+      "title": "Apple's Siri Third-Party AI Extensions Quietly Missing from WWDC",
+      "url": "https://thenextweb.com/news/apple-siri-extensions-third-party-ai-missing-wwdc",
+      "source": "TLDR AI (email) / The Next Web",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "apple-wwdc26",
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "google-gemini-skills-marketplace",
+      "title": "Google Is Building a Skills Marketplace for Gemini Business",
+      "url": "https://www.testingcatalog.com/google-is-working-on-skills-marketplace-for-gemini-business/",
+      "source": "TLDR AI (email)",
+      "source_type": "email",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "ai-accessibility-test",
+      "title": "Can Your AI Pass the Accessibility Test?",
+      "url": "https://www.aaron-gustafson.com/notebook/can-your-ai-pass-the-accessibility-test/",
+      "source": "TLDR Design (email)",
+      "source_type": "email",
+      "topic": "design",
+      "topics": [
+        "design",
+        "ai_in_design"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "iroh-1-0",
+      "title": "Iroh 1.0: Dial Keys, Not IPs",
+      "url": "https://www.iroh.computer/blog/v1",
+      "source": "HN Frontpage",
+      "source_type": "forum",
+      "topic": "tech",
+      "topics": [
+        "tech"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-13",
+      "last_seen": "2026-06-13",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "vercel-30min-functions",
+      "title": "Vercel Functions Can Now Run Up to 30 Minutes",
+      "url": "https://vercel.com/changelog/vercel-functions-can-now-run-up-to-30-minutes",
+      "source": "Vercel",
+      "source_type": "rss",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design",
+        "tech"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-12",
+      "last_seen": "2026-06-12",
+      "cluster": null,
+      "score": 6,
+      "pinned": false
+    },
+    {
+      "id": "fable-80-minigames",
+      "title": "Show HN: I Built 80 Mini-Games Using Fable Before It Was Shut Down",
+      "url": "https://minigames.world/en",
+      "source": "HN Show HN",
+      "source_type": "forum",
+      "topic": "ai",
+      "topics": [
+        "ai"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-15",
+      "last_seen": "2026-06-15",
+      "cluster": "anthropic-fable-shutdown",
+      "score": 5,
+      "pinned": false
+    },
+    {
+      "id": "paca-jira-ai-collab",
+      "title": "Paca: Lightweight Jira Alternative Built for Human-AI Collaboration",
+      "url": "https://github.com/Paca-AI/paca",
+      "source": "HN Show HN",
+      "source_type": "forum",
+      "topic": "ai_in_design",
+      "topics": [
+        "ai_in_design"
+      ],
+      "summary": "",
+      "rbtl": "",
+      "first_seen": "2026-06-13",
+      "last_seen": "2026-06-13",
+      "cluster": null,
+      "score": 5,
       "pinned": false
     }
   ],
