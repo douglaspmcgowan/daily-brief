@@ -12,4 +12,4 @@ This generated view contains variable names and operating metadata only. Secret 
 | `VERCEL_TOKEN` | Deployment credential for the reviewed workflow | Vercel | deployment | Douglas | on compromise or member change | GitHub Actions or the Vercel CLI | declared |
 
 Canonical source: `secret-manifest.json`
-Refresh: `C:\Users\dougl\.agents\tools\Update-SecretManifest.cmd -Repository <repo>`
+Refresh: `%USERPROFILE%\.agents\tools\Update-SecretManifest.cmd -Repository <repo>`
