@@ -188,3 +188,74 @@ Dark mode moved from two per-component overrides (`.summary`, `mark.hl`) to toke
   keyboard `Tab` proving the focus ring paints 2px solid `rgb(200,72,43)`, dark and light both
   honouring the OS scheme, and reduced motion zeroing every transition and the one animation.
 - `npm test` and `npm run typecheck` exist. **`build` still does not**, for the reason in stage 1.
+
+## 2026-09-27 | App repair, stage 2 — independent re-verification and one residual fix
+
+Stage 2 had already landed (`d236ae9`). This pass re-ran every proving command rather than trusting the
+entry above, re-derived the floor row, and closed the one advisory that was left open.
+
+### Every claim re-measured
+
+| Check | Command | Exit | Result |
+|---|---|---|---|
+| typecheck | `npx tsc --noEmit` | 0 | clean |
+| tests | `npx playwright test` | 0 | 5 passed — axe, focus ring, dark-from-OS, light default, reduced motion |
+| lint | `git diff --check` | 0 | clean |
+| secrets | `gitleaks detect` | 0 | no leaks, 22 commits |
+| generator parity | regenerate into a scratch root, compare `<style>` and `<script>` | — | **byte-identical** to the committed `index.html`. The splice in `d236ae9` is what the generator emits, not a hand-edit that drifted from it. |
+
+Floor row, re-derived per generated page (`index.html`; `digest.html` still `cmp` equal):
+
+| Column | Baseline | Now |
+|---|---|---|
+| use-site hex literals | 22 | **0** (23 unique hex remain, every one a `--token:` declaration in `:root` or a dark override) |
+| use-site `px` font sizes | 23 distinct / 82 decls | **0** — all 82 are `var()` |
+| custom properties | 8 | **46** |
+| `!important` | 4 | **0** |
+| `:focus-visible` | 0 | **7** |
+| `prefers-color-scheme` | 0 | **2** |
+| `prefers-reduced-motion` | 0 | **1** |
+| `transition` | 16 | 18 |
+| `@keyframes` | 1 | 1 |
+| `@container` / `clamp(` | 0 / 0 | 0 / 0 — both are type-scale and layout decisions, so both are visual and stay in the report |
+
+No column is worse than the baseline.
+
+### The token layer is now proven by machine diff, not by a hand-copied table
+
+`getComputedStyle` over 16 selectors and 19 properties, 1440x900, `colorScheme: 'light'`, headless
+Chromium, run against `git show master:index.html` and against the branch's `index.html`, then `diff`ed
+as JSON. **Exactly three selectors differ, and all three are the documented `~/.agents/DESIGN.md` fixes:**
+
+- `.rbtl-label` `opacity` `0.85` → `1` — WCAG AA, 3.71:1 → 4.68:1
+- `.topic-progress` `opacity` `0.85` → `1` — WCAG AA, 3.88:1 → 5.40:1
+- `.reading-pane` `border-left` `2px solid` → none — § Components, elevation declared once; the shadow carries it
+
+Every other colour, font size, family, weight, line-height, radius, padding, margin, shadow, letter-spacing,
+display, gap and size is identical, and the DOM shape is identical (80 `.item`, 5 pills, 215 links,
+411 buttons, 11 `details`). The token extraction moved no pixel.
+
+### One residual fix
+
+`npm audit fix` — transitive `form-data` `4.0.5` → `4.0.6`, clearing GHSA-hmw2-7cc7-3qxx (high, CRLF
+injection). `package-lock.json` only; no direct dependency changed and both direct pins stay exact.
+`npm audit` now reports **zero high, zero critical**.
+
+`@mozilla/readability` `0.5.0` stays. Its remaining advisory is **low** (ReDoS, GHSA-3p6v-hrg8-8qj7) and
+the fix is `0.6.0`, a breaking major for a `0.x` package, in the one file that is a deployed Vercel
+serverless entry point with no way to exercise the deployment from here. Trading a working reader for a
+low advisory fails the stopping rule.
+
+### Slop detector, and why nothing came of it
+
+`detect.mjs --json index.html` returns three `slop` hits. None is executable under this run's boundary:
+
+- **`side-tab`, `.pane-content blockquote { border-left:3px solid var(--anchor) }`** — a left rule on a
+  `blockquote` is the oldest legitimate use of the property, not the accent bar on a card, list item or
+  callout that `craft-floor.md` bans. Judged a false positive; changing it would be a visual decision.
+- **`flat-type-hierarchy`** — collapsing the type scale changes text size. Visual, reported not executed.
+- **`marketing-buzzword`, "Best-in-class story clustering"** — it lives in `corpus.json:1919` as a curated
+  source note. That is product data, not chrome copy.
+
+§ Headings and titles was checked mechanically across every `button`, `h1`–`h4`, `th`, `summary` and
+`label` in the rendered page: zero terminal periods.
