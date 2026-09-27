@@ -16,6 +16,12 @@ Two commands sit behind it, and neither is needed just to look at the digest:
 |---|---|---|
 | `npm install` | Installs `jsdom` and `@mozilla/readability` | Only for `api/reader.js`, the in-page article reader, which runs on Vercel rather than locally |
 | `python build_digest.py` | Re-renders `index.html`, `digest.html` and `Latest Digest.md` from `corpus.json` | After new stories land in the corpus |
+| `npm test` | Playwright: `axe` on the primary surface, the keyboard focus ring, light and dark from the OS preference, reduced motion | After any change to the page's CSS or browser JavaScript |
+| `npm run typecheck` | `tsc --noEmit` over `api/reader.js` under `checkJs` + `strict` | After any change to the reader endpoint |
+
+Runtimes are pinned: `.nvmrc` (Node 22, matching `engines.node`) and `.python-version` (3.13).
+There is deliberately **no `build` script** — Vercel would run it on deploy and re-render the page
+against a stale corpus. See the note below.
 
 **`build_digest.py` prunes by wall-clock date.** Running it against a corpus older than its retention windows drops almost everything: on 2026-09-26 a rebuild of the 2026-06-15 corpus kept 10 items and pruned 101. Refresh the corpus first, through `/news-digest` in Claude Code, or the rebuild will empty the page.
 

@@ -105,3 +105,86 @@ An empty slot is the finding, not an omission.
 4. TypeScript: `api/reader.js` is the only source file in scope — one file, CommonJS, no build step.
 5. Tests: no Playwright suite exists, so the axe assertion needs one created.
 6. **Do not add a `build` script to `package.json`.** Vercel auto-runs a `build` script for a project with no framework preset, and `python build_digest.py` on a deploy would prune the stale corpus and ship an empty page. `start` was added; `build` deliberately was not.
+
+## 2026-09-27 — App Repair stage 2: the non-visual floor, applied in place
+
+`BASELINE` verdict, so the framework stayed where it was and the floor went on top of it. Every CSS and
+browser-JS change landed in `build_digest.py`, which holds the page's whole stylesheet and script as
+f-strings. `index.html` and `digest.html` are generated output and were updated by splicing the
+regenerated `<style>` and `<script>` blocks in, because a full rebuild prunes the stale 2026-06-15
+corpus and would have emptied the page (README, "prunes by wall-clock date"). The spliced blocks are
+byte-identical to what the generator emits, and the two files still `cmp` equal.
+
+### Floor row, per generated page
+
+| Column | Before | After |
+|---|---|---|
+| hex literals at a use site | 22 | **0** |
+| unique hex values in the file | 22 | 23 (all of them token declarations in `:root`; the extra one is `--anchor-deep`) |
+| `px` font sizes at a use site | 82 declarations, 23 distinct | **0** (82 declarations, all `var()`; four `em` values remain) |
+| custom properties | 8 | **46** |
+| `!important` | 4 | **0** |
+| `:focus-visible` | 0 | **7 selectors in one rule** |
+| `prefers-color-scheme` | 0 | **1 CSS block + 2 `matchMedia` reads** |
+| `prefers-reduced-motion` | 0 | **1** |
+| `@container` / `clamp(` | 0 / 0 | 0 / 0 (unchanged — both are visual decisions) |
+| `transition` | 16 | 18 |
+| `@keyframes` | 1 | 1 |
+| size | 239 KB | 242 KB |
+
+### The token extraction is proven, not asserted
+
+Computed styles at 1440x900, light scheme, before and after, all identical: `body`
+`rgb(29,26,22)` on `rgb(246,243,236)` at 16px; `.mast-title` 54px; `.pill` `rgb(29,26,22)` /
+`rgb(246,243,236)` / 999px / 13.5px; `.item` `rgb(255,253,248)` / 10px / `14px 16px`; `#q`
+`rgb(255,253,248)` / 8px; `.whatsnew` `rgb(243,221,212)` / 12px; `.summary` `rgb(58,53,45)` / 15px.
+DOM shape identical too: 80 `.item`, 5 pills, 215 links, 411 buttons, 11 `details`.
+
+Both `!important` removals were measured under a real hover rather than reasoned about:
+`.read-btn:hover` still computes `opacity 1`, and `.dismiss-btn:hover` still computes
+`rgb(200,72,43)` background, `rgb(255,255,255)` text and `rgb(200,72,43)` border.
+
+### Four deliberate visible changes, each forced by a rule in `~/.agents/DESIGN.md`
+
+These are not taste. Each one was a measured floor failure.
+
+- `.whatsnew h2` was `--anchor` on `--anchor-soft`: **3.64:1**, below WCAG AA. Now `--anchor-deep`
+  (`#a8391f` light, `#e06750` dark), **4.96:1**.
+- `.rbtl-label` carried `opacity:.85` over the card: **3.71:1**. Opacity dropped; full `--anchor` on
+  `--card` is **4.68:1**.
+- `.topic-progress` carried `opacity:.85`: its label measured **3.88:1**. Opacity dropped, **5.40:1**.
+- `.pill .pc` carried `opacity:.6`: **4.38:1**. Raised to `.65`, **5.18:1**.
+
+Two more, from the same file:
+
+- `.cluster.focused > .item.lead` used `border-left:3px solid var(--anchor)` — the thick coloured
+  left bar `DESIGN.md` § Anti-default names as the single most recognisable machine-made tell. It is
+  now a 2px inset ring, which also removes the `padding-left:13px` that existed only to cancel the
+  border's layout shift.
+- `.reading-pane` declared elevation twice, a 2px border under a wide soft shadow — the "ghost card"
+  § Components bans. The border is gone; the shadow carries the elevation.
+
+Dark mode moved from two per-component overrides (`.summary`, `mark.hl`) to token overrides, per
+§ Performance, "Express dark mode through tokens rather than per-component overrides".
+
+### Everything else
+
+- Dependency pins: `@mozilla/readability ^0.5.0` → `0.5.0`, `jsdom ^24.1.0` → `24.1.3` (the version
+  already resolved in `package-lock.json`).
+- Runtime pins: `engines.node ">=18"` → `"22.x"`, plus `.nvmrc` (`22`) and `.python-version` (`3.13`).
+  22 rather than the local 24 because `api/reader.js` runs on Vercel's Node runtime and 22 is its LTS.
+- TypeScript: the app's core is Python, and `index.html` / `digest.html` are generated output, so the
+  rename-to-`.ts` conversion was skipped. `api/reader.js` is the only JavaScript source and it is a
+  deployed Vercel serverless entry point; renaming it would change the deployed function's module
+  shape with no way to test the deployment from here. Instead `tsconfig.json` type-checks it under
+  `checkJs` with `strict: true`, and `npx tsc --noEmit` exits 0. Seven errors were fixed: `req`/`res`
+  gained a JSDoc typedef of the shape they actually use, `isSafeUrl` gained a `string` parameter, and
+  four `catch (err)` sites now go through `errName`/`errMessage` helpers instead of reaching into an
+  `unknown`. Two behaviour changes fall out, both narrowing: a non-`Error` throw now reports
+  `String(err)` instead of `undefined`, and a repeated `?url=` query parameter (an array) is now a
+  400 instead of being string-coerced into the SSRF check.
+- Tests: there was no suite. `tests/floor.spec.js` plus `playwright.config.js` add five, all passing —
+  `@axe-core/playwright` with zero serious or critical violations on the primary surface, a real
+  keyboard `Tab` proving the focus ring paints 2px solid `rgb(200,72,43)`, dark and light both
+  honouring the OS scheme, and reduced motion zeroing every transition and the one animation.
+- `npm test` and `npm run typecheck` exist. **`build` still does not**, for the reason in stage 1.
