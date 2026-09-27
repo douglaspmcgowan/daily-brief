@@ -41,8 +41,8 @@ stylefiles=2 KB=481 unique-hex=22 font-sizes=23 custom-props=8 transition=32 @ke
 The roster row in `APP-REPAIR-SPEC.md` reads `22/23/8/4/0/0`. It reproduces exactly.
 
 `stylefiles=2` is `index.html` and `digest.html`, which are byte-identical (`cmp` reports no difference)
-and are both generated. `!important=4` is 2 occurrences counted twice — `.read-btn:hover` and
-`.dismiss-btn:hover`, at `build_digest.py:429` and `:438`.
+and are both generated. `!important` is 4 occurrences on 2 lines per generated page (8 across both files): `.read-btn:hover`
+once and `.dismiss-btn:hover` three times, at `build_digest.py:429` and `:438`.
 
 ### Where the CSS actually lives
 
