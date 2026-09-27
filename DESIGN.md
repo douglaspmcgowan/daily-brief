@@ -93,18 +93,55 @@ The full universal rules are `~/.agents/DESIGN.md`. Where a library entry and a 
 
 ## Product-specific typography
 
-- Body:
-- Display:
-- Monospace:
+Every rule below lives in `build_digest.py`'s `<style>` f-string. `index.html` and `digest.html` are
+generated output; editing them directly is a defect.
+
+- Body: the system sans stack — `-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
+  Helvetica, Arial, sans-serif`, `line-height:1.5`. Used for prose, metadata, controls and labels.
+- Display: `Georgia, "Iowan Old Style", "Times New Roman", serif`. A serif display face is the
+  articulated exception § Typography asks for: the product is an editorial news digest, the masthead
+  and story titles carry its register, and neither `Fraunces` nor `Instrument Serif` is used.
+- Monospace: reserved for identifiers only — the reader pane's site name and the keyboard-shortcut
+  keys in the help dialog.
+- Tabular numerals are on wherever counts align: `.pill .pc` and `.topic-ring-label`.
 
 ## Tokens and components
 
-- Record project-specific tokens, established components, and allowed variants.
+One `:root` block holds all 46 custom properties; nothing outside it carries a literal hex, a `px`
+font size or a radius.
+
+- Palette, one warm anchor: `--paper --card --ink --ink-soft --muted --rule --anchor --anchor-deep
+  --anchor-soft --link --on-anchor --warn --highlight --shadow-soft --shadow-firm`.
+- `--anchor-deep` exists only because `--anchor` on `--anchor-soft` measures 3.64:1. Use it for anchor
+  text sitting on an anchor-tinted surface; use `--anchor` everywhere else.
+- Type scale: `--fs-10` through `--fs-54`, named at the values the page already renders. The scale is
+  wider than § Typography's "restrained" — collapsing it changes text size on screen and is a
+  deliberate visual decision that has not been taken. Do not add a new literal; add a token.
+- Radii: `--radius-2` … `--radius-14`, plus `--radius-round` (50%) and `--radius-pill` (999px).
+- Spacing is still literal. Padding and margin here are multi-value shorthands, and a mechanical
+  split into tokens cannot be proven byte-identical, so it was left rather than guessed.
+- Dark mode is token-only. Redefine the palette under `html[data-theme="dark"]` and under
+  `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])`. Never add a
+  per-component dark override.
 
 ## Interaction and accessibility
 
-- Record project-specific states, motion, responsive behavior, and accessibility constraints.
+- Every interactive control takes one focus ring: `outline:2px solid var(--anchor); outline-offset:2px`
+  on `:focus-visible`. There is no second focus treatment, and a coloured left bar is not one.
+- Elevation is declared once per surface. `.item` and `.whatsnew` use a hairline border; the reading
+  pane and the highlight tooltip use a shadow. Never both.
+- `!important` is not used. If a declaration will not win, fix the selector.
+- Every text colour clears WCAG AA on its own background. `tests/floor.spec.js` asserts zero serious
+  or critical `axe` violations on the primary surface and fails the suite otherwise.
+- `prefers-reduced-motion: reduce` zeroes every transition and the one `@keyframes`. It does this
+  through a selector list with matching specificity rather than `!important`.
+- The theme button resolves the OS preference on load and writes `light` or `dark` to
+  `localStorage['digest-theme']`; an explicit choice outranks a later OS change.
 
 ## Exceptions
 
-- Record a universal-rule exception only with the evidence and verifier that justify it.
+- **A Unicode glyph stands in for an icon** on the per-card controls (`✓` on `.read-btn`, and the
+  archive, snooze, save and note controls beside it). `craft-floor.md` bans this. It is unfixed
+  because replacing it means choosing an icon set and redrawing 411 controls, which is a visual
+  decision, not a floor repair. Recorded, not excused.
+- **The type scale has 19 steps.** Named, not collapsed, for the reason above.

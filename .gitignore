@@ -46,3 +46,7 @@ digest-preview.png
 .vercel
 
 node_modules/
+
+# Playwright run artefacts
+test-results/
+playwright-report/
