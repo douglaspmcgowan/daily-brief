@@ -12,6 +12,12 @@ taskstate/
 # here, so a project can acquire this directory without any current tool creating it.
 .claude/state/
 
+# The codex dispatch marker. auto-schedule-codex-poll.js writes it into <repo-root>/.claude/ on
+# PostToolUse for a codex subagent, and its own body tells the session to delete it once the
+# wakeup is scheduled -- so a session that ends before that leaves it behind. Named rather than
+# ignoring `.claude/`, which is a real product configuration directory a project may track.
+.claude/codex-dispatch-pending.json
+
 # Linked worktrees kept inside the repository. A worktree's own files are tracked by ITS checkout,
 # never by this one, so an unignored .worktrees/ shows as untracked here and a `git add -A` would
 # commit a second copy of the tree. The convention is one place per repository: agent worktrees go
@@ -28,13 +34,108 @@ taskstate/
 .agents/work/tmp/
 .agents/work/**/*.tmp
 
-# Codex dispatch markers. auto-schedule-codex-poll.js writes this file into the repository root
-# when a Codex subagent is dispatched, as a hard reminder that the soft "schedule a poll" rule was
-# failing to fire. It is per-session, per-dispatch device state that names a task id, and the
-# runtime does not always remove it -- observed 2026-08-16 still present in the working tree after
-# its task had completed, untracked and unignored, where a `git add -A` would commit one session's
-# transient dispatch record into the project's history.
-.claude/codex-dispatch-pending.json
+# Delegate progress chatter is ephemeral and must not become committed branch noise.
+.agents/work/statusboard/
+
+# The lane-hold marker the router writes into every worktree it creates
+# (Invoke-FleetRoute.ps1). The router already skips it as work evidence, but it was not ignored, so
+# the reap guard saw one uncommitted file and refused the pre-authorized reap of every lane
+# worktree -- which is how 48 of them accumulated until the device ran out of disk.
+.agents-hold
+
+# Intake entries are JSON filings, never working trees. Block both the known checkout directory
+# and Git administrative markers at any depth below imports.
+.agents/work/imports/**/filing-worktree/
+.agents/work/imports/**/.git
+.agents/work/imports/**/.git/
+
+# Compiled-assembly cache for WorkScope.psm1's two C# blocks. The module used to re-run the C#
+# compiler on every import -- 742 ms of a ~900 ms import, measured 2026-08-15 under pwsh 7.6.4,
+# paid by every process the task hooks start. It now compiles once to a DLL beside itself, keyed
+# by a hash of the source and the runtime version. Build output, never source: it is rebuilt on
+# demand, differs per machine and per pwsh version, and a committed copy would be loaded as code
+# on someone else's machine.
+.agents/tools/.assembly-cache/
+
+# Work Scope's own authoritative runtime files -- the hash-chained event log, the state it
+# describes, its schema, and the evidence and handoff directories a closed task's receipts live
+# in. A project's OWN earlier or broader pattern (a catch-all `*.jsonl`, `*.json`, or similar) can
+# still swallow these from every commit with nothing reporting it: measured on mission-control,
+# whose `*.jsonl` rule excluded .agents/work/events.jsonl from history entirely, so the chain that
+# authenticates state.json was never committed. THIS NEGATION IS NOT A RELIABLE FIX BY ITSELF: git
+# applies the LAST matching .gitignore line, so a project rule that appears anywhere BELOW this
+# managed block (the common case -- Set-MarkedBlock keeps or writes this block near the top) still
+# wins over the negation below and re-excludes the path. Confirmed by hand: placing this exact
+# negation at the end of this block did not stop `git check-ignore -v` from reporting
+# mission-control's later `*.jsonl` rule as the winner. Keep this as defense-in-depth for the
+# projects where no later rule conflicts, but Test-WorkScopeSchemaProjection.ps1's gitignore-exposure
+# check is the safeguard that actually catches the swallowed case, by running real `git
+# check-ignore` per enrolled project rather than trusting pattern order in the abstract.
+#
+# On 2026-09-02 events.jsonl reached 130 MB in committed history on the harness repository, over
+# GitHub's 100 MB hard limit, blocking all pushes of any branch containing those commits.
+# The event log cannot be tracked at its current size. state.json is its derived, mutable pointer;
+# tracking that half alone moves it across generations on merges and checkout switches while the
+# local log does not move. Keep the pair local rather than manufacturing unreplayable divergence.
+.agents/work/events.jsonl
+.agents/work/event-archives/*.jsonl
+.agents/work/state.json
+# Splice-WorkStateEventChains.ps1 writes a per-splice receipt (renumbered event range, source
+# hashes, merge point) beside the event log it merges; OutputPath must stay under .agents/work
+# so the receipt is device-local runtime evidence like events.jsonl, never tracked history.
+.agents/work/splice-receipts/
+# WS-10/WS-11 (Ws.psm1): lane events and receipts, the inbox, and the interim per-track task files
+# are device-local runtime state like state.json; WS-13 moves the plan to the workscope ref.
+.agents/work/inbox.jsonl
+.agents/work/lanes/
+.agents/work/tracks/
+# Work Scope archive lines (WS-4, Invoke-WorkScopeArchive.ps1) are tier-2 plan data that belongs
+# on the workscope orphan ref (D15, D17), never on master; machine-local like state.json until
+# ws sync carries them.
+.agents/work/archive/
+# The fleet dispatch registry is the same kind of thing as state.json: live, mutable,
+# machine-local runtime state. It records the PID, start time and target directory of every
+# dispatch this machine made, so it is meaningless on any other machine and it changes on
+# every dispatch and every completion -- rewritten by Invoke-FleetRoute.ps1 on every lane open
+# and close, with a sibling lock file. Tracking it would dirty every checkout and would put one
+# machine's in-flight lanes and process table into every other machine's history on each pull.
+.agents/work/fleet-registry.json
+.agents/work/fleet-registry.json.lock
+.agents/work/fleet-registry.json.tmp-*
+# The backburner sidecar PR 589 split out of state.json. Same class as state.json above:
+# local machine state, 2.3 MB of queue, and tracking it would commit one machine's queue over
+# every other machine's on each pull.
+.agents/work/backburner.json
+# Per-worktree generated task views. A linked worktree reads Work Scope state from the main
+# checkout but inherits the ROOT TASK.md frozen at the commit it was created from, so lanes were
+# briefed on work finished days earlier. The views are rendered here instead -- and they must stay
+# untracked for the same reason state.json does: a tracked per-worktree TASK.md rides into that
+# lane's pull request and conflicts with every other lane's copy on landing.
+.agents/work/TASK.md
+.agents/work/BACKBURNER.md
+.agents/work/LOG.md
+.agents/work/PROJECT.md
+.agents/work/TRACKS.md
+!.agents/work/schema.json
+!.agents/work/evidence/
+!.agents/handoffs/
+.impeccable/
+
+# The Codex CLI writes error.log into whatever working directory it is invoked from, so it lands
+# in the root of any repository an agent works in. It is a debug trace, not project content, and
+# it carries the signed-in ChatGPT account id on every startup line -- an identifier that must
+# never be committed. Measured 2026-09-16: an enrolled project had a 2956-line error.log sitting
+# untracked with no ignore rule covering it, one `git add -A` from being published. The harness
+# repository itself already ignores it; every project the harness enrols was missing the rule,
+# because this template never carried it.
+error.log
+# Harness lane scratch is generated runtime debris. Session imports, hook-misfire records, and
+# route briefs are written into each enrolled project worktree and must not make a finished lane
+# unreapable. Keep this scoped to the scratch producers so authored Work Scope state remains
+# governed by its own explicit rules.
+.agents/work/imports/
+.agents/work/misfires/
+.agents/fleet-briefs/
 # agent-harness:project-gitignore:v1:end
 
 __pycache__/
