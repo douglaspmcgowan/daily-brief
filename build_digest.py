@@ -229,16 +229,15 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         actions_html = ""
 
     return f"""<article class="{cls}" data-search="{search_blob}">
-  <div class="item-head">
-    <div class="item-head-main">
-      <a class="title" href="{url}" target="_blank" rel="noopener"{reader_attr}>{title}</a>
-      {new_badge}{pin}{ext_link}
-    </div>
+  <div class="item-head-main">
+    <a class="title" href="{url}" target="_blank" rel="noopener"{reader_attr}>{title}</a>
+    {new_badge}{pin}{ext_link}
+  </div>
+  <div class="item-body">{summ_html}{rbtl_html}</div>
+  <div class="item-rail">
+    <div class="meta"><span class="src">{src}</span><span class="dot" aria-hidden="true">|</span><span class="stype">{stype}</span>{date_html}</div>
     {actions_html}
   </div>
-  <div class="meta"><span class="src">{src}</span><span class="dot" aria-hidden="true">|</span><span class="stype">{stype}</span>{date_html}</div>
-  {summ_html}
-  {rbtl_html}
 </article>"""
 
 
@@ -352,7 +351,7 @@ def build_html(corpus, run_date):
     )
 
     refs_html = render_references_html(references)
-    stamp = run_date.strftime("%A, %B %-d, %Y") if os.name != "nt" else run_date.strftime("%A, %B %d, %Y")
+    stamp = f"{run_date.strftime('%A, %B')} {run_date.day}, {run_date.year}"
 
     return f"""<!doctype html>
 <html lang="en">
@@ -409,7 +408,15 @@ def build_html(corpus, run_date):
   #q {{ font:inherit; width:100%; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12) var(--sp-8) calc(var(--sp-24) + var(--sp-16));
     border:var(--rule-firm); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink); }}
   #q::placeholder {{ color:var(--muted); opacity:1; }}
-  .whatsnew {{ background:transparent; border:0; border-top:var(--rule-double); border-bottom:var(--rule-hair);
+  .front {{ container-type:inline-size; }}
+  .front-grid {{ display:grid; grid-template-columns:minmax(0,1fr); grid-template-areas:"side" "index";
+    column-gap:var(--sp-48); align-items:start; }}
+  .front-grid.solo {{ grid-template-areas:"index"; }}
+  @container (min-width:800px) {{
+    .front-grid {{ grid-template-columns:minmax(0,2fr) minmax(0,1fr); grid-template-areas:"index side"; }}
+    .front-grid.solo {{ grid-template-columns:minmax(0,1fr); grid-template-areas:"index"; }}
+  }}
+  .whatsnew {{ grid-area:index; background:transparent; border:0; border-top:var(--rule-double); border-bottom:var(--rule-hair);
     border-radius:var(--radius-0); padding:var(--sp-16) 0; margin:var(--sp-24) 0; }}
   .whatsnew h2 {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); font-weight:700;
     color:var(--anchor-deep); }}
@@ -424,11 +431,25 @@ def build_html(corpus, run_date):
     padding-top:var(--sp-12); border-top:var(--rule-double); }}
   .topic-h .count {{ font-size:var(--fs-sm); color:var(--muted); font-family:inherit;
     vertical-align:middle; }}
-  .cluster {{ margin:0 0 var(--sp-12); container-type:inline-size; }}
-  .item {{ background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius-0);
-    padding:var(--sp-12) var(--sp-16); margin:0 0 var(--sp-8); }}
-  .item-head {{ display:flex; align-items:flex-start; gap:var(--sp-8); flex-wrap:wrap; }}
-  .item-head-main {{ flex:1 1 240px; min-width:0; display:flex; align-items:baseline; gap:var(--sp-8); flex-wrap:wrap; }}
+  .cluster {{ margin:0; padding:var(--sp-16) 0 var(--sp-8); border-bottom:var(--rule-hair); container-type:inline-size; }}
+  .topic-h + .cluster {{ padding-top:var(--sp-8); }}
+  /* story: unboxed. One column below 800px of its own container; above it a text column and a meta rail. */
+  .item {{ display:grid; grid-template-columns:minmax(0,1fr); column-gap:var(--sp-48);
+    grid-template-areas:"head" "meta" "body" "actions"; margin:0; padding:0; }}
+  .item-head-main {{ grid-area:head; min-width:0; display:flex; align-items:baseline; gap:var(--sp-8); flex-wrap:wrap; }}
+  .item-body {{ grid-area:body; min-width:0; }}
+  .item-rail {{ display:contents; }}
+  .item-rail .meta {{ grid-area:meta; }}
+  .item-rail .card-actions {{ grid-area:actions; }}
+  @container (min-width:800px) {{
+    .item {{ grid-template-columns:minmax(0,var(--measure)) minmax(12rem,1fr);
+      grid-template-areas:"head rail" "body rail"; }}
+    .item-rail {{ display:block; grid-area:rail; align-self:start; }}
+    .item-rail .meta {{ margin-top:0; }}
+    .item-rail .meta > span {{ display:block; }}
+    .item-rail .meta .dot {{ display:none; }}
+    .item-rail .card-actions {{ margin-top:var(--sp-8); flex-wrap:wrap; }}
+  }}
   .title {{ color:var(--ink); text-decoration:none; font-size:var(--fs-md); font-weight:700;
     font-family:var(--font-display); padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0;
     transition:color var(--dur-1) var(--ease-out); }}
@@ -444,9 +465,9 @@ def build_html(corpus, run_date):
   .pin {{ color:var(--anchor); }}
   .meta {{ color:var(--muted); font-size:var(--fs-sm); margin-top:var(--sp-4); }}
   .meta .dot {{ margin:0 var(--sp-4); }}
-  .summary {{ margin:var(--sp-8) 0 0; color:var(--ink); font-size:var(--fs-md); }}
-  .rbtl {{ margin:var(--sp-8) 0 0; font-size:var(--fs-sm); color:var(--muted); font-style:italic; line-height:1.5; }}
-  .rbtl-label {{ font-style:normal; font-weight:700; color:var(--anchor); }}
+  .summary {{ margin:var(--sp-8) 0 0; color:var(--ink); font-size:var(--fs-md); max-width:var(--measure); }}
+  .rbtl {{ margin:var(--sp-8) 0 0; font-size:var(--fs-md); color:var(--muted); font-style:italic; line-height:1.5; max-width:var(--measure); }}
+  .rbtl-label {{ font-style:normal; font-weight:700; color:var(--anchor-deep); }}
   .also-wrap {{ margin:var(--sp-4) 0 0 var(--sp-4); }}
   .also-wrap summary {{ cursor:pointer; color:var(--ink); font-size:var(--fs-sm); line-height:1.6; padding:var(--sp-12) 0; }}
   .also-list {{ margin:var(--sp-8) 0 var(--sp-4); padding-left:var(--sp-16); }}
@@ -462,13 +483,16 @@ def build_html(corpus, run_date):
   .references {{ margin:var(--sp-48) 0 0; border-top:var(--rule-double); padding-top:var(--sp-16); }}
   .references h2 {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-4); }}
   .ref-lead {{ color:var(--muted); font-size:var(--fs-sm); margin:0 0 var(--sp-12); }}
-  .ref-list {{ columns:2; column-gap:var(--sp-24); padding-left:var(--sp-16); }}
+  .references {{ container-type:inline-size; }}
+  .ref-list {{ columns:1; column-gap:var(--sp-24); column-rule:var(--rule-hair); margin:0; padding:0; list-style:none; }}
+  .ref-list li {{ break-inside:avoid; }}
+  @container (min-width:520px) {{ .ref-list {{ columns:2; }} }}
+  @container (min-width:900px) {{ .ref-list {{ columns:3; }} }}
   .ref-note {{ color:var(--muted); font-size:var(--fs-sm); }}
   a {{ color:var(--ink); text-decoration:underline; text-decoration-thickness:1px;
     transition:color var(--dur-1) var(--ease-out); }}
   footer.foot {{ margin-top:var(--sp-32); color:var(--muted); font-size:var(--fs-sm);
     border-top:var(--rule-hair); padding-top:var(--sp-12); }}
-  @media (max-width:680px) {{ .ref-list {{ columns:1; }} }}
   @media (max-width:600px) {{
     .mast-sub {{ font-size:var(--fs-sm); gap:var(--sp-4); }}
     .mast-topics {{ display:none; }}
@@ -480,8 +504,7 @@ def build_html(corpus, run_date):
     .search-row {{ gap:var(--sp-4); }}
     #q {{ min-width:0; font-size:var(--fs-md); }}
     .title {{ line-height:1.35; }}
-    .summary {{ font-size:var(--fs-sm); }}
-    .whatsnew {{ padding:var(--sp-12) var(--sp-12); }}
+    .whatsnew {{ padding:var(--sp-12) 0; }}
     .drag-handle {{ opacity:.35; left:-14px; }}
     .topic-ring {{ width:16px; height:16px; }}
     .topic-ring-label {{ font-size:var(--fs-sm); }}
@@ -494,11 +517,7 @@ def build_html(corpus, run_date):
   .mast-logo-row {{ display:flex; align-items:center; gap:var(--sp-12); }}
   .mast-logo {{ width:44px; height:44px; color:var(--ink); flex-shrink:0; }}
   /* card actions + kanban */
-  .card-actions {{ display:flex; align-items:center; gap:var(--sp-8); flex-shrink:0; margin-left:auto; }}
-  @container (max-width:480px) {{
-    .item {{ padding:var(--sp-12); }}
-    .summary {{ font-size:var(--fs-sm); }}
-  }}
+  .card-actions {{ display:flex; align-items:center; gap:var(--sp-8); }}
   .ico {{ width:1.15em; height:1.15em; fill:currentColor; flex-shrink:0; }}
   /* story actions: borderless 44px squares; toggled on = fill-weight icon + aria-pressed */
   .card-btn {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
@@ -534,8 +553,8 @@ def build_html(corpus, run_date):
   .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:var(--radius-0); }}
   .cluster.dragging {{ opacity:.35; pointer-events:none; }}
   /* keyboard-navigation focus state — a ring, not a coloured left bar (banned) */
-  .cluster.focused > .item.lead {{ outline:2px solid var(--anchor); outline-offset:-1px;
-    background:var(--sheet); transition:background var(--dur-2) var(--ease-out); scroll-margin:var(--sp-64); }}
+  .cluster.focused > .item.lead {{ outline:2px solid var(--anchor); outline-offset:var(--sp-8);
+    transition:outline-color var(--dur-2) var(--ease-out); scroll-margin:var(--sp-64); }}
   /* tooltips */
   [data-tip] {{ position:relative; }}
   [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
@@ -565,7 +584,7 @@ def build_html(corpus, run_date):
     margin-left:var(--sp-4); padding-left:var(--sp-12); }}
   .note-display.visible {{ display:block; }}
   /* insight card */
-  .insight-card {{ margin:var(--sp-24) 0 var(--sp-8); padding:var(--sp-16) var(--sp-24) var(--sp-16); border-radius:var(--radius-0);
+  .insight-card {{ grid-area:side; margin:var(--sp-24) 0; padding:var(--sp-16) 0; border-radius:var(--radius-0);
     background:transparent; border:0; border-top:var(--rule-double); border-bottom:var(--rule-hair); }}
   .insight-quote {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); line-height:1.6;
     color:var(--ink); font-style:italic; }}
@@ -583,11 +602,14 @@ def build_html(corpus, run_date):
     }}
   }}
   /* ── reading pane ──────────────────────────────────────────────────────── */
-  .reading-pane {{ display:none; position:fixed; top:0; right:0; width:40vw; height:100vh;
+  .reading-pane {{ display:flex; visibility:hidden; opacity:0; transform:translateX(16px);
+    position:fixed; top:0; right:0; width:40vw; height:100vh;
     background:var(--sheet); z-index:50;
-    flex-direction:column; box-shadow:0 0 32px var(--shadow); }}
-  .reading-pane.open {{ display:flex; }}
-  body.pane-open .wrap {{ margin-right:calc(40vw + 8px); }}
+    flex-direction:column; box-shadow:0 0 32px var(--shadow);
+    transition:opacity var(--dur-2) var(--ease-in),transform var(--dur-2) var(--ease-in),visibility 0s var(--ease-in) var(--dur-2); }}
+  .reading-pane.open {{ visibility:visible; opacity:1; transform:none;
+    transition:opacity var(--dur-3) var(--ease-out),transform var(--dur-3) var(--ease-out),visibility 0s var(--ease-out); }}
+  body.pane-open .wrap {{ margin-right:calc(40vw + var(--sp-32)); }}
   .pane-toolbar {{ display:flex; align-items:center; padding:var(--sp-8) var(--sp-12); border-bottom:var(--rule-hair);
     gap:var(--sp-8); flex-shrink:0; position:sticky; top:0; background:var(--sheet); z-index:2; }}
   .pane-site {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
@@ -607,7 +629,8 @@ def build_html(corpus, run_date):
     margin:0 0 var(--sp-8); color:var(--ink); }}
   .pane-byline {{ font-size:var(--fs-sm); color:var(--muted); margin-bottom:var(--sp-16); padding-bottom:var(--sp-12);
     border-bottom:var(--rule-hair); }}
-  .pane-content {{ font-size:var(--fs-md); line-height:1.75; color:var(--ink); }}
+  .pane-content {{ font-size:var(--fs-md); line-height:1.75; color:var(--ink); max-width:var(--measure); }}
+  .pane-title, .pane-byline {{ max-width:var(--measure); }}
   .pane-content p {{ margin:0 0 1em; }}
   .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{
     font-family:var(--font-display); margin:1.4em 0 .5em; line-height:1.25; }}
@@ -668,6 +691,7 @@ def build_html(corpus, run_date):
     .drag-handle, .cluster:hover .drag-handle, #theme-btn, .pane-close, .pane-newtab, #hl-btn, .kbd-close,
     .item-head-main, .meta, .summary, .rbtl,
     .topic-ring .ring-fg, .cluster.focused > .item.lead, [data-tip]::after,
+    .reading-pane, .reading-pane.open,
     .pane-loading {{ transition:none; animation:none; }}
     html {{ scroll-behavior:auto; }}
   }}
@@ -710,8 +734,10 @@ def build_html(corpus, run_date):
     <p id="no-results-msg">No stories match.</p>
     <button class="arc-pill" id="clear-filters" type="button">Clear filters</button>
   </div>
-  {insight_html}
-  {whats_new}
+  <div class="front"><div class="front-grid{"" if insight_html else " solo"}">
+    {insight_html}
+    {whats_new}
+  </div></div>
   {''.join(sections)}
   {refs_html}
 
