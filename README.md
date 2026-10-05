@@ -23,7 +23,7 @@ Runtimes are pinned: `.nvmrc` (Node 22, matching `engines.node`) and `.python-ve
 There is deliberately **no `build` script** — Vercel would run it on deploy and re-render the page
 against a stale corpus. See the note below.
 
-**`build_digest.py` prunes by wall-clock date.** Running it against a corpus older than its retention windows drops almost everything: on 2026-09-26 a rebuild of the 2026-06-15 corpus kept 10 items and pruned 101. Refresh the corpus first, through `/news-digest` in Claude Code, or the rebuild will empty the page.
+**`build_digest.py` prunes by wall-clock date.** Running it against a corpus older than its retention windows drops almost everything: on 2026-09-26 a rebuild of the 2026-06-15 corpus kept 10 items and pruned 101. Refresh the corpus first, through `/news-digest` in Claude Code, or the rebuild will empty the page. To re-render a committed corpus without that prune, pass `--run-date YYYY-MM-DD` (for example `--run-date 2026-06-15`); use `--root <scratch copy>` so `corpus.json` and `digests/` are not rewritten.
 
 ## What each run does
 1. Reads `corpus.json` (the persistent store) so it won't re-add what's already there.
