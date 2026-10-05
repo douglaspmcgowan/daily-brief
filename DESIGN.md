@@ -21,7 +21,9 @@ beige-brass-espresso "premium consumer" palette is the same tell; rotate off it.
 - Lock one accent color page-wide, and one gray family per project.
 - Lock one corner-radius system per page. Mix radii only under a rule you can state.
 - Keep one theme per page. Sections do not invert light and dark mid-scroll except as a single deliberate composition device.
-- A section layout family appears at most once per page. At most two consecutive image-text zigzag splits. At most one small uppercase eyebrow label per three sections.
+- A section layout family appears at most once per page. At most two consecutive image-text zigzag splits.
+- **No eyebrow labels and no kicker titles on any page, deck, or artifact.** An eyebrow or kicker is the small uppercase or letter-spaced label above a heading; the heading carries its own weight, so delete the label. Ruled 2026-09-30.
+- **Never use the middle dot `·` (U+00B7, `&middot;`) or the bullet `•` as an inline divider.** Separate inline items with a semicolon, `|`, a comma, or a line break. The em-dash stays banned as a divider. Ruled 2026-09-30.
 - Where a brief reads as an established design system, use that system's official package rather than approximating it. One system per project.
 - The brief wins. Honor a pinned aesthetic even when it is not the choice you would make; redirecting a clear brief toward your own taste is failure, not judgment.
 
@@ -50,15 +52,21 @@ run, against the heading "Interaction and accessibility" a few sections down.
 ### Everything else
 
 - Never use IBM Plex Mono.
+- **Never set anything in a monospace typeface unless it is code.** Not numbers, not labels, not reference tags, not captions, not credits, not timestamps. Monospace outside a code block is a costume that says "technical" and reads as machine output. Numerals that need to line up get `font-variant-numeric: tabular-nums` on the normal face instead.
+- **Never use the middle dot as a separator.** No `·`, and no bullet character standing in for it. Separate with an en dash, a slash, a comma, or plain whitespace with a rule. The middle dot reads as machine-assembled metadata everywhere it appears, which is why it is out on every surface, not just decks.
+- **Never write a line that is only "The" plus a noun.** "The transfer function", "The result", "The problem" — a bare definite noun phrase standing alone is the most common shape in machine-written copy and carries no more information than the noun alone. A title may open with "The"; a label, a bullet or a caption may not be one.
+- **Never title anything as a noun followed by a rhythmic tag.** "The argument, rung by rung", "The story, piece by piece", "Design, from the ground up". The tag adds cadence, not meaning, and it is the tell that a title was composed rather than named. Title the thing by what it is.
+- **A reference shown to a reader must be identifiable without the source document.** A bare bracket number or a bare superscript means nothing to someone who does not have the bibliography open, which on a slide or a poster is everyone. Name the author and year, and put the numbering in a source line if the numbering itself matters.
 - Default to a sans display face. Use serif only with an articulated reason; `Fraunces` and `Instrument Serif` are banned as defaults specifically because they are the common machine-made choice.
 - Hero discipline: the hero fits the first viewport, the headline runs at most two lines, subtext stays under roughly twenty words, and no more than four text elements sit inside it. Trust marks and logo walls go below the hero, never in it.
 - A grid has exactly as many cells as there is content for. Reshape the grid rather than pasting in a blank tile.
 - Every animation names what it communicates — hierarchy, sequence, feedback, or state change. An animation that names nothing gets cut.
 - Reread every visible string before shipping. Never invent a precise-sounding number.
 - Use a proportional body face for prose, navigation, labels, dates, names, and human-readable metadata.
-- Reserve monospace for code, commands, identifiers, timestamps, and genuinely tabular numeric data.
-- Define explicit body, display, and monospace roles. Use tabular numerals on the proportional face for aligned quantities.
+- Reserve monospace for code and commands only, and set it in a code block. Identifiers, timestamps and numeric columns take the proportional face.
+- Define explicit body and display roles, and a monospace role only where the surface actually renders code. Use tabular numerals on the proportional face for aligned quantities.
 - Establish hierarchy through size, weight, spacing, and placement before decoration.
+- **Use all-caps titles, labels, and headings very, very sparingly, only when absolutely necessary.** Uppercase letters and `text-transform: uppercase` both count; the default is sentence case. Ruled 2026-09-30.
 - Give each screen a clear primary action or reading path. Use spacing and alignment to show relationships.
 - Reuse existing tokens and components before adding variants.
 - Cover relevant default, hover, focus, active, disabled, loading, empty, error, and success states.
@@ -74,6 +82,8 @@ run, against the heading "Interaction and accessibility" a few sections down.
 Concrete things to reach for — animation packages and working skeletons, icon kits, typeface pools, design-system install commands and canonical documentation. Read the leaf you need; each one loads on its own.
 
 - **Index** `~/.agents/design/LIBRARIES.md`
+- **Precedence and routing** `~/.agents/design/precedence.md` — which source wins when the universal rules, `impeccable` and a pinned brief disagree, and whether this project's design detector hook is actually wired
+- **Stack templates** `~/.agents/design/STACK-TEMPLATES.md` — seven app-kind templates naming an occupant for all 22 stack slots, and the per-slot deviation rules. The selection itself belongs to `~/.agents/skills/stack/SKILL.md`: six observable questions, the scaffold, and `architecture.md`'s import direction. Enter there before choosing a framework, styling method, primitive layer or component source, and read the result in this file's `## Stack selection`; `solo-review` stack mode measures a real repository against it
 - **Motion** `~/.agents/design/animation/` — `libraries.md`, `sticky-stack.md`, `horizontal-pan.md`, `scroll-reveal.md`, `liquid-glass.md` (frosted glass), `forbidden.md`
 - **Icons** `~/.agents/design/icons/libraries.md`
 - **Type** `~/.agents/design/type/families.md`
@@ -85,6 +95,10 @@ Concrete things to reach for — animation packages and working skeletons, icon 
 - **Pre-ship matrix** `~/.agents/design/preflight.md` — the mechanical finish check for landing, marketing and portfolio surfaces; not dashboards, not product UI
 - **Dashboards and data-dense product UI** `~/.agents/design/dashboards.md` — the full system for the surface this tree used to leave uncovered: the three dashboard kinds and why building one while thinking of another causes most of the mistakes, information architecture and the three reading distances, density targets set against marketing spacing, typography and colour for data (sequential, diverging, categorical and semantic scales), chart selection ordered by the Cleveland-McGill perceptual ranking, chart and table craft, the six states every data region has, filters and URL state, interaction, real-time cadence, renderer choice by point count, the charting-library table, the anti-patterns, and a §18 pre-ship matrix that is the entry above's equivalent for this medium. This line used to say the tree did not own dashboards and pointed at the `/design-review` rubric, which critiques a running app rather than generating one; that gap closed on 2026-08-09
 - **Mobile, touch and responsive** `~/.agents/design/mobile.md` — the medium, not a surface type: the three kinds of mobile thing and why a responsive site should not get a bottom tab bar, the viewport and its moving parts (`svh`/`lvh`/`dvh`, `viewport-fit=cover`, `env(safe-area-inset-*)` with the `max()` fallback that is the part people omit), the three touch-target floors — WCAG 2.2's 24px, Material's 48dp, Apple's 44pt — and which to design to, thumb reach and what it decides, mobile type including the 16px threshold below which iOS zooms a focused input, breakpoints and container queries, navigation patterns, forms with `inputmode`/`autocomplete`/`enterkeyhint` and the keyboard that covers your action bar, the gestures the OS has already reserved, the states that do not exist without a pointer, scrolling, the motion budget on a mid-tier device, images, offline, touch accessibility, the anti-patterns, a §18 pre-ship matrix, and §19 on the four checks emulation cannot answer. It does not restate `impeccable`'s `reference/adapt.md`, which owns converting an existing surface between contexts
+- **Production readiness** `~/.agents/design/ADVISOR-PRODUCTION-READY.md` — what still stands between the design-space explorer and the Work Scope graph and real use
+- **Design-space explorer** `~/.agents/design/design-space-explorer/README.md` — the reusable two-axis combination explorer, its intent, specification, design rules, and inspection record
+- **Design-space manifests** `~/.agents/design/design-spaces/README.md` — the reusable schema for design-space axes, entries, palettes, templates, and generated-axis sources
+- **Mission-control design studies** `~/.agents/design/mission-control/AESTHETIC-OPTIONS.md` and `REPRESENTATIONS.md` — visual-world and information-representation options for that surface
 
 The full universal rules are `~/.agents/DESIGN.md`. Where a library entry and a rule disagree, the rule wins.
 
@@ -93,18 +107,84 @@ The full universal rules are `~/.agents/DESIGN.md`. Where a library entry and a 
 
 ## Product-specific typography
 
-- Body:
-- Display:
-- Monospace:
+Every rule below lives in `build_digest.py`'s `<style>` f-string. `index.html` and `digest.html` are
+generated output; editing them directly is a defect. Regenerate by running the page builder.
+
+- Body: the system sans stack, `line-height:1.5`. Used for prose, metadata, controls and labels.
+- Display: `Georgia, "Iowan Old Style", "Times New Roman", serif`. A serif display face is the
+  articulated exception § Typography asks for: the product is an editorial news digest, and the
+  masthead, topic heads and story titles carry its register. Neither `Fraunces` nor
+  `Instrument Serif` is used.
+- Three sizes only, all tokens: `--fs-sm` 13px (metadata, controls, labels), `--fs-md` 16px (prose,
+  titles, topic heads, reader text) and `--fs-display`, a `clamp(2rem, 6vw, 3.375rem)` used by the
+  masthead alone. Hierarchy among 16px text comes from weight (400, 600, 700), the serif face and a
+  2px ink rule under each topic head. Never add a fourth size; reader-pane article headings are
+  forced to `--fs-md`.
+- Monospace is not used outside `code`/`pre`. Reader site names and shortcut keys take the
+  proportional face with `font-variant-numeric: tabular-nums`.
+- No uppercase text, no eyebrow labels, no middle dot. Inline items are separated by a `|` in a
+  `.dot` span (`aria-hidden`), a comma, or flex gap. "Reading between the lines." is a run-in bold
+  lead, not a label above a heading.
 
 ## Tokens and components
 
-- Record project-specific tokens, established components, and allowed variants.
+One `:root` block holds every custom property; nothing outside it carries a literal hex, a font size
+or a radius.
+
+- Palette, one warm anchor: `--paper --card --ink --ink-soft --muted --rule --anchor --anchor-deep
+  --anchor-soft --link --on-anchor --warn --highlight --shadow-soft --shadow-firm`.
+- `--anchor-deep` exists only because `--anchor` on `--anchor-soft` measures 3.64:1. Use it for anchor
+  text sitting on an anchor-tinted surface; use `--anchor` everywhere else.
+- Spacing: `--sp-4 --sp-8 --sp-12 --sp-16 --sp-24 --sp-32 --sp-48 --sp-64`. Every margin, padding and
+  gap in the stylesheet takes one of them (the reader pane's article body keeps `em` rhythm because
+  it styles third-party markup). Section padding and the wrap gutter use `clamp()` over these tokens.
+- Easing: `--ease-out: cubic-bezier(.22,1,.36,1)`. Every transition names it; none uses `ease` or
+  `linear`.
+- Radii: `--radius-2` through `--radius-14`, plus `--radius-round` and `--radius-pill`.
+- Icons: inline SVG, `.ico` (1em, 2px round stroke, `currentColor`; `.ico.fill` for solid shapes).
+  The set is defined once as `ICON_*` constants in `build_digest.py`. Icon-only controls carry an
+  `aria-label`.
+- Touch targets: every button, input, summary and list link has a box of at least 44 by 44 CSS px.
+  Circular and pill controls reach it with a transparent border around a padding-box background and
+  an inset 1px ring (`box-shadow`), and a negative margin that keeps the old layout footprint. List
+  links are `inline-block` with 12px block padding balanced by the same negative margin. Adjacent
+  card controls keep an 8px gap.
+- `.cluster` is a `container-type: inline-size` container; `.item` adapts through `@container`, not a
+  viewport query. The `600px` media query now only handles the pill-row scroll and the search row.
+- The pill row scrolls sideways inside its own box on narrow screens; the page itself never does.
+- Dark mode is token-only. Redefine the palette under `html[data-theme="dark"]` and under
+  `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])`. Never add a
+  per-component dark override.
+- Head: unique `<title>`, favicon, `theme-color` (light and dark), `og:title`, `og:description` and
+  `og:image` (`/og-image.png`, 1200 by 630, committed at the repo root).
+- One `h1` per surface (the masthead). The reader pane's article title is an `h2`.
+- Empty states: a lane with no stories says so inline; a filter, search, Saved or Archive view with
+  nothing in it shows `#no-results` with the reason and a Clear filters button.
 
 ## Interaction and accessibility
 
-- Record project-specific states, motion, responsive behavior, and accessibility constraints.
+- Every interactive control takes one focus ring: `outline:2px solid var(--anchor); outline-offset:2px`
+  on `:focus-visible`. There is no second focus treatment, and a coloured left bar is not one.
+- Elevation is declared once per surface. `.item` and `.whatsnew` use a hairline border; the reading
+  pane and the highlight tooltip use a shadow. Never both.
+- `!important` is not used. If a declaration will not win, fix the selector.
+- Every text colour clears WCAG AA on its own background. `tests/floor.spec.js` asserts zero serious
+  or critical `axe` violations on the primary surface and fails the suite otherwise. The same file
+  asserts no sideways scroll at 375, 768 and 1440, 44px targets, at most three font sizes, one `h1`,
+  head tags, the empty state, and no middle dot, uppercase or monospace in chrome.
+- `prefers-reduced-motion: reduce` zeroes every transition and the one `@keyframes`. It does this
+  through a selector list with matching specificity rather than `!important`.
+- The theme button resolves the OS preference on load and writes `light` or `dark` to
+  `localStorage['digest-theme']`; an explicit choice outranks a later OS change.
 
 ## Exceptions
 
-- Record a universal-rule exception only with the evidence and verifier that justify it.
+- **Marketing-buzzword detector hit.** The phrase "Best-in-class" in the reference list is the note
+  `corpus.json` stores for a third-party dashboard; it is content, not product copy, and `corpus.json`
+  is outside the interface source. Justified, not removed.
+- **`og:image` is root-relative.** Open Graph wants an absolute URL and no deploy domain is recorded
+  for this repository (`vercel.json` names none). Set the absolute URL when one exists.
+- **Eleven radii.** The radius scale was named, not collapsed; reducing it moves corners on screen and
+  is a separate visual decision.
+- **The `.insight-card` and `.whatsnew` tinted callouts and the insight gradient** stay: they are the
+  product's two summary surfaces and the visual identity the lane was told to keep.

@@ -56,6 +56,42 @@ PALETTE_DARK = {
 }
 
 
+def _palette_tokens(p: dict) -> str:
+    """Render one palette as custom-property declarations, at its current values."""
+    return (f"--paper:{p['paper']}; --card:{p['card']}; --ink:{p['ink']};\n"
+            f"    --muted:{p['muted']}; --rule:{p['rule']}; --anchor:{p['anchor']};\n"
+            f"    --anchor-soft:{p['anchor_soft']}; --link:{p['link']};")
+
+
+# --anchor-deep is --anchor darkened until it clears 4.5:1 on --anchor-soft:
+# #c8482b measures 3.64:1 there, #a8391f measures 4.96:1 (axe, 2026-09-27).
+LIGHT_TOKENS = _palette_tokens(PALETTE) + "\n    --ink-soft:#3a352d; --highlight:#fff176; --anchor-deep:#a8391f;"
+DARK_TOKENS = _palette_tokens(PALETTE_DARK) + "\n    --ink-soft:#c8bfb0; --highlight:#4a3d00; --anchor-deep:#e06750;"
+
+ICON_OPEN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'
+ICON_EXT = ICON_OPEN + '<path d="M7 17L17 7M9 7h8v8"/></svg>'
+ICON_BOOKMARK = ICON_OPEN + '<path d="M6 3h12v18l-6-4-6 4z"/></svg>'
+ICON_SNOOZE = ICON_OPEN + '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>'
+ICON_ARCHIVE = ICON_OPEN + '<path d="M4 7h16v4H4zM6 11v9h12v-9M10 15h4"/></svg>'
+ICON_CHECK = ICON_OPEN + '<path d="M5 12.5l4.5 4.5L19 7"/></svg>'
+ICON_EDIT = ICON_OPEN + '<path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/></svg>'
+ICON_CLOSE = ICON_OPEN + '<path d="M6 6l12 12M18 6L6 18"/></svg>'
+ICON_STAR = '<svg class="ico fill" viewBox="0 0 24 24" role="img" aria-label="Pinned"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'
+ICON_GRIP = '<svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>'
+
+# Three type sizes and a spacing scale, all tokens (compliance pass, 2026-10-04).
+# The old 19-step scale is gone: small, body, and one fluid display size.
+SCALE_TOKENS = """--fs-sm:13px; --fs-md:16px; --fs-display:clamp(2rem, 6vw, 3.375rem);
+    --sp-4:4px; --sp-8:8px; --sp-12:12px; --sp-16:16px; --sp-24:24px; --sp-32:32px;
+    --sp-48:48px; --sp-64:64px;
+    --ease-out:cubic-bezier(.22,1,.36,1);
+    --radius-2:2px; --radius-3:3px; --radius-4:4px; --radius-5:5px; --radius-6:6px;
+    --radius-7:7px; --radius-8:8px; --radius-10:10px; --radius-12:12px;
+    --radius-14:14px; --radius-round:50%; --radius-pill:999px;
+    --on-anchor:#fff; --warn:#b8960c;
+    --shadow-soft:rgba(0,0,0,.10); --shadow-firm:rgba(0,0,0,.2);"""
+
+
 def today() -> dt.date:
     return dt.date.today()
 
@@ -134,40 +170,40 @@ def _age_label(first_seen_date, run_date):
 
 
 def render_item_html(it, lead=True, cluster_key="", run_date=None):
-    new_badge = '<span class="badge">NEW</span>' if it.get("is_new") else ""
+    new_badge = '<span class="badge">New</span>' if it.get("is_new") else ""
     src = esc(it.get("source", ""))
     stype = esc(it.get("source_type", ""))
     title = esc(it.get("title", "(untitled)"))
     url = esc(it.get("url", "#"))
     summary = esc(it.get("summary", ""))
-    pin = '<span class="pin" title="pinned / evergreen">★</span>' if it.get("pinned") else ""
+    pin = f'<span class="pin" title="pinned / evergreen">{ICON_STAR}</span>' if it.get("pinned") else ""
     cls = "item lead" if lead else "item also"
     rbtl = esc(it.get("rbtl", ""))
     search_blob = esc(" ".join([it.get("title", ""), it.get("summary", ""),
                                 it.get("rbtl", ""), it.get("source", ""),
                                 " ".join(it.get("topics", []))])).lower()
     summ_html = f'<p class="summary">{summary}</p>' if (summary and lead) else ""
-    rbtl_html = (f'<p class="rbtl"><span class="rbtl-label">Reading between the lines</span>'
+    rbtl_html = (f'<p class="rbtl"><span class="rbtl-label">Reading between the lines.</span> '
                  f'{rbtl}</p>') if (rbtl and lead) else ""
 
     # date stamp
     fs_date = parse_date(it.get("first_seen"))
     age_str = _age_label(fs_date, run_date)
     raw_date = esc(str(it.get("first_seen", ""))[:10])
-    date_html = (f'<span class="date-stamp" title="{raw_date}">&nbsp;·&nbsp;{esc(age_str)}</span>'
+    date_html = (f'<span class="date-stamp" title="{raw_date}"><span class="dot" aria-hidden="true">|</span>{esc(age_str)}</span>'
                  ) if age_str else ""
 
     # card action buttons and reader trigger (lead cards only)
     if lead and cluster_key:
         k = esc(cluster_key)
         reader_attr = ' data-reader="1"'
-        ext_link = f'<a class="ext-link" href="{url}" target="_blank" rel="noopener" data-tip="Open in new tab">↗</a>'
+        ext_link = f'<a class="ext-link" href="{url}" target="_blank" rel="noopener" data-tip="Open in new tab" aria-label="Open in new tab">{ICON_EXT}</a>'
         actions_html = (
             f'<div class="card-actions">'
-            f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read"></button>'
-            f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)">🔖</button>'
-            f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)">💤</button>'
-            f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)">✓</button>'
+            f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read">{ICON_CHECK}</button>'
+            f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)" aria-label="Save for later">{ICON_BOOKMARK}</button>'
+            f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)" aria-label="Snooze until tomorrow">{ICON_SNOOZE}</button>'
+            f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)" aria-label="Archive">{ICON_ARCHIVE}</button>'
             f'</div>'
         )
     else:
@@ -183,7 +219,7 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
     </div>
     {actions_html}
   </div>
-  <div class="meta"><span class="src">{src}</span><span class="dot">·</span><span class="stype">{stype}</span>{date_html}</div>
+  <div class="meta"><span class="src">{src}</span><span class="dot" aria-hidden="true">|</span><span class="stype">{stype}</span>{date_html}</div>
   {summ_html}
   {rbtl_html}
 </article>"""
@@ -207,7 +243,7 @@ def render_cluster_html(cluster, run_date=None):
             f'<details class="also-wrap"><summary>+ {len(extras)} more on this story</summary>'
             f'<ul class="also-list">{also}</ul></details>'
         )
-    drag_handle = '<div class="drag-handle" data-tip="Drag to reorder">⠿</div>'
+    drag_handle = f'<div class="drag-handle" data-tip="Drag to reorder">{ICON_GRIP}</div>'
     return (f'<div class="cluster" draggable="true" data-key="{key_esc}">'
             f'{drag_handle}{lead_html}{note_area}{also_html}</div>')
 
@@ -268,7 +304,7 @@ def build_html(corpus, run_date):
     if new_items:
         new_rows = "".join(
             f'<li><a href="{esc(it.get("url","#"))}" target="_blank" rel="noopener">{esc(it.get("title",""))}</a>'
-            f' <span class="new-src">{esc(it.get("source",""))} · {esc(TOPIC_LABELS.get(it.get("topic","tech"),""))}</span></li>'
+            f' <span class="new-src">{esc(it.get("source",""))}, {esc(TOPIC_LABELS.get(it.get("topic","tech"),""))}</span></li>'
             for it in new_items
         )
         whats_new = f'<section class="whatsnew"><h2>New since last digest</h2><ol>{new_rows}</ol></section>'
@@ -281,8 +317,7 @@ def build_html(corpus, run_date):
     if top_rbtl:
         ins = top_rbtl[0]
         insight_html = (
-            f'<section class="insight-card">'
-            f'<div class="insight-label">Today\'s insight</div>'
+            f'<section class="insight-card" aria-label="Today\'s insight">'
             f'<blockquote class="insight-quote">{esc(ins.get("rbtl",""))}</blockquote>'
             f'<div class="insight-src"><a href="{esc(ins.get("url","#"))}" target="_blank" rel="noopener">'
             f'{esc(ins.get("title",""))}</a>'
@@ -306,268 +341,302 @@ def build_html(corpus, run_date):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="{PALETTE['paper']}" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="{PALETTE_DARK['paper']}" media="(prefers-color-scheme: dark)">
+<meta name="description" content="A personal news digest on AI, design and technology, rebuilt each run from a persistent corpus.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Daily Brief">
+<meta property="og:description" content="A personal news digest on AI, design and technology.">
+<meta property="og:image" content="/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='6' width='29' height='32' rx='5' stroke='%23c8482b' stroke-width='2.5'/><line x1='10' y1='15' x2='26' y2='15' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='21' x2='26' y2='21' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='27' x2='20' y2='27' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><circle cx='36' cy='11' r='7' fill='%23c8482b'/><circle cx='36' cy='11' r='3.5' fill='white' opacity='.9'/></svg>" type="image/svg+xml">
 <title>News Digest — {stamp}</title>
 <style>
   :root {{
-    --paper:{PALETTE['paper']}; --card:{PALETTE['card']}; --ink:{PALETTE['ink']};
-    --muted:{PALETTE['muted']}; --rule:{PALETTE['rule']}; --anchor:{PALETTE['anchor']};
-    --anchor-soft:{PALETTE['anchor_soft']}; --link:{PALETTE['link']};
+    {LIGHT_TOKENS}
+    {SCALE_TOKENS}
   }}
   * {{ box-sizing:border-box; }}
   body {{ margin:0; background:var(--paper); color:var(--ink);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
     line-height:1.5; }}
-  .wrap {{ max-width:1080px; margin:0 auto; padding:0 24px 80px; }}
-  header.mast {{ border-bottom:3px solid var(--ink); padding:34px 0 16px; margin-bottom:8px; }}
+  .wrap {{ max-width:1080px; margin:0 auto; padding:0 clamp(var(--sp-16), 4vw, var(--sp-24)) var(--sp-64); }}
+  header.mast {{ border-bottom:3px solid var(--ink); padding:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 var(--sp-16); margin-bottom:var(--sp-8); }}
   .mast-title {{ font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
-    font-size:54px; line-height:1; letter-spacing:-1px; margin:0; }}
+    font-size:var(--fs-display); line-height:1; letter-spacing:-1px; margin:0; }}
   .mast-title .accent {{ color:var(--anchor); }}
-  .mast-sub {{ color:var(--muted); margin:10px 0 0; font-size:15px;
-    display:flex; gap:14px; flex-wrap:wrap; align-items:center; }}
+  .mast-sub {{ color:var(--muted); margin:var(--sp-8) 0 0; font-size:var(--fs-md);
+    display:flex; gap:var(--sp-12); flex-wrap:wrap; align-items:center; }}
   .mast-sub b {{ color:var(--ink); font-weight:600; }}
-  .controls {{ position:sticky; top:0; background:var(--paper); padding:10px 0;
+  .controls {{ position:sticky; top:0; background:var(--paper); padding:var(--sp-8) 0;
     border-bottom:1px solid var(--rule); z-index:5;
-    display:flex; flex-wrap:wrap; gap:8px; align-items:center; }}
-  .pills-row {{ display:flex; flex-wrap:wrap; gap:7px; align-items:center; flex:1; min-width:0; }}
-  .pill {{ font:inherit; font-size:13.5px; border:1px solid var(--ink); background:transparent;
-    color:var(--ink); padding:6px 12px; border-radius:999px; cursor:pointer;
-    touch-action:manipulation; }}
+    display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
+  .pills-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; flex:1; min-width:0; }}
+  .pill {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--ink); background:transparent;
+    color:var(--ink); padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
+    touch-action:manipulation; min-height:44px; min-width:44px;
+    transition:background-color .15s var(--ease-out),color .15s var(--ease-out); }}
   .pill.active {{ background:var(--ink); color:var(--paper); }}
-  .pill .pc {{ opacity:.6; font-variant-numeric:tabular-nums; margin-left:4px; }}
-  .search-row {{ display:flex; gap:8px; align-items:center; flex-shrink:0; }}
-  #q {{ font:inherit; flex:1; min-width:160px; padding:7px 12px; border:1px solid var(--rule);
-    border-radius:8px; background:var(--card); color:var(--ink); }}
+  .pill .pc {{ opacity:.65; font-variant-numeric:tabular-nums; margin-left:var(--sp-4); }}
+  .search-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
+  #q {{ font:inherit; flex:1 1 160px; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12);
+    transition:border-color .15s var(--ease-out); border:1px solid var(--rule);
+    border-radius:var(--radius-8); background:var(--card); color:var(--ink); }}
   .whatsnew {{ background:var(--anchor-soft); border:1px solid var(--anchor);
-    border-radius:12px; padding:16px 20px; margin:22px 0; }}
-  .whatsnew h2 {{ margin:0 0 8px; font-size:14px; text-transform:uppercase; letter-spacing:1px;
-    color:var(--anchor); }}
-  .whatsnew ol {{ margin:0; padding-left:20px; }}
-  .whatsnew li {{ margin:5px 0; }}
+    border-radius:var(--radius-12); padding:var(--sp-16) var(--sp-16); margin:var(--sp-24) 0; }}
+  .whatsnew h2 {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); font-weight:700;
+    color:var(--anchor-deep); }}
+  .whatsnew ol {{ margin:0; padding-left:var(--sp-16); }}
+  .whatsnew li, .also-list li, .ref-list li {{ margin:0; padding:var(--sp-12) 0; line-height:1.6; }}
   .whatsnew a {{ color:var(--ink); text-decoration:none; font-weight:600; }}
   .whatsnew a:hover {{ text-decoration:underline; }}
-  .new-src {{ color:var(--muted); font-weight:400; font-size:12.5px; }}
-  .topic {{ margin:34px 0 0; }}
-  .topic-h {{ font-family:Georgia,serif; font-size:26px; margin:0 0 14px;
-    padding-bottom:6px; border-bottom:1px solid var(--rule); }}
-  .topic-h .count {{ font-size:14px; color:var(--muted); font-family:inherit;
+  .new-src {{ color:var(--muted); font-weight:400; font-size:var(--fs-sm); }}
+  .topic {{ margin:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 0; }}
+  .topic-h {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-12);
+    padding-bottom:var(--sp-8); border-bottom:2px solid var(--ink); }}
+  .topic-h .count {{ font-size:var(--fs-sm); color:var(--muted); font-family:inherit;
     vertical-align:middle; }}
-  .cluster {{ margin:0 0 14px; }}
-  .item {{ background:var(--card); border:1px solid var(--rule); border-radius:10px;
-    padding:14px 16px; margin:0 0 10px; }}
-  .item-head {{ display:flex; align-items:flex-start; gap:8px; flex-wrap:nowrap; }}
-  .item-head-main {{ flex:1; min-width:0; display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; }}
-  .title {{ color:var(--ink); text-decoration:none; font-size:18px; font-weight:600;
-    font-family:Georgia,serif; }}
+  .cluster {{ margin:0 0 var(--sp-12); container-type:inline-size; }}
+  .item {{ background:var(--card); border:1px solid var(--rule); border-radius:var(--radius-10);
+    padding:var(--sp-12) var(--sp-16); margin:0 0 var(--sp-8); }}
+  .item-head {{ display:flex; align-items:flex-start; gap:var(--sp-8); flex-wrap:wrap; }}
+  .item-head-main {{ flex:1 1 240px; min-width:0; display:flex; align-items:baseline; gap:var(--sp-8); flex-wrap:wrap; }}
+  .title {{ color:var(--ink); text-decoration:none; font-size:var(--fs-md); font-weight:600;
+    font-family:Georgia,serif; padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0;
+    transition:color .15s var(--ease-out); }}
   .title[data-reader] {{ cursor:pointer; }}
   .title:hover {{ color:var(--link); text-decoration:underline; }}
-  .ext-link {{ color:var(--muted); font-size:12px; text-decoration:none; opacity:.55;
-    margin-left:5px; flex-shrink:0; vertical-align:middle; transition:opacity .12s; }}
+  .ext-link {{ color:var(--muted); font-size:var(--fs-sm); text-decoration:none; opacity:.55;
+    flex-shrink:0; display:inline-flex; align-items:center; justify-content:center;
+    min-width:44px; min-height:44px; margin:calc(-1*var(--sp-12)) 0;
+    transition:opacity .12s var(--ease-out),color .12s var(--ease-out); }}
   .ext-link:hover {{ opacity:1; color:var(--link); }}
-  .badge {{ background:var(--anchor); color:#fff; font-size:10.5px; font-weight:700;
-    letter-spacing:.6px; padding:2px 7px; border-radius:4px; }}
+  .badge {{ background:var(--anchor); color:var(--on-anchor); font-size:var(--fs-sm); font-weight:700;
+    padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-4); }}
   .pin {{ color:var(--anchor); }}
-  .meta {{ color:var(--muted); font-size:12.5px; margin-top:3px; }}
-  .meta .dot {{ margin:0 6px; }}
-  .summary {{ margin:8px 0 0; color:#3a352d; font-size:15px; }}
-  .rbtl {{ margin:8px 0 0; font-size:14px; color:var(--muted); font-style:italic; line-height:1.5; }}
-  .rbtl-label {{ font-style:normal; font-size:10.5px; font-weight:700; text-transform:uppercase;
-    letter-spacing:.7px; display:block; color:var(--anchor); opacity:.85; margin-bottom:3px; }}
-  .also-wrap {{ margin:2px 0 0 2px; }}
-  .also-wrap summary {{ cursor:pointer; color:var(--link); font-size:13px; }}
-  .also-list {{ margin:8px 0 4px; padding-left:18px; }}
-  .also-list li {{ margin:3px 0; font-size:14px; }}
+  .meta {{ color:var(--muted); font-size:var(--fs-sm); margin-top:var(--sp-4); }}
+  .meta .dot {{ margin:0 var(--sp-4); }}
+  .summary {{ margin:var(--sp-8) 0 0; color:var(--ink-soft); font-size:var(--fs-md); }}
+  .rbtl {{ margin:var(--sp-8) 0 0; font-size:var(--fs-sm); color:var(--muted); font-style:italic; line-height:1.5; }}
+  .rbtl-label {{ font-style:normal; font-weight:700; color:var(--anchor); }}
+  .also-wrap {{ margin:var(--sp-4) 0 0 var(--sp-4); }}
+  .also-wrap summary {{ cursor:pointer; color:var(--link); font-size:var(--fs-sm); line-height:1.6; padding:var(--sp-12) 0; }}
+  .also-list {{ margin:var(--sp-8) 0 var(--sp-4); padding-left:var(--sp-16); }}
+  .also-list li {{ font-size:var(--fs-sm); }}
+  .whatsnew a, .also-list a, .ref-list a {{ display:inline-block; vertical-align:top; padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0; }}
+  .insight-src a {{ display:inline-block; padding:var(--sp-12) 0; line-height:1.7; }}
   .also-list a {{ color:var(--ink); }}
-  .also-src {{ color:var(--muted); font-size:12px; }}
+  .also-src {{ color:var(--muted); font-size:var(--fs-sm); }}
   .empty {{ color:var(--muted); font-style:italic; }}
-  .references {{ margin:46px 0 0; border-top:3px solid var(--ink); padding-top:18px; }}
-  .references h2 {{ font-family:Georgia,serif; font-size:22px; margin:0 0 4px; }}
-  .ref-lead {{ color:var(--muted); font-size:14px; margin:0 0 12px; }}
-  .ref-list {{ columns:2; column-gap:28px; padding-left:18px; }}
-  .ref-list li {{ margin:0 0 7px; }}
-  .ref-note {{ color:var(--muted); font-size:13px; }}
-  a {{ color:var(--link); }}
-  footer.foot {{ margin-top:40px; color:var(--muted); font-size:12.5px;
-    border-top:1px solid var(--rule); padding-top:14px; }}
-  @media (max-width:680px) {{ .mast-title {{ font-size:38px; }} .ref-list {{ columns:1; }} }}
+  .no-results {{ margin:var(--sp-48) 0; text-align:center; color:var(--muted); }}
+  .no-results[hidden] {{ display:none; }}
+  .references {{ margin:var(--sp-48) 0 0; border-top:3px solid var(--ink); padding-top:var(--sp-16); }}
+  .references h2 {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-4); }}
+  .ref-lead {{ color:var(--muted); font-size:var(--fs-sm); margin:0 0 var(--sp-12); }}
+  .ref-list {{ columns:2; column-gap:var(--sp-24); padding-left:var(--sp-16); }}
+  .ref-note {{ color:var(--muted); font-size:var(--fs-sm); }}
+  a {{ color:var(--link); transition:color .15s var(--ease-out); }}
+  footer.foot {{ margin-top:var(--sp-32); color:var(--muted); font-size:var(--fs-sm);
+    border-top:1px solid var(--rule); padding-top:var(--sp-12); }}
+  @media (max-width:680px) {{ .ref-list {{ columns:1; }} }}
   @media (max-width:600px) {{
-    .wrap {{ padding:0 16px 60px; }}
-    .mast-title {{ font-size:28px; letter-spacing:-.3px; }}
-    .mast-sub {{ font-size:13px; gap:6px; }}
+    .mast-sub {{ font-size:var(--fs-sm); gap:var(--sp-4); }}
     .mast-topics {{ display:none; }}
-    .controls {{ flex-direction:column; align-items:stretch; gap:6px; }}
+    .controls {{ flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-8); }}
     .pills-row {{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
-      scrollbar-width:none; gap:6px; padding-bottom:2px; }}
+      scrollbar-width:none; gap:var(--sp-4); padding-bottom:var(--sp-4); }}
     .pills-row::-webkit-scrollbar {{ display:none; }}
-    .pill {{ flex-shrink:0; font-size:12.5px; padding:7px 10px; }}
-    .search-row {{ gap:6px; }}
-    #q {{ min-width:0; font-size:15px; }}
-    #theme-btn {{ padding:7px 11px; }}
-    .topic-h {{ font-size:21px; }}
-    .title {{ font-size:15px; line-height:1.35; }}
-    .item {{ padding:12px 13px; }}
-    .summary {{ font-size:14px; }}
-    .whatsnew {{ padding:12px 14px; }}
-    .card-btn {{ width:32px; height:32px; font-size:14px; }}
-    .card-actions {{ gap:5px; margin-left:4px; }}
+    .pill {{ flex-shrink:0; }}
+    .search-row {{ gap:var(--sp-4); }}
+    #q {{ min-width:0; font-size:var(--fs-md); }}
+    .title {{ line-height:1.35; }}
+    .summary {{ font-size:var(--fs-sm); }}
+    .whatsnew {{ padding:var(--sp-12) var(--sp-12); }}
     .drag-handle {{ opacity:.35; left:-14px; }}
     .topic-ring {{ width:16px; height:16px; }}
-    .topic-ring-label {{ font-size:10px; }}
+    .topic-ring-label {{ font-size:var(--fs-sm); }}
   }}
   @media (hover:none) {{
     .drag-handle {{ opacity:.3; }}
     .cluster:hover .drag-handle {{ opacity:.3; }}
   }}
   /* masthead logo */
-  .mast-logo-row {{ display:flex; align-items:center; gap:14px; }}
+  .mast-logo-row {{ display:flex; align-items:center; gap:var(--sp-12); }}
   .mast-logo {{ width:44px; height:44px; color:var(--ink); flex-shrink:0; }}
   /* card actions + kanban */
-  .card-actions {{ display:flex; align-items:center; gap:4px; flex-shrink:0; margin-left:6px; }}
+  .card-actions {{ display:flex; align-items:center; gap:var(--sp-8); flex-shrink:0; margin-left:auto; }}
+  @container (max-width:480px) {{
+    .item {{ padding:var(--sp-12); }}
+    .summary {{ font-size:var(--fs-sm); }}
+  }}
+  .ico {{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:2;
+    stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }}
+  .ico.fill {{ fill:currentColor; stroke:none; }}
+  .card-btn .ico {{ width:var(--fs-md); height:var(--fs-md); }}
   /* per-card read toggle — checkmark, not a ring */
-  .read-btn::before {{ content:'✓'; font-size:12px; }}
   .read-btn {{ opacity:.35; }}
-  .read-btn:hover {{ opacity:1 !important; }}
-  .cluster.is-read .read-btn {{ opacity:1; color:var(--anchor); border-color:var(--anchor); background:var(--anchor-soft); }}
+  .read-btn:hover {{ opacity:1; }}
+  .cluster.is-read .read-btn {{ opacity:1; color:var(--anchor); box-shadow:inset 0 0 0 1px var(--anchor); background-color:var(--anchor-soft); }}
   .cluster.is-read .item.lead {{ opacity:.65; }}
-  .card-btn {{ width:26px; height:26px; border-radius:50%; border:1px solid var(--rule);
-    background:transparent; color:var(--muted); font-size:13px; line-height:1; cursor:pointer;
+  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-round); border:var(--sp-8) solid transparent;
+    background-color:transparent; background-clip:padding-box; box-shadow:inset 0 0 0 1px var(--rule);
+    color:var(--muted); font-size:var(--fs-sm); line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    transition:background .15s,border-color .15s,color .15s; padding:0;
-    touch-action:manipulation; }}
-  .card-btn:hover {{ background:var(--card); border-color:var(--ink); color:var(--ink); }}
-  .dismiss-btn:hover {{ background:var(--anchor) !important; border-color:var(--anchor) !important; color:#fff !important; }}
-  .snooze-btn.active {{ border-color:#b8960c; color:#b8960c; }}
-  .rl-btn.active {{ border-color:var(--link); color:var(--link); }}
+    transition:background-color .15s var(--ease-out),box-shadow .15s var(--ease-out),color .15s var(--ease-out); padding:0;
+    touch-action:manipulation; margin:calc(-1*var(--sp-8)) 0; }}
+  .card-btn:hover {{ background-color:var(--card); box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
+  .dismiss-btn:hover {{ background-color:var(--anchor); box-shadow:inset 0 0 0 1px var(--anchor); color:var(--on-anchor); }}
+  .snooze-btn.active {{ box-shadow:inset 0 0 0 1px var(--warn); color:var(--warn); }}
+  .rl-btn.active {{ box-shadow:inset 0 0 0 1px var(--link); color:var(--link); }}
   /* topic-level read progress ring */
-  .topic-progress {{ display:inline-flex; align-items:center; gap:5px; margin-left:12px;
-    vertical-align:middle; opacity:.85; }}
+  .topic-progress {{ display:inline-flex; align-items:center; gap:var(--sp-4); margin-left:var(--sp-12);
+    vertical-align:middle; }}
   .topic-ring {{ width:20px; height:20px; flex-shrink:0; }}
   .topic-ring .ring-bg {{ fill:none; stroke:var(--rule); stroke-width:2.5; }}
   .topic-ring .ring-fg {{ fill:none; stroke:var(--anchor); stroke-width:2.5;
     stroke-dasharray:56.55; stroke-dashoffset:56.55;
-    transition:stroke-dashoffset .5s ease; transform:rotate(-90deg); transform-origin:center; }}
-  .topic-ring-label {{ font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }}
-  .date-stamp {{ color:var(--muted); font-size:11.5px; }}
+    transition:stroke-dashoffset .5s var(--ease-out); transform:rotate(-90deg); transform-origin:center; }}
+  .topic-ring-label {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
+  .date-stamp {{ color:var(--muted); font-size:var(--fs-sm); }}
   /* drag handle */
   .cluster {{ position:relative; }}
-  .drag-handle {{ position:absolute; top:10px; left:-18px; color:var(--muted); font-size:14px;
-    cursor:grab; opacity:0; transition:opacity .15s; line-height:1; user-select:none; padding:2px 4px; }}
+  .drag-handle {{ position:absolute; top:var(--sp-8); left:-18px; color:var(--muted); font-size:var(--fs-sm);
+    cursor:grab; opacity:0; transition:opacity .15s var(--ease-out); line-height:1; user-select:none; padding:var(--sp-4); }}
   .cluster:hover .drag-handle {{ opacity:1; }}
   .cluster[draggable] {{ cursor:default; }}
-  .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:12px; }}
+  .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:var(--radius-12); }}
   .cluster.dragging {{ opacity:.35; pointer-events:none; }}
-  /* focus state — left accent bar instead of outline */
-  .cluster.focused > .item.lead {{ border-left:3px solid var(--anchor); padding-left:13px;
-    background:var(--anchor-soft); transition:background .2s; scroll-margin:90px; }}
+  /* keyboard-navigation focus state — a ring, not a coloured left bar (banned) */
+  .cluster.focused > .item.lead {{ outline:2px solid var(--anchor); outline-offset:-1px;
+    background:var(--anchor-soft); transition:background .2s var(--ease-out); scroll-margin:var(--sp-64); }}
   .cluster:hover > .item.lead {{ background:color-mix(in srgb, var(--card) 90%, var(--anchor) 10%); }}
   .cluster.focused:hover > .item.lead {{ background:var(--anchor-soft); }}
   /* tooltips */
   [data-tip] {{ position:relative; }}
   [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
     left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper);
-    font-size:11px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    font-weight:400; padding:4px 8px; border-radius:5px; white-space:nowrap;
-    pointer-events:none; opacity:0; transition:opacity .12s; z-index:20; }}
+    font-size:var(--fs-sm); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-weight:400; padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-5); white-space:nowrap;
+    pointer-events:none; opacity:0; transition:opacity .12s var(--ease-out); z-index:20; }}
   [data-tip]:hover::after {{ opacity:1; }}
-  .arc-pill {{ font:inherit; font-size:12px; border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:4px 10px; border-radius:999px; cursor:pointer;
-    white-space:nowrap; transition:border-color .15s,color .15s; }}
+  .card-actions [data-tip]::after, #help-btn[data-tip]::after {{ left:auto; right:0; transform:none; }}
+  .arc-pill {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
+    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
+    white-space:nowrap; min-height:44px; transition:border-color .15s var(--ease-out),color .15s var(--ease-out); }}
   .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
   .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
-  #help-btn {{ width:28px; height:28px; padding:0; display:inline-flex; align-items:center;
-    justify-content:center; font-size:13px; font-weight:700; }}
+  #help-btn {{ width:44px; height:44px; padding:0; display:inline-flex; align-items:center;
+    justify-content:center; font-size:var(--fs-sm); font-weight:700; }}
   /* note area */
-  .note-area {{ padding:2px 6px 4px; }}
-  .note-trigger {{ font:inherit; font-size:12px; color:var(--muted); background:transparent;
-    border:1px solid var(--rule); border-radius:999px; cursor:pointer;
-    padding:3px 10px; display:inline-flex; align-items:center; gap:5px;
-    transition:border-color .15s,color .15s,background .15s; user-select:none; margin:2px 0; }}
-  .note-trigger:hover {{ border-color:var(--ink); color:var(--ink); }}
-  .note-trigger.has-note {{ border-color:var(--link); color:var(--link); }}
-  .note-body {{ margin:6px 0 4px; }}
-  .note-input {{ width:100%; font:inherit; font-size:13.5px; resize:none;
-    border:1px solid var(--rule); border-radius:8px; background:var(--card); color:var(--ink);
-    padding:8px 10px; }}
+  .note-area {{ padding:var(--sp-4) var(--sp-4) var(--sp-4); }}
+  .note-trigger {{ font:inherit; font-size:var(--fs-sm); color:var(--muted); background-color:transparent;
+    border:0; border-block:var(--sp-8) solid transparent; background-clip:padding-box;
+    box-shadow:inset 0 0 0 1px var(--rule); border-radius:var(--radius-pill); cursor:pointer;
+    padding:var(--sp-4) var(--sp-12); display:inline-flex; align-items:center; gap:var(--sp-8); min-height:44px;
+    transition:box-shadow .15s var(--ease-out),color .15s var(--ease-out); user-select:none; margin:calc(-1*var(--sp-8)) 0; }}
+  .note-trigger .ico {{ width:var(--fs-md); height:var(--fs-md); }}
+  .note-trigger:hover {{ box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
+  .note-trigger.has-note {{ box-shadow:inset 0 0 0 1px var(--link); color:var(--link); }}
+  .note-body {{ margin:var(--sp-4) 0 var(--sp-4); }}
+  .note-input {{ width:100%; font:inherit; font-size:var(--fs-sm); resize:none;
+    border:1px solid var(--rule); border-radius:var(--radius-8); background:var(--card); color:var(--ink);
+    padding:var(--sp-8) var(--sp-8); }}
   .note-input:focus {{ outline:2px solid var(--anchor); border-color:transparent; }}
-  .note-display {{ font-size:13.5px; color:var(--muted); white-space:pre-wrap;
-    padding:4px 4px 6px; font-style:italic; display:none; border-left:2px solid var(--rule);
-    margin-left:2px; padding-left:10px; }}
+  .note-display {{ font-size:var(--fs-sm); color:var(--muted); white-space:pre-wrap;
+    padding:var(--sp-4) var(--sp-4) var(--sp-4); font-style:italic; display:none; border-left:1px solid var(--rule);
+    margin-left:var(--sp-4); padding-left:var(--sp-12); }}
   .note-display.visible {{ display:block; }}
   /* insight card */
-  .insight-card {{ margin:22px 0 10px; padding:18px 22px 16px; border-radius:12px;
+  .insight-card {{ margin:var(--sp-24) 0 var(--sp-8); padding:var(--sp-16) var(--sp-24) var(--sp-16); border-radius:var(--radius-12);
     background:linear-gradient(135deg,var(--anchor-soft) 0%,var(--card) 100%);
     border:1px solid var(--anchor); }}
-  .insight-label {{ font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
-    color:var(--anchor); margin-bottom:8px; }}
-  .insight-quote {{ margin:0 0 10px; font-family:Georgia,serif; font-size:16px; line-height:1.6;
+  .insight-quote {{ margin:0 0 var(--sp-8); font-family:Georgia,serif; font-size:var(--fs-md); line-height:1.6;
     color:var(--ink); font-style:italic; }}
-  .insight-src {{ font-size:13px; color:var(--muted); }}
+  .insight-src {{ font-size:var(--fs-sm); color:var(--muted); }}
   .insight-src a {{ color:var(--ink); font-weight:600; text-decoration:none; }}
   .insight-src a:hover {{ text-decoration:underline; }}
   .insight-from {{ color:var(--muted); }}
   html[data-theme="dark"] {{
-    --paper:{PALETTE_DARK['paper']}; --card:{PALETTE_DARK['card']}; --ink:{PALETTE_DARK['ink']};
-    --muted:{PALETTE_DARK['muted']}; --rule:{PALETTE_DARK['rule']}; --anchor:{PALETTE_DARK['anchor']};
-    --anchor-soft:{PALETTE_DARK['anchor_soft']}; --link:{PALETTE_DARK['link']};
+    {DARK_TOKENS}
   }}
-  html[data-theme="dark"] .summary {{ color:#c8bfb0; }}
-  #theme-btn {{ font:inherit; font-size:13px; border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:5px 11px; border-radius:999px; cursor:pointer;
-    transition:border-color .15s,color .15s; touch-action:manipulation; white-space:nowrap; }}
+  /* Follow the operating system when the reader has not chosen a theme. */
+  @media (prefers-color-scheme: dark) {{
+    :root:not([data-theme="light"]) {{
+      {DARK_TOKENS}
+    }}
+  }}
+  #theme-btn {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
+    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
+    min-height:44px; transition:border-color .15s var(--ease-out),color .15s var(--ease-out); touch-action:manipulation; white-space:nowrap; }}
   #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
   /* ── reading pane ──────────────────────────────────────────────────────── */
   .reading-pane {{ display:none; position:fixed; top:0; right:0; width:40vw; height:100vh;
-    background:var(--card); border-left:2px solid var(--rule); z-index:50;
-    flex-direction:column; box-shadow:-6px 0 32px rgba(0,0,0,.10); }}
+    background:var(--card); z-index:50;
+    flex-direction:column; box-shadow:-6px 0 32px var(--shadow-soft); }}
   .reading-pane.open {{ display:flex; }}
   body.pane-open .wrap {{ margin-right:calc(40vw + 8px); }}
-  .pane-toolbar {{ display:flex; align-items:center; padding:10px 14px; border-bottom:1px solid var(--rule);
-    gap:8px; flex-shrink:0; position:sticky; top:0; background:var(--card); z-index:2; }}
-  .pane-site {{ font-size:11.5px; color:var(--muted); font-family:monospace; }}
-  .pane-close,.pane-newtab {{ width:28px; height:28px; border-radius:50%; border:1px solid var(--rule);
-    background:transparent; color:var(--muted); font-size:16px; cursor:pointer; display:flex;
+  .pane-toolbar {{ display:flex; align-items:center; padding:var(--sp-8) var(--sp-12); border-bottom:1px solid var(--rule);
+    gap:var(--sp-8); flex-shrink:0; position:sticky; top:0; background:var(--card); z-index:2; }}
+  .pane-site {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
+  .pane-close,.pane-newtab {{ width:44px; height:44px; border-radius:var(--radius-round); border:1px solid var(--rule);
+    background:transparent; color:var(--muted); font-size:var(--fs-md); cursor:pointer; display:flex;
     align-items:center; justify-content:center;
-    transition:border-color .15s,color .15s; text-decoration:none; flex-shrink:0; }}
+    transition:border-color .15s var(--ease-out),color .15s var(--ease-out); text-decoration:none; flex-shrink:0; }}
   .pane-close:hover,.pane-newtab:hover {{ border-color:var(--ink); color:var(--ink); }}
-  .pane-body {{ flex:1; overflow-y:auto; padding:22px 26px 60px; }}
-  .pane-loading {{ color:var(--muted); font-style:italic; padding:24px 0; animation:pulse 1.4s ease infinite; }}
+  .pane-body {{ flex:1; overflow-y:auto; padding:var(--sp-24) var(--sp-24) var(--sp-64); }}
+  .pane-loading {{ color:var(--muted); font-style:italic; padding:var(--sp-24) 0; animation:pulse 1.4s var(--ease-out) infinite; }}
   @keyframes pulse {{ 0%,100% {{ opacity:.5; }} 50% {{ opacity:1; }} }}
-  .pane-error {{ color:var(--anchor); font-size:14px; padding:8px 0 4px; line-height:1.5; }}
+  .pane-error {{ color:var(--anchor); font-size:var(--fs-sm); padding:var(--sp-8) 0 var(--sp-4); line-height:1.5; }}
   .pane-error a {{ color:var(--link); }}
-  .pane-title {{ font-family:Georgia,serif; font-size:21px; font-weight:700; line-height:1.3;
-    margin:0 0 8px; color:var(--ink); }}
-  .pane-byline {{ font-size:12px; color:var(--muted); margin-bottom:16px; padding-bottom:14px;
+  .pane-title {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; line-height:1.3;
+    margin:0 0 var(--sp-8); color:var(--ink); }}
+  .pane-byline {{ font-size:var(--fs-sm); color:var(--muted); margin-bottom:var(--sp-16); padding-bottom:var(--sp-12);
     border-bottom:1px solid var(--rule); }}
-  .pane-content {{ font-size:15.5px; line-height:1.75; color:var(--ink); }}
+  .pane-content {{ font-size:var(--fs-md); line-height:1.75; color:var(--ink); }}
   .pane-content p {{ margin:0 0 1em; }}
   .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{
     font-family:Georgia,serif; margin:1.4em 0 .5em; line-height:1.25; }}
-  .pane-content h1 {{ font-size:1.4em; }} .pane-content h2 {{ font-size:1.2em; }}
-  .pane-content h3 {{ font-size:1.05em; }}
+  .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{ font-size:var(--fs-md); font-weight:700; }}
   .pane-content a {{ color:var(--link); }}
-  .pane-content img {{ max-width:100%; height:auto; border-radius:6px; margin:8px 0; display:block; }}
+  .pane-content img {{ max-width:100%; height:auto; border-radius:var(--radius-6); margin:var(--sp-8) 0; display:block; }}
   .pane-content figure {{ margin:1em 0; }}
-  .pane-content figcaption {{ font-size:13px; color:var(--muted); margin-top:4px; }}
-  .pane-content blockquote {{ border-left:3px solid var(--anchor); margin:1em 0;
-    padding-left:14px; color:var(--muted); font-style:italic; }}
-  .pane-content pre {{ background:var(--paper); border-radius:6px; padding:14px; overflow-x:auto;
-    font-size:13px; border:1px solid var(--rule); }}
-  .pane-content code {{ background:var(--paper); border-radius:3px; padding:1px 5px;
-    font-size:.88em; }}
+  .pane-content figcaption {{ font-size:var(--fs-sm); color:var(--muted); margin-top:var(--sp-4); }}
+  .pane-content blockquote {{ border-left:1px solid var(--rule); margin:1em 0;
+    padding-left:var(--sp-12); color:var(--muted); font-style:italic; }}
+  .pane-content pre {{ background:var(--paper); border-radius:var(--radius-6); padding:var(--sp-12); overflow-x:auto;
+    font-size:var(--fs-sm); border:1px solid var(--rule); }}
+  .pane-content code {{ background:var(--paper); border-radius:var(--radius-3); padding:var(--sp-4);
+    font-size:var(--fs-sm); }}
   .pane-content pre code {{ background:none; padding:0; }}
-  .pane-content ul,.pane-content ol {{ padding-left:22px; margin:0 0 1em; }}
+  .pane-content ul,.pane-content ol {{ padding-left:var(--sp-24); margin:0 0 1em; }}
   .pane-content li {{ margin:.3em 0; }}
-  .pane-content mark.hl {{ background:#fff176; color:inherit; border-radius:2px; padding:0 1px; }}
-  html[data-theme="dark"] .pane-content mark.hl {{ background:#4a3d00; }}
+  .pane-content mark.hl {{ background:var(--highlight); color:inherit; border-radius:var(--radius-2); padding:0 var(--sp-4); }}
   /* highlight tooltip */
-  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:7px;
-    padding:3px 4px; z-index:200; box-shadow:0 2px 8px rgba(0,0,0,.2); }}
+  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:var(--radius-7);
+    padding:var(--sp-4) var(--sp-4); z-index:200; box-shadow:0 2px 8px var(--shadow-firm); }}
   #hl-btn {{ background:none; border:none; color:var(--paper); cursor:pointer;
-    font-size:12px; padding:3px 8px; white-space:nowrap; font-family:inherit; }}
+    font-size:var(--fs-sm); padding:var(--sp-12); min-height:44px; white-space:nowrap; font-family:inherit; }}
   #hl-btn:hover {{ opacity:.8; }}
   @media (max-width:900px) {{
-    .reading-pane {{ width:100vw; border-left:none; }}
+    .reading-pane {{ width:100vw; }}
     body.pane-open .wrap {{ margin-right:0; }}
+  }}
+  /* ── keyboard focus: every interactive control gets a visible ring ─────── */
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible,
+  [draggable="true"]:focus-visible {{
+    outline:2px solid var(--anchor); outline-offset:2px; }}
+  /* ── reduced motion: drop every transition and animation on request ────── */
+  @media (prefers-reduced-motion: reduce) {{
+    a, .title, .pill, #q, .ext-link, .ext-link:hover, .card-btn, .arc-pill, .note-trigger, .note-input,
+    .drag-handle, .cluster:hover .drag-handle, #theme-btn, .pane-close, .pane-newtab,
+    .topic-ring .ring-fg, .cluster.focused > .item.lead, [data-tip]::after,
+    .pane-loading {{ transition:none; animation:none; }}
+    html {{ scroll-behavior:auto; }}
   }}
 </style>
 </head>
@@ -585,9 +654,9 @@ def build_html(corpus, run_date):
       </svg>
       <h1 class="mast-title">The <span class="accent">Daily</span> Brief</h1>
     </div>
-    <p class="mast-sub"><b>{stamp}</b><span>·</span><span>{len(items)} items live</span>
-      <span>·</span><span>{new_count} new</span>
-      <span>·</span><span class="mast-topics">AI · Design · AI×Design/Eng · Tech</span></p>
+    <p class="mast-sub"><b>{stamp}</b><span>{len(items)} items live</span>
+      <span>{new_count} new</span>
+      <span class="mast-topics">AI, Design, AI×Design/Eng, Tech</span></p>
   </header>
 
   <div class="controls">
@@ -604,6 +673,10 @@ def build_html(corpus, run_date):
     </div>
   </div>
 
+  <div class="no-results" id="no-results" hidden>
+    <p id="no-results-msg">No stories match.</p>
+    <button class="arc-pill" id="clear-filters" type="button">Clear filters</button>
+  </div>
   {insight_html}
   {whats_new}
   {''.join(sections)}
@@ -611,8 +684,8 @@ def build_html(corpus, run_date):
 
   <footer class="foot">
     Generated by <code>/news-digest</code> on {run_date.isoformat()}. Persistent corpus:
-    <code>corpus.json</code> · Sources: <code>sources.json</code>. Items age out on a per-topic
-    retention window; pinned (★) items stay.
+    <code>corpus.json</code>; sources: <code>sources.json</code>. Items age out on a per-topic
+    retention window; pinned items stay.
   </footer>
 </div>
 
@@ -620,18 +693,18 @@ def build_html(corpus, run_date):
   <div class="pane-toolbar">
     <span class="pane-site"></span>
     <div style="flex:1"></div>
-    <a class="pane-newtab" target="_blank" rel="noopener" href="#" data-tip="Open in new tab">↗</a>
-    <button class="pane-close" data-tip="Close (Esc)" aria-label="Close reader">×</button>
+    <a class="pane-newtab" target="_blank" rel="noopener" href="#" data-tip="Open in new tab" aria-label="Open in new tab">{ICON_EXT}</a>
+    <button class="pane-close" data-tip="Close (Esc)" aria-label="Close reader">{ICON_CLOSE}</button>
   </div>
   <div class="pane-body">
     <div class="pane-loading">Loading…</div>
     <div class="pane-error" style="display:none"></div>
-    <h1 class="pane-title"></h1>
+    <h2 class="pane-title"></h2>
     <div class="pane-byline"></div>
     <div class="pane-content"></div>
   </div>
   <div class="hl-tooltip" id="hl-tooltip" style="display:none">
-    <button id="hl-btn">✦ Highlight</button>
+    <button id="hl-btn">Highlight</button>
   </div>
 </div>
 <script>
@@ -699,12 +772,13 @@ def build_html(corpus, run_date):
       display.className = 'note-display' + (notes[k] ? ' visible' : '');
       display.textContent = notes[k] || '';
 
+      function setTrigger(t) {{ trigger.innerHTML = '{ICON_EDIT}' + '<span>' + t + '</span>'; }}
       function refresh() {{
         const saved = notes[k] || '';
         display.textContent = saved;
         display.classList.toggle('visible', !!saved);
         trigger.classList.toggle('has-note', !!saved);
-        trigger.textContent = saved ? '✏️ Edit note' : '✏️ Add note';
+        setTrigger(saved ? 'Edit note' : 'Add note');
       }}
       refresh();
 
@@ -719,7 +793,7 @@ def build_html(corpus, run_date):
       trigger.addEventListener('click', () => {{
         const open = body.style.display === 'none';
         body.style.display = open ? '' : 'none';
-        if (open) {{ ta.focus(); trigger.textContent = '✏️ Cancel'; }}
+        if (open) {{ ta.focus(); setTrigger('Cancel'); }}
         else refresh();
       }});
 
@@ -784,10 +858,21 @@ def build_html(corpus, run_date):
       const empty = sec.querySelector('.empty');
       if (empty) empty.style.display = topicMatch ? '' : 'none';
     }});
+    const anyVisible = [...document.querySelectorAll('.cluster')].some(c => c.style.display !== 'none');
+    document.getElementById('no-results').hidden = anyVisible;
+    document.getElementById('no-results-msg').textContent =
+      viewMode === 'archive' ? 'Nothing archived yet.'
+      : viewMode === 'readlater' ? 'Nothing saved for later yet.'
+      : 'No stories match' + (q.value.trim() ? ' "' + q.value.trim() + '".' : ' this filter.');
     updatePills();
     updateTopicRings();
   }}
   apply();
+  document.getElementById('clear-filters').addEventListener('click', () => {{
+    q.value = ''; active = 'all'; viewMode = 'normal';
+    pills.forEach(x => x.classList.toggle('active', x.dataset.filter === 'all'));
+    apply(); q.focus();
+  }});
 
   pills.forEach(p => p.addEventListener('click', () => {{
     pills.forEach(x => x.classList.remove('active'));
@@ -983,21 +1068,21 @@ def build_html(corpus, run_date):
     ov.id = 'kbd-overlay';
     ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;';
     const box = document.createElement('div');
-    box.style.cssText = 'background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:20px 28px;min-width:280px;';
-    box.innerHTML = '<h3 style="margin:0 0 12px;font-family:Georgia,serif;">Keyboard shortcuts</h3>' +
+    box.style.cssText = 'background:var(--card);border:1px solid var(--rule);border-radius:var(--radius-14);padding:var(--sp-24);min-width:280px;max-width:calc(100vw - var(--sp-32));';
+    box.innerHTML = '<h3 style="margin:0 0 var(--sp-12);font-family:Georgia,serif;font-size:var(--fs-md);">Keyboard shortcuts</h3>' +
       '<table style="border-collapse:collapse;width:100%">' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);width:110px;padding:4px 8px;font-size:13.5px">j / ↓</td><td style="padding:4px 8px;font-size:13.5px">Next card</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">k / ↑</td><td style="padding:4px 8px;font-size:13.5px">Previous card</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Enter / o / r</td><td style="padding:4px 8px;font-size:13.5px">Open in reader pane</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">m</td><td style="padding:4px 8px;font-size:13.5px">Toggle read</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">x</td><td style="padding:4px 8px;font-size:13.5px">Archive</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">s</td><td style="padding:4px 8px;font-size:13.5px">Snooze until tomorrow</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">b</td><td style="padding:4px 8px;font-size:13.5px">Save for later</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">n</td><td style="padding:4px 8px;font-size:13.5px">Add / edit note</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">/</td><td style="padding:4px 8px;font-size:13.5px">Focus search</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">?</td><td style="padding:4px 8px;font-size:13.5px">This help</td></tr>' +
-      '<tr><td style="font-family:monospace;color:var(--anchor);padding:4px 8px;font-size:13.5px">Esc</td><td style="padding:4px 8px;font-size:13.5px">Clear focus</td></tr>' +
-      '</table><p style="margin:10px 0 0;font-size:12px;color:var(--muted)">Press ? or click outside to close</p>';
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);width:110px;padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">j / ↓</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Next card</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">k / ↑</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Previous card</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Enter / o / r</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Open in reader pane</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">m</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Toggle read</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">x</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Archive</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">s</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Snooze until tomorrow</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">b</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Save for later</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">n</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Add / edit note</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">/</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Focus search</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">?</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">This help</td></tr>' +
+      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Esc</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Clear focus</td></tr>' +
+      '</table><p style="margin:var(--sp-8) 0 0;font-size:var(--fs-sm);color:var(--muted)">Press ? or click outside to close</p>';
     ov.appendChild(box);
     ov.addEventListener('click', e => {{ if (e.target === ov) ov.remove(); }});
     document.body.appendChild(ov);
@@ -1005,14 +1090,24 @@ def build_html(corpus, run_date):
 
   // ── dark mode ─────────────────────────────────────────────────────────────
   (function() {{
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)');
     const saved = ls('digest-theme');
-    if (saved === 'dark') {{ document.documentElement.dataset.theme = 'dark'; themeBtn.textContent = 'Light'; }}
+    // '' is what older builds stored for an explicit light choice.
+    const chose = saved === 'dark' || saved === 'light' || saved === '';
+    const dark = saved === 'dark' || (!chose && osDark.matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    themeBtn.textContent = dark ? 'Light' : 'Dark';
+    osDark.addEventListener('change', e => {{
+      if (ls('digest-theme') !== null) return;          // an explicit choice wins
+      document.documentElement.dataset.theme = e.matches ? 'dark' : 'light';
+      themeBtn.textContent = e.matches ? 'Light' : 'Dark';
+    }});
   }})();
   themeBtn.addEventListener('click', () => {{
     const dark = document.documentElement.dataset.theme !== 'dark';
-    document.documentElement.dataset.theme = dark ? 'dark' : '';
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
     themeBtn.textContent = dark ? 'Light' : 'Dark';
-    localStorage.setItem('digest-theme', dark ? 'dark' : '');
+    localStorage.setItem('digest-theme', dark ? 'dark' : 'light');
   }});
 
   // ── reading pane ──────────────────────────────────────────────────────────
@@ -1061,7 +1156,7 @@ def build_html(corpus, run_date):
         return;
       }}
       paneTitle.textContent    = data.title    || title || '';
-      paneByline.textContent   = [data.byline, data.siteName].filter(Boolean).join(' \xb7 ');
+      paneByline.textContent   = [data.byline, data.siteName].filter(Boolean).join(', ');
       paneSiteEl.textContent   = data.siteName || '';
       paneCont.innerHTML       = data.content  || '';
       paneNewTab.href          = url;

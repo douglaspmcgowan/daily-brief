@@ -1,3 +1,261 @@
 # Work log
 
 <!-- Append: YYYY-MM-DD | completed work | verifier or evidence -->
+
+## 2026-09-26 | App repair program, stage 1 — BEFORE
+
+Verdict from `APP-REPAIR-SPEC.md`: **BASELINE**. Branch `agent/daily-brief-repair`, worktree
+`C:\Users\dougl\Worktrees\daily-brief\repair`, cut from `master` at `5836b04`.
+
+### It works before it was touched
+
+Every command run on the Windows host, Git Bash, 2026-09-26. Node v24.13.1, npm 11.8.0, Python 3.13.15.
+
+| Step | Command | Exit | Result |
+|---|---|---|---|
+| install | `npm install --no-audit --no-fund` | 0 | 64 packages in 5s |
+| audit | `npm audit --audit-level=critical` | 0 | 2 advisories, 1 high, 1 low, **zero critical**. High: `form-data` CRLF injection, GHSA-hmw2-7cc7-3qxx, transitive under `jsdom` |
+| build | `python build_digest.py --root <worktree>` | 0 | `10 items kept, 101 pruned. Wrote digest.html, Latest Digest.md, digests/2026-09-26.md` |
+| start | `npm start` (`python -m http.server 8787 --bind 127.0.0.1`) | serving | `HTTP 200`, 246257 bytes at `http://127.0.0.1:8787/` |
+| render | Browser pane at `http://127.0.0.1:8787/` | — | Renders. 80 `.item` cards, 5 topic pills, 215 links, 411 buttons, 11 `details`, 1 search input |
+
+The build's output was reverted (`git restore --source=HEAD --worktree`) so the branch starts
+byte-identical to `master`. `digests/2026-09-26.md` remains untracked: deleting it was refused by the
+host permission classifier, and it is regenerable build output, so it was left in place rather than
+worked around.
+
+**The build is wall-clock dependent and the corpus is stale.** `build_digest.py` prunes on today's date
+against `retention_days`; the committed corpus was last refreshed 2026-06-15, so a rebuild today keeps 10
+pinned items and prunes 101. The 246 KB page that renders is the June 15 render. Rebuilding before
+refreshing the corpus empties the product. Recorded in `README.md`.
+
+### Baseline floor row
+
+Appendix A `m4.sh`, run against the worktree, `git ls-files` scoped, `/.agents/` excluded:
+
+```
+stylefiles=2 KB=481 unique-hex=22 font-sizes=23 custom-props=8 transition=32 @keyframes=2
+!important=4 :focus-visible=0 prefers-color-scheme=0 prefers-reduced-motion=0 @container=0 clamp(=0
+```
+
+The roster row in `APP-REPAIR-SPEC.md` reads `22/23/8/4/0/0`. It reproduces exactly.
+
+`stylefiles=2` is `index.html` and `digest.html`, which are byte-identical (`cmp` reports no difference)
+and are both generated. `!important` is 4 occurrences on 2 lines per generated page (8 across both files): `.read-btn:hover`
+once and `.dismiss-btn:hover` three times, at `build_digest.py:429` and `:438`.
+
+### Where the CSS actually lives
+
+**Not in any `.css` file and not in `index.html`.** The whole stylesheet and the whole browser script are
+Python f-strings inside `build_digest.py`, roughly lines 300–600. `index.html` and `digest.html` are
+generated output. Every floor change in stage 2 lands in `build_digest.py` and is proven by regenerating.
+
+Dark mode is half-built already: `PALETTE_DARK` and an `html[data-theme="dark"]` block exist at
+`build_digest.py:508`, driven by a localStorage toggle. What is missing is the
+`@media (prefers-color-scheme: dark)` hook, so the page ignores the operating system preference until
+the user clicks. That is the B4 gap, and it is a hook onto tokens that already exist.
+
+### Computed-style baseline, for the stage 2 token proof
+
+`getComputedStyle` at `http://127.0.0.1:8787/`, 1280x900. Stage 2's token extraction must reproduce this
+exactly or it was not a non-visual change.
+
+| Selector | color | background | font-size | radius | padding |
+|---|---|---|---|---|---|
+| `body` | `rgb(29, 26, 22)` | `rgb(246, 243, 236)` | 16px | 0px | 0px |
+| `header.mast` | `rgb(29, 26, 22)` | `rgba(0, 0, 0, 0)` | 16px | 0px | 34px 0px 16px |
+| `.mast-title` | `rgb(29, 26, 22)` | `rgba(0, 0, 0, 0)` | 54px | 0px | 0px |
+| `.pill` (active) | `rgb(246, 243, 236)` | `rgb(29, 26, 22)` | 13.5px | 999px | 6px 12px |
+| `.item` | `rgb(29, 26, 22)` | `rgb(255, 253, 248)` | 16px | 10px | 14px 16px |
+| `.title` | `rgb(29, 26, 22)` | `rgba(0, 0, 0, 0)` | 18px | 0px | 0px |
+| `.topic-h` | `rgb(29, 26, 22)` | `rgba(0, 0, 0, 0)` | 26px | 0px | 0px 0px 6px |
+| `#q` | `rgb(29, 26, 22)` | `rgb(255, 253, 248)` | 16px | 8px | 7px 12px |
+| `.whatsnew` | `rgb(29, 26, 22)` | `rgb(243, 221, 212)` | 16px | 12px | 16px 20px |
+
+Resolved `:root` tokens: `--paper #f6f3ec`, `--card #fffdf8`, `--ink #1d1a16`, `--muted #6b6357`,
+`--rule #e3ddd0`, `--anchor #c8482b`, `--anchor-soft #f3ddd4`, `--link #1b4d6b`.
+
+### Stack, slot by slot
+
+An empty slot is the finding, not an omission.
+
+| Slot | Occupant |
+|---|---|
+| language | Python 3 (`build_digest.py`, 1258 lines) and JavaScript (`api/reader.js`, CommonJS; plus one large inline browser script emitted by the generator). **No TypeScript, no `tsconfig.json`.** |
+| framework / build | **Empty.** No bundler, no framework, no build step in `package.json`. A Python script writes HTML. |
+| UI library | **Empty.** Vanilla DOM. |
+| headless primitives | **Empty.** |
+| component source | **Empty.** Markup is Python f-strings. |
+| styling | Hand-written CSS inside the generator. 8 custom properties on `:root`, plus an `html[data-theme="dark"]` override block. **No Tailwind.** |
+| state | **Empty.** `localStorage` for the theme, saved and dismissed items. |
+| motion | 32 `transition` declarations, 2 `@keyframes`, **zero `prefers-reduced-motion`**. |
+| data | Plain files: `corpus.json` (97 KB), `sources.json`, `digests/*.md`. No database. |
+| server | One Vercel serverless function, `api/reader.js`, on `@mozilla/readability` and `jsdom`. SSRF guard present: loopback, link-local and RFC-1918 hosts refused. |
+| host | Vercel, `vercel.json` `{"version": 2}`, static. Hosted, so a second person can open it. |
+| tests | **Empty.** No Playwright, no test runner, no test directory. |
+| CI | GitHub Actions, gitleaks 8.30.1 pinned by SHA-256, on push and pull request. Nothing else. |
+| runtime pins | `engines.node >= 18` — a dead major. **No `.nvmrc`, no `.python-version`.** |
+| dependency pins | `@mozilla/readability ^0.5.0`, `jsdom ^24.1.0`. Two floating carets, no `latest`. |
+
+### Carried into stage 2
+
+1. Floor gaps: `:focus-visible` 0, `prefers-reduced-motion` 0, `prefers-color-scheme` 0, `!important` 2, all in `build_digest.py`.
+2. Runtime pins: raise the dead `>=18` floor, add `.nvmrc` and `.python-version`.
+3. Dependency pins: two floating carets to exact versions; re-run `npm audit` after.
+4. TypeScript: `api/reader.js` is the only source file in scope — one file, CommonJS, no build step.
+5. Tests: no Playwright suite exists, so the axe assertion needs one created.
+6. **Do not add a `build` script to `package.json`.** Vercel auto-runs a `build` script for a project with no framework preset, and `python build_digest.py` on a deploy would prune the stale corpus and ship an empty page. `start` was added; `build` deliberately was not.
+
+## 2026-09-27 — App Repair stage 2: the non-visual floor, applied in place
+
+`BASELINE` verdict, so the framework stayed where it was and the floor went on top of it. Every CSS and
+browser-JS change landed in `build_digest.py`, which holds the page's whole stylesheet and script as
+f-strings. `index.html` and `digest.html` are generated output and were updated by splicing the
+regenerated `<style>` and `<script>` blocks in, because a full rebuild prunes the stale 2026-06-15
+corpus and would have emptied the page (README, "prunes by wall-clock date"). The spliced blocks are
+byte-identical to what the generator emits, and the two files still `cmp` equal.
+
+### Floor row, per generated page
+
+| Column | Before | After |
+|---|---|---|
+| hex literals at a use site | 22 | **0** |
+| unique hex values in the file | 22 | 23 (all of them token declarations in `:root`; the extra one is `--anchor-deep`) |
+| `px` font sizes at a use site | 82 declarations, 23 distinct | **0** (82 declarations, all `var()`; four `em` values remain) |
+| custom properties | 8 | **46** |
+| `!important` | 4 | **0** |
+| `:focus-visible` | 0 | **7 selectors in one rule** |
+| `prefers-color-scheme` | 0 | **1 CSS block + 2 `matchMedia` reads** |
+| `prefers-reduced-motion` | 0 | **1** |
+| `@container` / `clamp(` | 0 / 0 | 0 / 0 (unchanged — both are visual decisions) |
+| `transition` | 16 | 18 |
+| `@keyframes` | 1 | 1 |
+| size | 239 KB | 242 KB |
+
+### The token extraction is proven, not asserted
+
+Computed styles at 1440x900, light scheme, before and after, all identical: `body`
+`rgb(29,26,22)` on `rgb(246,243,236)` at 16px; `.mast-title` 54px; `.pill` `rgb(29,26,22)` /
+`rgb(246,243,236)` / 999px / 13.5px; `.item` `rgb(255,253,248)` / 10px / `14px 16px`; `#q`
+`rgb(255,253,248)` / 8px; `.whatsnew` `rgb(243,221,212)` / 12px; `.summary` `rgb(58,53,45)` / 15px.
+DOM shape identical too: 80 `.item`, 5 pills, 215 links, 411 buttons, 11 `details`.
+
+Both `!important` removals were measured under a real hover rather than reasoned about:
+`.read-btn:hover` still computes `opacity 1`, and `.dismiss-btn:hover` still computes
+`rgb(200,72,43)` background, `rgb(255,255,255)` text and `rgb(200,72,43)` border.
+
+### Four deliberate visible changes, each forced by a rule in `~/.agents/DESIGN.md`
+
+These are not taste. Each one was a measured floor failure.
+
+- `.whatsnew h2` was `--anchor` on `--anchor-soft`: **3.64:1**, below WCAG AA. Now `--anchor-deep`
+  (`#a8391f` light, `#e06750` dark), **4.96:1**.
+- `.rbtl-label` carried `opacity:.85` over the card: **3.71:1**. Opacity dropped; full `--anchor` on
+  `--card` is **4.68:1**.
+- `.topic-progress` carried `opacity:.85`: its label measured **3.88:1**. Opacity dropped, **5.40:1**.
+- `.pill .pc` carried `opacity:.6`: **4.38:1**. Raised to `.65`, **5.18:1**.
+
+Two more, from the same file:
+
+- `.cluster.focused > .item.lead` used `border-left:3px solid var(--anchor)` — the thick coloured
+  left bar `DESIGN.md` § Anti-default names as the single most recognisable machine-made tell. It is
+  now a 2px inset ring, which also removes the `padding-left:13px` that existed only to cancel the
+  border's layout shift.
+- `.reading-pane` declared elevation twice, a 2px border under a wide soft shadow — the "ghost card"
+  § Components bans. The border is gone; the shadow carries the elevation.
+
+Dark mode moved from two per-component overrides (`.summary`, `mark.hl`) to token overrides, per
+§ Performance, "Express dark mode through tokens rather than per-component overrides".
+
+### Everything else
+
+- Dependency pins: `@mozilla/readability ^0.5.0` → `0.5.0`, `jsdom ^24.1.0` → `24.1.3` (the version
+  already resolved in `package-lock.json`).
+- Runtime pins: `engines.node ">=18"` → `"22.x"`, plus `.nvmrc` (`22`) and `.python-version` (`3.13`).
+  22 rather than the local 24 because `api/reader.js` runs on Vercel's Node runtime and 22 is its LTS.
+- TypeScript: the app's core is Python, and `index.html` / `digest.html` are generated output, so the
+  rename-to-`.ts` conversion was skipped. `api/reader.js` is the only JavaScript source and it is a
+  deployed Vercel serverless entry point; renaming it would change the deployed function's module
+  shape with no way to test the deployment from here. Instead `tsconfig.json` type-checks it under
+  `checkJs` with `strict: true`, and `npx tsc --noEmit` exits 0. Seven errors were fixed: `req`/`res`
+  gained a JSDoc typedef of the shape they actually use, `isSafeUrl` gained a `string` parameter, and
+  four `catch (err)` sites now go through `errName`/`errMessage` helpers instead of reaching into an
+  `unknown`. Two behaviour changes fall out, both narrowing: a non-`Error` throw now reports
+  `String(err)` instead of `undefined`, and a repeated `?url=` query parameter (an array) is now a
+  400 instead of being string-coerced into the SSRF check.
+- Tests: there was no suite. `tests/floor.spec.js` plus `playwright.config.js` add five, all passing —
+  `@axe-core/playwright` with zero serious or critical violations on the primary surface, a real
+  keyboard `Tab` proving the focus ring paints 2px solid `rgb(200,72,43)`, dark and light both
+  honouring the OS scheme, and reduced motion zeroing every transition and the one animation.
+- `npm test` and `npm run typecheck` exist. **`build` still does not**, for the reason in stage 1.
+
+## 2026-09-27 | App repair, stage 2 — independent re-verification and one residual fix
+
+Stage 2 had already landed (`d236ae9`). This pass re-ran every proving command rather than trusting the
+entry above, re-derived the floor row, and closed the one advisory that was left open.
+
+### Every claim re-measured
+
+| Check | Command | Exit | Result |
+|---|---|---|---|
+| typecheck | `npx tsc --noEmit` | 0 | clean |
+| tests | `npx playwright test` | 0 | 5 passed — axe, focus ring, dark-from-OS, light default, reduced motion |
+| lint | `git diff --check` | 0 | clean |
+| secrets | `gitleaks detect` | 0 | no leaks, 22 commits |
+| generator parity | regenerate into a scratch root, compare `<style>` and `<script>` | — | **byte-identical** to the committed `index.html`. The splice in `d236ae9` is what the generator emits, not a hand-edit that drifted from it. |
+
+Floor row, re-derived per generated page (`index.html`; `digest.html` still `cmp` equal):
+
+| Column | Baseline | Now |
+|---|---|---|
+| use-site hex literals | 22 | **0** (23 unique hex remain, every one a `--token:` declaration in `:root` or a dark override) |
+| use-site `px` font sizes | 23 distinct / 82 decls | **0** — all 82 are `var()` |
+| custom properties | 8 | **46** |
+| `!important` | 4 | **0** |
+| `:focus-visible` | 0 | **7** |
+| `prefers-color-scheme` | 0 | **2** |
+| `prefers-reduced-motion` | 0 | **1** |
+| `transition` | 16 | 18 |
+| `@keyframes` | 1 | 1 |
+| `@container` / `clamp(` | 0 / 0 | 0 / 0 — both are type-scale and layout decisions, so both are visual and stay in the report |
+
+No column is worse than the baseline.
+
+### The token layer is now proven by machine diff, not by a hand-copied table
+
+`getComputedStyle` over 16 selectors and 19 properties, 1440x900, `colorScheme: 'light'`, headless
+Chromium, run against `git show master:index.html` and against the branch's `index.html`, then `diff`ed
+as JSON. **Exactly three selectors differ, and all three are the documented `~/.agents/DESIGN.md` fixes:**
+
+- `.rbtl-label` `opacity` `0.85` → `1` — WCAG AA, 3.71:1 → 4.68:1
+- `.topic-progress` `opacity` `0.85` → `1` — WCAG AA, 3.88:1 → 5.40:1
+- `.reading-pane` `border-left` `2px solid` → none — § Components, elevation declared once; the shadow carries it
+
+Every other colour, font size, family, weight, line-height, radius, padding, margin, shadow, letter-spacing,
+display, gap and size is identical, and the DOM shape is identical (80 `.item`, 5 pills, 215 links,
+411 buttons, 11 `details`). The token extraction moved no pixel.
+
+### One residual fix
+
+`npm audit fix` — transitive `form-data` `4.0.5` → `4.0.6`, clearing GHSA-hmw2-7cc7-3qxx (high, CRLF
+injection). `package-lock.json` only; no direct dependency changed and both direct pins stay exact.
+`npm audit` now reports **zero high, zero critical**.
+
+`@mozilla/readability` `0.5.0` stays. Its remaining advisory is **low** (ReDoS, GHSA-3p6v-hrg8-8qj7) and
+the fix is `0.6.0`, a breaking major for a `0.x` package, in the one file that is a deployed Vercel
+serverless entry point with no way to exercise the deployment from here. Trading a working reader for a
+low advisory fails the stopping rule.
+
+### Slop detector, and why nothing came of it
+
+`detect.mjs --json index.html` returns three `slop` hits. None is executable under this run's boundary:
+
+- **`side-tab`, `.pane-content blockquote { border-left:3px solid var(--anchor) }`** — a left rule on a
+  `blockquote` is the oldest legitimate use of the property, not the accent bar on a card, list item or
+  callout that `craft-floor.md` bans. Judged a false positive; changing it would be a visual decision.
+- **`flat-type-hierarchy`** — collapsing the type scale changes text size. Visual, reported not executed.
+- **`marketing-buzzword`, "Best-in-class story clustering"** — it lives in `corpus.json:1919` as a curated
+  source note. That is product data, not chrome copy.
+
+§ Headings and titles was checked mechanically across every `button`, `h1`–`h4`, `th`, `summary` and
+`label` in the rendered page: zero terminal periods.

@@ -1,7 +1,21 @@
 const { Readability } = require('@mozilla/readability');
 const { JSDOM } = require('jsdom');
 
+/**
+ * Minimal shape of the Vercel Node request/response this handler uses.
+ * @typedef {{ method?: string, query?: Record<string, string | string[] | undefined> }} ReaderRequest
+ * @typedef {{ setHeader(name: string, value: string): void,
+ *             status(code: number): { end(): unknown, json(body: unknown): unknown } }} ReaderResponse
+ */
+
+/** @param {unknown} err @returns {string} */
+function errName(err) { return err instanceof Error ? err.name : ''; }
+
+/** @param {unknown} err @returns {string} */
+function errMessage(err) { return err instanceof Error ? err.message : String(err); }
+
 // Block SSRF — refuse internal/localhost targets
+/** @param {string} raw @returns {boolean} */
 function isSafeUrl(raw) {
   try {
     const { hostname, protocol } = new URL(raw);
@@ -16,13 +30,14 @@ function isSafeUrl(raw) {
   }
 }
 
+/** @param {ReaderRequest} req @param {ReaderResponse} res */
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(204).end();
 
   const url = req.query?.url;
-  if (!url) return res.status(400).json({ error: 'Missing ?url= parameter' });
+  if (typeof url !== 'string' || !url) return res.status(400).json({ error: 'Missing ?url= parameter' });
   if (!isSafeUrl(url)) return res.status(400).json({ error: 'URL not permitted' });
 
   let response;
@@ -37,7 +52,7 @@ module.exports = async function handler(req, res) {
       signal: AbortSignal.timeout(8000),
     });
   } catch (err) {
-    const msg = err.name === 'TimeoutError' ? 'Request timed out after 8s' : `Fetch failed: ${err.message}`;
+    const msg = errName(err) === 'TimeoutError' ? 'Request timed out after 8s' : `Fetch failed: ${errMessage(err)}`;
     return res.status(502).json({ error: msg });
   }
 
@@ -52,14 +67,14 @@ module.exports = async function handler(req, res) {
 
   let html;
   try { html = await response.text(); }
-  catch (err) { return res.status(502).json({ error: `Could not read response: ${err.message}` }); }
+  catch (err) { return res.status(502).json({ error: `Could not read response: ${errMessage(err)}` }); }
 
   let article;
   try {
     const dom = new JSDOM(html, { url });
     article = new Readability(dom.window.document).parse();
   } catch (err) {
-    return res.status(500).json({ error: `Parse error: ${err.message}` });
+    return res.status(500).json({ error: `Parse error: ${errMessage(err)}` });
   }
 
   if (!article) {

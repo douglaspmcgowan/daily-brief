@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "3dbf877a10bd7ad0aaf25f85cc33fa5d1f3faadf9512ff31095122422ad44866"
+      "sha256": "89f27a564ea732905e5f752960cf96a50d7b1fb4b290db9cce57ea8a3cf3c75e"
     },
     {
       "path": "CLAUDE.md",
@@ -16,11 +16,19 @@
     },
     {
       "path": "DESIGN.md",
-      "sha256": "43d16e2a9c3f038e39f5e06365f1cce07b292eb0e461c0c9a4930fcff7ec5a41"
+      "sha256": "d9276cc2772f4cc0aef34b5cc5d7d77b4dabe682ab9571b9b9085528c529dff4"
     },
     {
-      "path": "MAP.md",
-      "sha256": "45d5692a9f48c040fa9ab4ccb1289215d135220f7421e6602ae112eae0426f45"
+      "path": "TASK.md",
+      "sha256": "7284271fa0462f73f50709016100269ad532bc531d3084e90cfd6f1c33f3f796"
+    },
+    {
+      "path": "LOG.md",
+      "sha256": "54105b742bac8537d0a72ef8541ebd2e64eff8ef9fc2316478570277ae4322f2"
+    },
+    {
+      "path": "BACKBURNER.md",
+      "sha256": "40f5acc2eb99d93be0b4e5c4a5b5df6f8aac1e2726f315d3f3573d59180aa8a6"
     },
     {
       "path": "MEMORY.md",
@@ -28,7 +36,7 @@
     },
     {
       "path": "skills-manifest.json",
-      "sha256": "6a112bc63e10d5d01ead9c37079537908ad6e6de90c6e7b744686b8c7035b6ac"
+      "sha256": "562eb1aa20b5f69631506c77f5fbe3adfeefe5e68093b909cb7b5ca06c66350f"
     },
     {
       "path": "data-manifest.yaml",
