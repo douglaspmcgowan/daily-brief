@@ -32,41 +32,47 @@ TOPIC_LABELS = {
     "tech": "Tech & Coding",
 }
 
-# --- editorial palette (one bold anchor; no purple gradients, no left accent bars) ---
+# --- Ledger palette (DESIGN.md 'Colour'): nine hex colours per mode plus one shadow alpha ---
 PALETTE = {
     "paper": "#f6f3ec",
-    "card": "#fffdf8",
+    "sheet": "#fffdf8",
     "ink": "#1d1a16",
     "muted": "#6b6357",
     "rule": "#e3ddd0",
-    "anchor": "#c8482b",   # single warm anchor used for masthead + NEW badge
-    "anchor_soft": "#f3ddd4",
-    "link": "#1b4d6b",
+    "anchor": "#c8482b",
+    "anchor_deep": "#a8391f",
+    "highlight": "#fff176",
+    "caution": "#7a5c00",
+    "shadow": "rgba(29,26,22,.14)",
 }
 
 PALETTE_DARK = {
     "paper": "#1c1914",
-    "card": "#252017",
+    "sheet": "#252017",
     "ink": "#ede9e0",
     "muted": "#9a9088",
     "rule": "#3b342a",
     "anchor": "#e06750",
-    "anchor_soft": "#3a1f14",
-    "link": "#79b8d8",
+    "anchor_deep": "#e06750",
+    "highlight": "#4a3d00",
+    "caution": "#d9b64a",
+    "shadow": "rgba(0,0,0,.5)",
 }
 
 
 def _palette_tokens(p: dict) -> str:
     """Render one palette as custom-property declarations, at its current values."""
-    return (f"--paper:{p['paper']}; --card:{p['card']}; --ink:{p['ink']};\n"
+    return (f"--paper:{p['paper']}; --sheet:{p['sheet']}; --ink:{p['ink']};\n"
             f"    --muted:{p['muted']}; --rule:{p['rule']}; --anchor:{p['anchor']};\n"
-            f"    --anchor-soft:{p['anchor_soft']}; --link:{p['link']};")
+            f"    --anchor-deep:{p['anchor_deep']}; --highlight:{p['highlight']};\n"
+            f"    --caution:{p['caution']}; --shadow:{p['shadow']};")
 
 
-# --anchor-deep is --anchor darkened until it clears 4.5:1 on --anchor-soft:
-# #c8482b measures 3.64:1 there, #a8391f measures 4.96:1 (axe, 2026-09-27).
-LIGHT_TOKENS = _palette_tokens(PALETTE) + "\n    --ink-soft:#3a352d; --highlight:#fff176; --anchor-deep:#a8391f;"
-DARK_TOKENS = _palette_tokens(PALETTE_DARK) + "\n    --ink-soft:#c8bfb0; --highlight:#4a3d00; --anchor-deep:#e06750;"
+LIGHT_TOKENS = _palette_tokens(PALETTE)
+DARK_TOKENS = _palette_tokens(PALETTE_DARK)
+
+FONTS_HREF = ("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700"
+              "&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap")
 
 ICON_OPEN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'
 ICON_EXT = ICON_OPEN + '<path d="M7 17L17 7M9 7h8v8"/></svg>'
@@ -79,17 +85,19 @@ ICON_CLOSE = ICON_OPEN + '<path d="M6 6l12 12M18 6L6 18"/></svg>'
 ICON_STAR = '<svg class="ico fill" viewBox="0 0 24 24" role="img" aria-label="Pinned"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'
 ICON_GRIP = '<svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>'
 
-# Three type sizes and a spacing scale, all tokens (compliance pass, 2026-10-04).
-# The old 19-step scale is gone: small, body, and one fluid display size.
-SCALE_TOKENS = """--fs-sm:13px; --fs-md:16px; --fs-display:clamp(2rem, 6vw, 3.375rem);
+# Type, spacing, rules, motion and status tokens (DESIGN.md 'Type', 'Spacing, radii, rules,
+# elevation', 'Motion tokens'). Mode-independent: colours resolve through var() per element.
+SCALE_TOKENS = """--font-display:"Playfair Display", Georgia, "Times New Roman", serif;
+    --font-body:"PT Serif", Georgia, "Iowan Old Style", serif;
+    --fs-sm:0.85rem; --fs-md:1.0625rem; --fs-display:clamp(2.125rem, 6vw + 0.75rem, 3.25rem);
     --sp-4:4px; --sp-8:8px; --sp-12:12px; --sp-16:16px; --sp-24:24px; --sp-32:32px;
     --sp-48:48px; --sp-64:64px;
-    --ease-out:cubic-bezier(.22,1,.36,1);
-    --radius-2:2px; --radius-3:3px; --radius-4:4px; --radius-5:5px; --radius-6:6px;
-    --radius-7:7px; --radius-8:8px; --radius-10:10px; --radius-12:12px;
-    --radius-14:14px; --radius-round:50%; --radius-pill:999px;
-    --on-anchor:#fff; --warn:#b8960c;
-    --shadow-soft:rgba(0,0,0,.10); --shadow-firm:rgba(0,0,0,.2);"""
+    --wrap:70rem; --measure:68ch; --radius-0:0;
+    --rule-hair:1px solid var(--rule); --rule-firm:1px solid var(--ink); --rule-double:4px double var(--ink);
+    --dur-1:120ms; --dur-2:200ms; --dur-3:320ms;
+    --ease-out:cubic-bezier(.22,1,.36,1); --ease-in:cubic-bezier(.4,0,1,1);
+    --status-new:var(--anchor-deep); --status-error:var(--anchor-deep); --status-caution:var(--caution);
+    --status-done:var(--muted); --status-saved:var(--ink);"""
 
 
 def today() -> dt.date:
@@ -350,6 +358,9 @@ def build_html(corpus, run_date):
 <meta property="og:image" content="/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'><rect x='3' y='6' width='29' height='32' rx='5' stroke='%23c8482b' stroke-width='2.5'/><line x1='10' y1='15' x2='26' y2='15' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='21' x2='26' y2='21' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><line x1='10' y1='27' x2='20' y2='27' stroke='%23c8482b' stroke-width='2.5' stroke-linecap='round'/><circle cx='36' cy='11' r='7' fill='%23c8482b'/><circle cx='36' cy='11' r='3.5' fill='white' opacity='.9'/></svg>" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{FONTS_HREF}">
 <title>News Digest — {stamp}</title>
 <style>
   :root {{
@@ -358,69 +369,69 @@ def build_html(corpus, run_date):
   }}
   * {{ box-sizing:border-box; }}
   body {{ margin:0; background:var(--paper); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    font-family:var(--font-body); font-size:var(--fs-md);
     line-height:1.5; }}
-  .wrap {{ max-width:1080px; margin:0 auto; padding:0 clamp(var(--sp-16), 4vw, var(--sp-24)) var(--sp-64); }}
-  header.mast {{ border-bottom:3px solid var(--ink); padding:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 var(--sp-16); margin-bottom:var(--sp-8); }}
-  .mast-title {{ font-family:Georgia,"Iowan Old Style","Times New Roman",serif;
-    font-size:var(--fs-display); line-height:1; letter-spacing:-1px; margin:0; }}
+  .wrap {{ max-width:var(--wrap); margin:0 auto; padding:0 clamp(var(--sp-16), 4vw, var(--sp-24)) var(--sp-64); }}
+  header.mast {{ border-bottom:var(--rule-double); padding:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 var(--sp-16); margin-bottom:var(--sp-8); }}
+  .mast-title {{ font-family:var(--font-display); font-weight:900;
+    font-size:var(--fs-display); line-height:1; letter-spacing:-.02em; margin:0; }}
   .mast-title .accent {{ color:var(--anchor); }}
   .mast-sub {{ color:var(--muted); margin:var(--sp-8) 0 0; font-size:var(--fs-md);
     display:flex; gap:var(--sp-12); flex-wrap:wrap; align-items:center; }}
-  .mast-sub b {{ color:var(--ink); font-weight:600; }}
+  .mast-sub b {{ color:var(--ink); font-weight:700; }}
   .controls {{ position:sticky; top:0; background:var(--paper); padding:var(--sp-8) 0;
-    border-bottom:1px solid var(--rule); z-index:5;
+    border-bottom:var(--rule-hair); z-index:5;
     display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
   .pills-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; flex:1; min-width:0; }}
-  .pill {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--ink); background:transparent;
-    color:var(--ink); padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
+  .pill {{ font:inherit; font-size:var(--fs-sm); border:var(--rule-firm); background:transparent;
+    color:var(--ink); padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
     touch-action:manipulation; min-height:44px; min-width:44px;
-    transition:background-color .15s var(--ease-out),color .15s var(--ease-out); }}
+    transition:background-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
   .pill.active {{ background:var(--ink); color:var(--paper); }}
   .pill .pc {{ opacity:.65; font-variant-numeric:tabular-nums; margin-left:var(--sp-4); }}
   .search-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
   #q {{ font:inherit; flex:1 1 160px; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12);
-    transition:border-color .15s var(--ease-out); border:1px solid var(--rule);
-    border-radius:var(--radius-8); background:var(--card); color:var(--ink); }}
-  .whatsnew {{ background:var(--anchor-soft); border:1px solid var(--anchor);
-    border-radius:var(--radius-12); padding:var(--sp-16) var(--sp-16); margin:var(--sp-24) 0; }}
+    transition:border-color var(--dur-1) var(--ease-out); border:1px solid var(--rule);
+    border-radius:var(--radius-0); background:var(--sheet); color:var(--ink); }}
+  .whatsnew {{ background:transparent; border:var(--rule-hair);
+    border-radius:var(--radius-0); padding:var(--sp-16) var(--sp-16); margin:var(--sp-24) 0; }}
   .whatsnew h2 {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); font-weight:700;
     color:var(--anchor-deep); }}
   .whatsnew ol {{ margin:0; padding-left:var(--sp-16); }}
   .whatsnew li, .also-list li, .ref-list li {{ margin:0; padding:var(--sp-12) 0; line-height:1.6; }}
-  .whatsnew a {{ color:var(--ink); text-decoration:none; font-weight:600; }}
+  .whatsnew a {{ color:var(--ink); text-decoration:none; font-weight:700; }}
   .whatsnew a:hover {{ text-decoration:underline; }}
   .new-src {{ color:var(--muted); font-weight:400; font-size:var(--fs-sm); }}
   .topic {{ margin:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 0; }}
-  .topic-h {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-12);
+  .topic-h {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:900; margin:0 0 var(--sp-12);
     padding-bottom:var(--sp-8); border-bottom:2px solid var(--ink); }}
   .topic-h .count {{ font-size:var(--fs-sm); color:var(--muted); font-family:inherit;
     vertical-align:middle; }}
   .cluster {{ margin:0 0 var(--sp-12); container-type:inline-size; }}
-  .item {{ background:var(--card); border:1px solid var(--rule); border-radius:var(--radius-10);
+  .item {{ background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius-0);
     padding:var(--sp-12) var(--sp-16); margin:0 0 var(--sp-8); }}
   .item-head {{ display:flex; align-items:flex-start; gap:var(--sp-8); flex-wrap:wrap; }}
   .item-head-main {{ flex:1 1 240px; min-width:0; display:flex; align-items:baseline; gap:var(--sp-8); flex-wrap:wrap; }}
-  .title {{ color:var(--ink); text-decoration:none; font-size:var(--fs-md); font-weight:600;
-    font-family:Georgia,serif; padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0;
-    transition:color .15s var(--ease-out); }}
+  .title {{ color:var(--ink); text-decoration:none; font-size:var(--fs-md); font-weight:700;
+    font-family:var(--font-display); padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0;
+    transition:color var(--dur-1) var(--ease-out); }}
   .title[data-reader] {{ cursor:pointer; }}
-  .title:hover {{ color:var(--link); text-decoration:underline; }}
+  .title:hover {{ color:var(--anchor-deep); text-decoration:underline; }}
   .ext-link {{ color:var(--muted); font-size:var(--fs-sm); text-decoration:none; opacity:.55;
     flex-shrink:0; display:inline-flex; align-items:center; justify-content:center;
     min-width:44px; min-height:44px; margin:calc(-1*var(--sp-12)) 0;
-    transition:opacity .12s var(--ease-out),color .12s var(--ease-out); }}
-  .ext-link:hover {{ opacity:1; color:var(--link); }}
-  .badge {{ background:var(--anchor); color:var(--on-anchor); font-size:var(--fs-sm); font-weight:700;
-    padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-4); }}
+    transition:opacity var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
+  .ext-link:hover {{ opacity:1; color:var(--ink); }}
+  .badge {{ background:var(--status-new); color:var(--paper); font-size:var(--fs-sm); font-weight:700;
+    padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-0); }}
   .pin {{ color:var(--anchor); }}
   .meta {{ color:var(--muted); font-size:var(--fs-sm); margin-top:var(--sp-4); }}
   .meta .dot {{ margin:0 var(--sp-4); }}
-  .summary {{ margin:var(--sp-8) 0 0; color:var(--ink-soft); font-size:var(--fs-md); }}
+  .summary {{ margin:var(--sp-8) 0 0; color:var(--ink); font-size:var(--fs-md); }}
   .rbtl {{ margin:var(--sp-8) 0 0; font-size:var(--fs-sm); color:var(--muted); font-style:italic; line-height:1.5; }}
   .rbtl-label {{ font-style:normal; font-weight:700; color:var(--anchor); }}
   .also-wrap {{ margin:var(--sp-4) 0 0 var(--sp-4); }}
-  .also-wrap summary {{ cursor:pointer; color:var(--link); font-size:var(--fs-sm); line-height:1.6; padding:var(--sp-12) 0; }}
+  .also-wrap summary {{ cursor:pointer; color:var(--ink); font-size:var(--fs-sm); line-height:1.6; padding:var(--sp-12) 0; }}
   .also-list {{ margin:var(--sp-8) 0 var(--sp-4); padding-left:var(--sp-16); }}
   .also-list li {{ font-size:var(--fs-sm); }}
   .whatsnew a, .also-list a, .ref-list a {{ display:inline-block; vertical-align:top; padding:var(--sp-12) 0; margin:calc(-1*var(--sp-12)) 0; }}
@@ -430,14 +441,15 @@ def build_html(corpus, run_date):
   .empty {{ color:var(--muted); font-style:italic; }}
   .no-results {{ margin:var(--sp-48) 0; text-align:center; color:var(--muted); }}
   .no-results[hidden] {{ display:none; }}
-  .references {{ margin:var(--sp-48) 0 0; border-top:3px solid var(--ink); padding-top:var(--sp-16); }}
-  .references h2 {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-4); }}
+  .references {{ margin:var(--sp-48) 0 0; border-top:var(--rule-double); padding-top:var(--sp-16); }}
+  .references h2 {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:700; margin:0 0 var(--sp-4); }}
   .ref-lead {{ color:var(--muted); font-size:var(--fs-sm); margin:0 0 var(--sp-12); }}
   .ref-list {{ columns:2; column-gap:var(--sp-24); padding-left:var(--sp-16); }}
   .ref-note {{ color:var(--muted); font-size:var(--fs-sm); }}
-  a {{ color:var(--link); transition:color .15s var(--ease-out); }}
+  a {{ color:var(--ink); text-decoration:underline; text-decoration-thickness:1px;
+    transition:color var(--dur-1) var(--ease-out); }}
   footer.foot {{ margin-top:var(--sp-32); color:var(--muted); font-size:var(--fs-sm);
-    border-top:1px solid var(--rule); padding-top:var(--sp-12); }}
+    border-top:var(--rule-hair); padding-top:var(--sp-12); }}
   @media (max-width:680px) {{ .ref-list {{ columns:1; }} }}
   @media (max-width:600px) {{
     .mast-sub {{ font-size:var(--fs-sm); gap:var(--sp-4); }}
@@ -476,18 +488,18 @@ def build_html(corpus, run_date):
   /* per-card read toggle — checkmark, not a ring */
   .read-btn {{ opacity:.35; }}
   .read-btn:hover {{ opacity:1; }}
-  .cluster.is-read .read-btn {{ opacity:1; color:var(--anchor); box-shadow:inset 0 0 0 1px var(--anchor); background-color:var(--anchor-soft); }}
+  .cluster.is-read .read-btn {{ opacity:1; color:var(--status-done); box-shadow:inset 0 0 0 1px var(--status-done); background-color:transparent; }}
   .cluster.is-read .item.lead {{ opacity:.65; }}
-  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-round); border:var(--sp-8) solid transparent;
+  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-0); border:var(--sp-8) solid transparent;
     background-color:transparent; background-clip:padding-box; box-shadow:inset 0 0 0 1px var(--rule);
     color:var(--muted); font-size:var(--fs-sm); line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
-    transition:background-color .15s var(--ease-out),box-shadow .15s var(--ease-out),color .15s var(--ease-out); padding:0;
+    transition:background-color var(--dur-1) var(--ease-out),box-shadow var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); padding:0;
     touch-action:manipulation; margin:calc(-1*var(--sp-8)) 0; }}
-  .card-btn:hover {{ background-color:var(--card); box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
-  .dismiss-btn:hover {{ background-color:var(--anchor); box-shadow:inset 0 0 0 1px var(--anchor); color:var(--on-anchor); }}
-  .snooze-btn.active {{ box-shadow:inset 0 0 0 1px var(--warn); color:var(--warn); }}
-  .rl-btn.active {{ box-shadow:inset 0 0 0 1px var(--link); color:var(--link); }}
+  .card-btn:hover {{ background-color:var(--sheet); box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
+  .dismiss-btn:hover {{ background-color:var(--anchor-deep); box-shadow:inset 0 0 0 1px var(--anchor-deep); color:var(--paper); }}
+  .snooze-btn.active {{ box-shadow:inset 0 0 0 1px var(--status-caution); color:var(--status-caution); }}
+  .rl-btn.active {{ box-shadow:inset 0 0 0 1px var(--status-saved); color:var(--status-saved); }}
   /* topic-level read progress ring */
   .topic-progress {{ display:inline-flex; align-items:center; gap:var(--sp-4); margin-left:var(--sp-12);
     vertical-align:middle; }}
@@ -495,34 +507,34 @@ def build_html(corpus, run_date):
   .topic-ring .ring-bg {{ fill:none; stroke:var(--rule); stroke-width:2.5; }}
   .topic-ring .ring-fg {{ fill:none; stroke:var(--anchor); stroke-width:2.5;
     stroke-dasharray:56.55; stroke-dashoffset:56.55;
-    transition:stroke-dashoffset .5s var(--ease-out); transform:rotate(-90deg); transform-origin:center; }}
+    transition:stroke-dashoffset var(--dur-3) var(--ease-out); transform:rotate(-90deg); transform-origin:center; }}
   .topic-ring-label {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
   .date-stamp {{ color:var(--muted); font-size:var(--fs-sm); }}
   /* drag handle */
   .cluster {{ position:relative; }}
   .drag-handle {{ position:absolute; top:var(--sp-8); left:-18px; color:var(--muted); font-size:var(--fs-sm);
-    cursor:grab; opacity:0; transition:opacity .15s var(--ease-out); line-height:1; user-select:none; padding:var(--sp-4); }}
+    cursor:grab; opacity:0; transition:opacity var(--dur-1) var(--ease-out); line-height:1; user-select:none; padding:var(--sp-4); }}
   .cluster:hover .drag-handle {{ opacity:1; }}
   .cluster[draggable] {{ cursor:default; }}
-  .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:var(--radius-12); }}
+  .cluster.drag-over {{ outline:2px dashed var(--anchor); outline-offset:4px; border-radius:var(--radius-0); }}
   .cluster.dragging {{ opacity:.35; pointer-events:none; }}
   /* keyboard-navigation focus state — a ring, not a coloured left bar (banned) */
   .cluster.focused > .item.lead {{ outline:2px solid var(--anchor); outline-offset:-1px;
-    background:var(--anchor-soft); transition:background .2s var(--ease-out); scroll-margin:var(--sp-64); }}
-  .cluster:hover > .item.lead {{ background:color-mix(in srgb, var(--card) 90%, var(--anchor) 10%); }}
-  .cluster.focused:hover > .item.lead {{ background:var(--anchor-soft); }}
+    background:var(--sheet); transition:background var(--dur-2) var(--ease-out); scroll-margin:var(--sp-64); }}
+  .cluster:hover > .item.lead {{ background:color-mix(in srgb, var(--sheet) 90%, var(--anchor) 10%); }}
+  .cluster.focused:hover > .item.lead {{ background:var(--sheet); }}
   /* tooltips */
   [data-tip] {{ position:relative; }}
   [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
     left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper);
-    font-size:var(--fs-sm); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    font-weight:400; padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-5); white-space:nowrap;
-    pointer-events:none; opacity:0; transition:opacity .12s var(--ease-out); z-index:20; }}
+    font-size:var(--fs-sm); font-family:var(--font-body);
+    font-weight:400; padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-0); white-space:nowrap;
+    pointer-events:none; opacity:0; transition:opacity var(--dur-1) var(--ease-out); z-index:20; }}
   [data-tip]:hover::after {{ opacity:1; }}
-  .card-actions [data-tip]::after, #help-btn[data-tip]::after {{ left:auto; right:0; transform:none; }}
+  .card-actions [data-tip]::after, .ext-link[data-tip]::after, #help-btn[data-tip]::after {{ left:auto; right:0; transform:none; }}
   .arc-pill {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
-    white-space:nowrap; min-height:44px; transition:border-color .15s var(--ease-out),color .15s var(--ease-out); }}
+    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
+    white-space:nowrap; min-height:44px; transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
   .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
   .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
   #help-btn {{ width:44px; height:44px; padding:0; display:inline-flex; align-items:center;
@@ -531,15 +543,15 @@ def build_html(corpus, run_date):
   .note-area {{ padding:var(--sp-4) var(--sp-4) var(--sp-4); }}
   .note-trigger {{ font:inherit; font-size:var(--fs-sm); color:var(--muted); background-color:transparent;
     border:0; border-block:var(--sp-8) solid transparent; background-clip:padding-box;
-    box-shadow:inset 0 0 0 1px var(--rule); border-radius:var(--radius-pill); cursor:pointer;
+    box-shadow:inset 0 0 0 1px var(--rule); border-radius:var(--radius-0); cursor:pointer;
     padding:var(--sp-4) var(--sp-12); display:inline-flex; align-items:center; gap:var(--sp-8); min-height:44px;
-    transition:box-shadow .15s var(--ease-out),color .15s var(--ease-out); user-select:none; margin:calc(-1*var(--sp-8)) 0; }}
+    transition:box-shadow var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); user-select:none; margin:calc(-1*var(--sp-8)) 0; }}
   .note-trigger .ico {{ width:var(--fs-md); height:var(--fs-md); }}
   .note-trigger:hover {{ box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
-  .note-trigger.has-note {{ box-shadow:inset 0 0 0 1px var(--link); color:var(--link); }}
+  .note-trigger.has-note {{ box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
   .note-body {{ margin:var(--sp-4) 0 var(--sp-4); }}
   .note-input {{ width:100%; font:inherit; font-size:var(--fs-sm); resize:none;
-    border:1px solid var(--rule); border-radius:var(--radius-8); background:var(--card); color:var(--ink);
+    border:1px solid var(--rule); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink);
     padding:var(--sp-8) var(--sp-8); }}
   .note-input:focus {{ outline:2px solid var(--anchor); border-color:transparent; }}
   .note-display {{ font-size:var(--fs-sm); color:var(--muted); white-space:pre-wrap;
@@ -547,16 +559,15 @@ def build_html(corpus, run_date):
     margin-left:var(--sp-4); padding-left:var(--sp-12); }}
   .note-display.visible {{ display:block; }}
   /* insight card */
-  .insight-card {{ margin:var(--sp-24) 0 var(--sp-8); padding:var(--sp-16) var(--sp-24) var(--sp-16); border-radius:var(--radius-12);
-    background:linear-gradient(135deg,var(--anchor-soft) 0%,var(--card) 100%);
-    border:1px solid var(--anchor); }}
-  .insight-quote {{ margin:0 0 var(--sp-8); font-family:Georgia,serif; font-size:var(--fs-md); line-height:1.6;
+  .insight-card {{ margin:var(--sp-24) 0 var(--sp-8); padding:var(--sp-16) var(--sp-24) var(--sp-16); border-radius:var(--radius-0);
+    background:transparent; border:0; border-top:var(--rule-double); border-bottom:var(--rule-hair); }}
+  .insight-quote {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); line-height:1.6;
     color:var(--ink); font-style:italic; }}
   .insight-src {{ font-size:var(--fs-sm); color:var(--muted); }}
-  .insight-src a {{ color:var(--ink); font-weight:600; text-decoration:none; }}
+  .insight-src a {{ color:var(--ink); font-weight:700; text-decoration:none; }}
   .insight-src a:hover {{ text-decoration:underline; }}
   .insight-from {{ color:var(--muted); }}
-  html[data-theme="dark"] {{
+  :root[data-theme="dark"] {{
     {DARK_TOKENS}
   }}
   /* Follow the operating system when the reader has not chosen a theme. */
@@ -566,54 +577,54 @@ def build_html(corpus, run_date):
     }}
   }}
   #theme-btn {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-pill); cursor:pointer;
-    min-height:44px; transition:border-color .15s var(--ease-out),color .15s var(--ease-out); touch-action:manipulation; white-space:nowrap; }}
+    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
+    min-height:44px; transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); touch-action:manipulation; white-space:nowrap; }}
   #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
   /* ── reading pane ──────────────────────────────────────────────────────── */
   .reading-pane {{ display:none; position:fixed; top:0; right:0; width:40vw; height:100vh;
-    background:var(--card); z-index:50;
-    flex-direction:column; box-shadow:-6px 0 32px var(--shadow-soft); }}
+    background:var(--sheet); z-index:50;
+    flex-direction:column; box-shadow:0 0 32px var(--shadow); }}
   .reading-pane.open {{ display:flex; }}
   body.pane-open .wrap {{ margin-right:calc(40vw + 8px); }}
-  .pane-toolbar {{ display:flex; align-items:center; padding:var(--sp-8) var(--sp-12); border-bottom:1px solid var(--rule);
-    gap:var(--sp-8); flex-shrink:0; position:sticky; top:0; background:var(--card); z-index:2; }}
+  .pane-toolbar {{ display:flex; align-items:center; padding:var(--sp-8) var(--sp-12); border-bottom:var(--rule-hair);
+    gap:var(--sp-8); flex-shrink:0; position:sticky; top:0; background:var(--sheet); z-index:2; }}
   .pane-site {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
-  .pane-close,.pane-newtab {{ width:44px; height:44px; border-radius:var(--radius-round); border:1px solid var(--rule);
+  .pane-close,.pane-newtab {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid var(--rule);
     background:transparent; color:var(--muted); font-size:var(--fs-md); cursor:pointer; display:flex;
     align-items:center; justify-content:center;
-    transition:border-color .15s var(--ease-out),color .15s var(--ease-out); text-decoration:none; flex-shrink:0; }}
+    transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); text-decoration:none; flex-shrink:0; }}
   .pane-close:hover,.pane-newtab:hover {{ border-color:var(--ink); color:var(--ink); }}
   .pane-body {{ flex:1; overflow-y:auto; padding:var(--sp-24) var(--sp-24) var(--sp-64); }}
   .pane-loading {{ color:var(--muted); font-style:italic; padding:var(--sp-24) 0; animation:pulse 1.4s var(--ease-out) infinite; }}
   @keyframes pulse {{ 0%,100% {{ opacity:.5; }} 50% {{ opacity:1; }} }}
-  .pane-error {{ color:var(--anchor); font-size:var(--fs-sm); padding:var(--sp-8) 0 var(--sp-4); line-height:1.5; }}
-  .pane-error a {{ color:var(--link); }}
-  .pane-title {{ font-family:Georgia,serif; font-size:var(--fs-md); font-weight:700; line-height:1.3;
+  .pane-error {{ color:var(--status-error); font-size:var(--fs-sm); padding:var(--sp-8) 0 var(--sp-4); line-height:1.5; }}
+  .pane-error a {{ color:var(--ink); }}
+  .pane-title {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:700; line-height:1.3;
     margin:0 0 var(--sp-8); color:var(--ink); }}
   .pane-byline {{ font-size:var(--fs-sm); color:var(--muted); margin-bottom:var(--sp-16); padding-bottom:var(--sp-12);
-    border-bottom:1px solid var(--rule); }}
+    border-bottom:var(--rule-hair); }}
   .pane-content {{ font-size:var(--fs-md); line-height:1.75; color:var(--ink); }}
   .pane-content p {{ margin:0 0 1em; }}
   .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{
-    font-family:Georgia,serif; margin:1.4em 0 .5em; line-height:1.25; }}
+    font-family:var(--font-display); margin:1.4em 0 .5em; line-height:1.25; }}
   .pane-content h1,.pane-content h2,.pane-content h3,.pane-content h4 {{ font-size:var(--fs-md); font-weight:700; }}
-  .pane-content a {{ color:var(--link); }}
-  .pane-content img {{ max-width:100%; height:auto; border-radius:var(--radius-6); margin:var(--sp-8) 0; display:block; }}
+  .pane-content a {{ color:var(--ink); }}
+  .pane-content img {{ max-width:100%; height:auto; border-radius:var(--radius-0); margin:var(--sp-8) 0; display:block; }}
   .pane-content figure {{ margin:1em 0; }}
   .pane-content figcaption {{ font-size:var(--fs-sm); color:var(--muted); margin-top:var(--sp-4); }}
   .pane-content blockquote {{ border-left:1px solid var(--rule); margin:1em 0;
     padding-left:var(--sp-12); color:var(--muted); font-style:italic; }}
-  .pane-content pre {{ background:var(--paper); border-radius:var(--radius-6); padding:var(--sp-12); overflow-x:auto;
+  .pane-content pre {{ background:var(--paper); border-radius:var(--radius-0); padding:var(--sp-12); overflow-x:auto;
     font-size:var(--fs-sm); border:1px solid var(--rule); }}
-  .pane-content code {{ background:var(--paper); border-radius:var(--radius-3); padding:var(--sp-4);
+  .pane-content code {{ background:var(--paper); border-radius:var(--radius-0); padding:var(--sp-4);
     font-size:var(--fs-sm); }}
   .pane-content pre code {{ background:none; padding:0; }}
   .pane-content ul,.pane-content ol {{ padding-left:var(--sp-24); margin:0 0 1em; }}
   .pane-content li {{ margin:.3em 0; }}
-  .pane-content mark.hl {{ background:var(--highlight); color:inherit; border-radius:var(--radius-2); padding:0 var(--sp-4); }}
+  .pane-content mark.hl {{ background:var(--highlight); color:inherit; border-radius:var(--radius-0); padding:0 var(--sp-4); }}
   /* highlight tooltip */
-  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:var(--radius-7);
-    padding:var(--sp-4) var(--sp-4); z-index:200; box-shadow:0 2px 8px var(--shadow-firm); }}
+  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:var(--radius-0);
+    padding:var(--sp-4) var(--sp-4); z-index:200; box-shadow:0 0 32px var(--shadow); }}
   #hl-btn {{ background:none; border:none; color:var(--paper); cursor:pointer;
     font-size:var(--fs-sm); padding:var(--sp-12); min-height:44px; white-space:nowrap; font-family:inherit; }}
   #hl-btn:hover {{ opacity:.8; }}
@@ -1068,20 +1079,20 @@ def build_html(corpus, run_date):
     ov.id = 'kbd-overlay';
     ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;';
     const box = document.createElement('div');
-    box.style.cssText = 'background:var(--card);border:1px solid var(--rule);border-radius:var(--radius-14);padding:var(--sp-24);min-width:280px;max-width:calc(100vw - var(--sp-32));';
-    box.innerHTML = '<h3 style="margin:0 0 var(--sp-12);font-family:Georgia,serif;font-size:var(--fs-md);">Keyboard shortcuts</h3>' +
+    box.style.cssText = 'background:var(--sheet);box-shadow:0 0 32px var(--shadow);padding:var(--sp-24);min-width:280px;max-width:calc(100vw - var(--sp-32));';
+    box.innerHTML = '<h3 style="margin:0 0 var(--sp-12);font-family:var(--font-display);font-size:var(--fs-md);">Keyboard shortcuts</h3>' +
       '<table style="border-collapse:collapse;width:100%">' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);width:110px;padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">j / ↓</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Next card</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">k / ↑</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Previous card</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Enter / o / r</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Open in reader pane</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">m</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Toggle read</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">x</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Archive</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">s</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Snooze until tomorrow</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">b</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Save for later</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">n</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Add / edit note</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">/</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Focus search</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">?</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">This help</td></tr>' +
-      '<tr><td style="font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Esc</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Clear focus</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);width:110px;padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">j / ↓</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Next card</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">k / ↑</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Previous card</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Enter / o / r</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Open in reader pane</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">m</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Toggle read</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">x</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Archive</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">s</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Snooze until tomorrow</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">b</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Save for later</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">n</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Add / edit note</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">/</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Focus search</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">?</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">This help</td></tr>' +
+      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Esc</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Clear focus</td></tr>' +
       '</table><p style="margin:var(--sp-8) 0 0;font-size:var(--fs-sm);color:var(--muted)">Press ? or click outside to close</p>';
     ov.appendChild(box);
     ov.addEventListener('click', e => {{ if (e.target === ov) ov.remove(); }});
@@ -1301,6 +1312,8 @@ def build_markdown(corpus, run_date):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=os.path.dirname(os.path.abspath(__file__)))
+    ap.add_argument("--run-date", metavar="YYYY-MM-DD",
+                    help="treat this date as today, so a committed corpus renders without the wall-clock prune")
     args = ap.parse_args()
     root = args.root
 
@@ -1311,7 +1324,7 @@ def main():
     retention_cfg = sources.get("retention_days", corpus.get("retention_days",
                     {"default": 14, "design": 21, "ai_in_design": 30, "evergreen": 90}))
 
-    run_date = today()
+    run_date = dt.date.fromisoformat(args.run_date) if args.run_date else today()
     last_run = parse_date(corpus.get("last_run"), run_date)
 
     # mark new (first_seen since last run) before pruning
