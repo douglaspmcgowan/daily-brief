@@ -178,3 +178,15 @@ for (const [w, max] of [[1440, 21370], [768, 24634], [375, 35251]]) {
     expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(max);
   });
 }
+
+test('the Summaries pill state is remembered across a reload', async ({ page }) => {
+  await open(page, 1440);
+  await page.click('#sum-pill');
+  await page.reload();
+  await expect(page.locator('#sum-pill')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.locator('.more-btn[aria-expanded="false"]').count()).toBe(0);
+  await page.click('#sum-pill');
+  await page.reload();
+  await expect(page.locator('#sum-pill')).toHaveAttribute('aria-pressed', 'false');
+  expect(await page.locator('.summary:visible').count()).toBe(0);
+});

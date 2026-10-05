@@ -1478,7 +1478,17 @@
     const open = sumPill.getAttribute('aria-pressed') !== 'true';
     sumPill.setAttribute('aria-pressed', String(open));
     document.querySelectorAll('.more-btn').forEach(b => setSummary(b.dataset.key, open));
+    try { localStorage.setItem('digest-summaries', open ? 'open' : 'closed'); } catch(e) {}
   });
+  // remembered across visits: restore the pill state saved by the last click
+  (function() {
+    let saved = null;
+    try { saved = localStorage.getItem('digest-summaries'); } catch(e) {}
+    if (saved === 'open') {
+      sumPill.setAttribute('aria-pressed', 'true');
+      document.querySelectorAll('.more-btn').forEach(b => setSummary(b.dataset.key, true));
+    }
+  })();
 
   // button click delegation
   document.addEventListener('click', e => {
