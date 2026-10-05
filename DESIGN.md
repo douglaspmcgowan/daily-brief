@@ -108,35 +108,58 @@ The full universal rules are `~/.agents/DESIGN.md`. Where a library entry and a 
 ## Product-specific typography
 
 Every rule below lives in `build_digest.py`'s `<style>` f-string. `index.html` and `digest.html` are
-generated output; editing them directly is a defect.
+generated output; editing them directly is a defect. Regenerate by running the page builder.
 
-- Body: the system sans stack — `-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-  Helvetica, Arial, sans-serif`, `line-height:1.5`. Used for prose, metadata, controls and labels.
+- Body: the system sans stack, `line-height:1.5`. Used for prose, metadata, controls and labels.
 - Display: `Georgia, "Iowan Old Style", "Times New Roman", serif`. A serif display face is the
-  articulated exception § Typography asks for: the product is an editorial news digest, the masthead
-  and story titles carry its register, and neither `Fraunces` nor `Instrument Serif` is used.
-- Monospace: reserved for identifiers only — the reader pane's site name and the keyboard-shortcut
-  keys in the help dialog.
-- Tabular numerals are on wherever counts align: `.pill .pc` and `.topic-ring-label`.
+  articulated exception § Typography asks for: the product is an editorial news digest, and the
+  masthead, topic heads and story titles carry its register. Neither `Fraunces` nor
+  `Instrument Serif` is used.
+- Three sizes only, all tokens: `--fs-sm` 13px (metadata, controls, labels), `--fs-md` 16px (prose,
+  titles, topic heads, reader text) and `--fs-display`, a `clamp(2rem, 6vw, 3.375rem)` used by the
+  masthead alone. Hierarchy among 16px text comes from weight (400, 600, 700), the serif face and a
+  2px ink rule under each topic head. Never add a fourth size; reader-pane article headings are
+  forced to `--fs-md`.
+- Monospace is not used outside `code`/`pre`. Reader site names and shortcut keys take the
+  proportional face with `font-variant-numeric: tabular-nums`.
+- No uppercase text, no eyebrow labels, no middle dot. Inline items are separated by a `|` in a
+  `.dot` span (`aria-hidden`), a comma, or flex gap. "Reading between the lines." is a run-in bold
+  lead, not a label above a heading.
 
 ## Tokens and components
 
-One `:root` block holds all 46 custom properties; nothing outside it carries a literal hex, a `px`
-font size or a radius.
+One `:root` block holds every custom property; nothing outside it carries a literal hex, a font size
+or a radius.
 
 - Palette, one warm anchor: `--paper --card --ink --ink-soft --muted --rule --anchor --anchor-deep
   --anchor-soft --link --on-anchor --warn --highlight --shadow-soft --shadow-firm`.
 - `--anchor-deep` exists only because `--anchor` on `--anchor-soft` measures 3.64:1. Use it for anchor
   text sitting on an anchor-tinted surface; use `--anchor` everywhere else.
-- Type scale: `--fs-10` through `--fs-54`, named at the values the page already renders. The scale is
-  wider than § Typography's "restrained" — collapsing it changes text size on screen and is a
-  deliberate visual decision that has not been taken. Do not add a new literal; add a token.
-- Radii: `--radius-2` … `--radius-14`, plus `--radius-round` (50%) and `--radius-pill` (999px).
-- Spacing is still literal. Padding and margin here are multi-value shorthands, and a mechanical
-  split into tokens cannot be proven byte-identical, so it was left rather than guessed.
+- Spacing: `--sp-4 --sp-8 --sp-12 --sp-16 --sp-24 --sp-32 --sp-48 --sp-64`. Every margin, padding and
+  gap in the stylesheet takes one of them (the reader pane's article body keeps `em` rhythm because
+  it styles third-party markup). Section padding and the wrap gutter use `clamp()` over these tokens.
+- Easing: `--ease-out: cubic-bezier(.22,1,.36,1)`. Every transition names it; none uses `ease` or
+  `linear`.
+- Radii: `--radius-2` through `--radius-14`, plus `--radius-round` and `--radius-pill`.
+- Icons: inline SVG, `.ico` (1em, 2px round stroke, `currentColor`; `.ico.fill` for solid shapes).
+  The set is defined once as `ICON_*` constants in `build_digest.py`. Icon-only controls carry an
+  `aria-label`.
+- Touch targets: every button, input, summary and list link has a box of at least 44 by 44 CSS px.
+  Circular and pill controls reach it with a transparent border around a padding-box background and
+  an inset 1px ring (`box-shadow`), and a negative margin that keeps the old layout footprint. List
+  links are `inline-block` with 12px block padding balanced by the same negative margin. Adjacent
+  card controls keep an 8px gap.
+- `.cluster` is a `container-type: inline-size` container; `.item` adapts through `@container`, not a
+  viewport query. The `600px` media query now only handles the pill-row scroll and the search row.
+- The pill row scrolls sideways inside its own box on narrow screens; the page itself never does.
 - Dark mode is token-only. Redefine the palette under `html[data-theme="dark"]` and under
   `@media (prefers-color-scheme: dark) :root:not([data-theme="light"])`. Never add a
   per-component dark override.
+- Head: unique `<title>`, favicon, `theme-color` (light and dark), `og:title`, `og:description` and
+  `og:image` (`/og-image.png`, 1200 by 630, committed at the repo root).
+- One `h1` per surface (the masthead). The reader pane's article title is an `h2`.
+- Empty states: a lane with no stories says so inline; a filter, search, Saved or Archive view with
+  nothing in it shows `#no-results` with the reason and a Clear filters button.
 
 ## Interaction and accessibility
 
@@ -146,7 +169,9 @@ font size or a radius.
   pane and the highlight tooltip use a shadow. Never both.
 - `!important` is not used. If a declaration will not win, fix the selector.
 - Every text colour clears WCAG AA on its own background. `tests/floor.spec.js` asserts zero serious
-  or critical `axe` violations on the primary surface and fails the suite otherwise.
+  or critical `axe` violations on the primary surface and fails the suite otherwise. The same file
+  asserts no sideways scroll at 375, 768 and 1440, 44px targets, at most three font sizes, one `h1`,
+  head tags, the empty state, and no middle dot, uppercase or monospace in chrome.
 - `prefers-reduced-motion: reduce` zeroes every transition and the one `@keyframes`. It does this
   through a selector list with matching specificity rather than `!important`.
 - The theme button resolves the OS preference on load and writes `light` or `dark` to
@@ -154,8 +179,12 @@ font size or a radius.
 
 ## Exceptions
 
-- **A Unicode glyph stands in for an icon** on the per-card controls (`✓` on `.read-btn`, and the
-  archive, snooze, save and note controls beside it). `craft-floor.md` bans this. It is unfixed
-  because replacing it means choosing an icon set and redrawing 411 controls, which is a visual
-  decision, not a floor repair. Recorded, not excused.
-- **The type scale has 19 steps.** Named, not collapsed, for the reason above.
+- **Marketing-buzzword detector hit.** The phrase "Best-in-class" in the reference list is the note
+  `corpus.json` stores for a third-party dashboard; it is content, not product copy, and `corpus.json`
+  is outside the interface source. Justified, not removed.
+- **`og:image` is root-relative.** Open Graph wants an absolute URL and no deploy domain is recorded
+  for this repository (`vercel.json` names none). Set the absolute URL when one exists.
+- **Eleven radii.** The radius scale was named, not collapsed; reducing it moves corners on screen and
+  is a separate visual decision.
+- **The `.insight-card` and `.whatsnew` tinted callouts and the insight gradient** stay: they are the
+  product's two summary surfaces and the visual identity the lane was told to keep.
