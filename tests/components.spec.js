@@ -86,7 +86,7 @@ test('no element carries both a border and a box-shadow', async ({ page }) => {
 
 test('no control was removed', async ({ page }) => {
   await page.goto('/index.html');
-  expect(await page.locator('button, input, summary, a[href]').count()).toBe(BASE_CONTROL_COUNT);
+  expect(await page.locator('button, input, summary, a[href]').count()).toBeGreaterThanOrEqual(BASE_CONTROL_COUNT);
 });
 
 test('a search with no match shows the empty state and a Clear filters button', async ({ page }) => {

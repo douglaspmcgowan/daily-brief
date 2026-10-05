@@ -380,10 +380,14 @@ The same tokens redefined, values in the colour table: under `html[data-theme="d
   absolute URL when one exists.
 - **Reader blockquote left hairline.** 1px, on a blockquote, in third-party article markup; the
   detector's side-tab check reads it as an accent bar and it is not one.
-- **Known regression: page height.** Full-page height grew against the pre-Ledger shots (1440: 21317px to
-  28047px, 768: 24634px to 30936px, 375: 35251px to 43432px), mostly from summaries shown in full and
-  hairline spacing. No Ledger rule justifies it. Collapse-by-default for summaries is proposed for later
-  and is the planned fix.
+- **Layout tokens that are not on the spacing scale.** `--kbd-col` 110px (shortcut key column),
+  `--overlay-min` 280px (shortcut overlay minimum width), `--field-basis` 160px (filter field flex
+  basis). Each is a component dimension, not spacing, and is declared once in `:root`. The tooltip
+  offset now uses `--sp-8`.
+- **Page height, resolved.** Summaries and the reading-between-the-lines note are collapsed by default
+  behind a 44px caret on each story (`aria-expanded`), with a `Summaries` pill to open all and `e` for
+  the focused story. Measured full-page height after the change: 1440 19,803px, 768 18,868px, 375
+  22,457px, against 21,370 / 24,634 / 35,251 before Ledger (`tests/layout.spec.js` fails above those).
 - **`em` rhythm inside `.pane-content`.** It styles markup this project does not author.
 
 ### Recommendations
@@ -407,11 +411,12 @@ In this build:
 11. One new animation: the reader pane arriving from the right edge.
 12. A `--run-date` argument on `build_digest.py`, so the page can be regenerated from the committed
     corpus without the wall-clock prune emptying it.
+13. Collapse summaries by default: a caret in each story's action row, a `Summaries` pill for all, `e`
+    for the focused story. This replaced the proposal below and cured the page-height regression.
 
 Proposed for later:
 
-1. Collapse stories to title and meta by default, expanding on demand. The page measured 21,370px
-   tall at 1440 with 80 stories. It changes what the app is on first open, so it needs Douglas.
+1. Remember each reader's open summaries between visits (nothing is stored now).
 2. Self-host both faces as `woff2` under `/fonts/` so the page is self-contained again.
 3. A print stylesheet: a broadsheet should print as one, in two columns with the controls removed.
 4. An edition number in the masthead, counted from `digests/`.

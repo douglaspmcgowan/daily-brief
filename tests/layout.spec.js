@@ -11,6 +11,7 @@ async function open(page, width) {
 
 test('at 1440 the summary holds the 68ch measure and the story has two columns', async ({ page }) => {
   await open(page, 1440);
+  await page.click('#sum-pill');
   const r = await page.evaluate(() => {
     const s = document.querySelector('.summary');
     const probe = document.createElement('span');
@@ -137,3 +138,43 @@ test('keyboard path: search, escape, j/k, mark read, open reader, escape', async
   await page.keyboard.press('Escape');
   await expect(page.locator('#reading-pane')).not.toHaveClass(/open/);
 });
+
+test('summaries are collapsed by default and one toggle opens a single story', async ({ page }) => {
+  await open(page, 375);
+  expect(await page.locator('.summary:visible').count()).toBe(0);
+  const first = page.locator('.cluster').first();
+  const btn = first.locator('.more-btn');
+  await expect(btn).toHaveAttribute('aria-expanded', 'false');
+  await btn.click();
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+  await expect(first.locator('.summary')).toBeVisible();
+  expect(await page.locator('.summary:visible').count()).toBe(1);
+  await btn.click();
+  await expect(first.locator('.summary')).toBeHidden();
+});
+
+test('the Summaries pill opens and closes every summary', async ({ page }) => {
+  await open(page, 1440);
+  await page.click('#sum-pill');
+  await expect(page.locator('#sum-pill')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.locator('.more-btn[aria-expanded="false"]').count()).toBe(0);
+  await page.click('#sum-pill');
+  expect(await page.locator('.summary:visible').count()).toBe(0);
+});
+
+test('the e key toggles the focused story summary', async ({ page }) => {
+  await open(page, 1440);
+  await page.keyboard.press('j');
+  await page.keyboard.press('e');
+  expect(await page.locator('.summary:visible').count()).toBe(1);
+  await page.keyboard.press('e');
+  expect(await page.locator('.summary:visible').count()).toBe(0);
+});
+
+// Recorded in DESIGN.md: before the Ledger pass 21370 / 24634 / 35251.
+for (const [w, max] of [[1440, 21370], [768, 24634], [375, 35251]]) {
+  test(`full-page height at ${w} does not exceed the pre-Ledger height`, async ({ page }) => {
+    await open(page, w);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThanOrEqual(max);
+  });
+}

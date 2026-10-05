@@ -75,6 +75,7 @@ FONTS_HREF = ("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wg
               "&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap")
 
 # Phosphor 2.1.1 path data, unmodified (DESIGN.md 'Icons'): bold at rest, fill for a toggled-on state.
+ICON_CARET = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>'
 ICON_EXT = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M204,64V168a12,12,0,0,1-24,0V93L72.49,200.49a12,12,0,0,1-17-17L163,76H88a12,12,0,0,1,0-24H192A12,12,0,0,1,204,64Z"/></svg>'
 ICON_BOOKMARK = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M184,28H72A20,20,0,0,0,52,48V224a12,12,0,0,0,18.36,10.18l57.63-36,57.65,36A12,12,0,0,0,204,224V48A20,20,0,0,0,184,28Zm-4,174.35-45.65-28.53a12,12,0,0,0-12.72,0L76,202.35V52H180Z"/></svg>'
 ICON_BOOKMARK_FILL = '<svg class="ico fill" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z"/></svg>'
@@ -101,6 +102,7 @@ SCALE_TOKENS = """--font-display:"Playfair Display", Georgia, "Times New Roman",
     --fs-sm:0.85rem; --fs-md:1.0625rem; --fs-display:clamp(2.125rem, 6vw + 0.75rem, 3.25rem);
     --sp-4:4px; --sp-8:8px; --sp-12:12px; --sp-16:16px; --sp-24:24px; --sp-32:32px;
     --sp-48:48px; --sp-64:64px;
+    --tip-gap:var(--sp-8); --kbd-col:110px; --overlay-min:280px; --field-basis:160px;
     --wrap:70rem; --measure:68ch; --radius-0:0;
     --rule-hair:1px solid var(--rule); --rule-firm:1px solid var(--ink); --rule-double:4px double var(--ink);
     --dur-1:120ms; --dur-2:200ms; --dur-3:320ms;
@@ -215,8 +217,11 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         k = esc(cluster_key)
         reader_attr = ' data-reader="1"'
         ext_link = f'<a class="ext-link" href="{url}" target="_blank" rel="noopener" data-tip="Open in new tab" aria-label="Open in new tab">{ICON_EXT}</a>'
+        more_btn = (f'<button class="card-btn more-btn" data-key="{k}" data-tip="Show summary (e)" aria-label="Show summary" '
+                    f'aria-expanded="false" aria-controls="body-{k}">{ICON_CARET}</button>') if (summ_html or rbtl_html) else ""
         actions_html = (
             f'<div class="card-actions">'
+            f'{more_btn}'
             f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read" aria-pressed="false">{ICON_CHECK}</button>'
             f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)" aria-label="Save for later" aria-pressed="false">{ICON_BOOKMARK}</button>'
             f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)" aria-label="Snooze until tomorrow" aria-pressed="false">{ICON_SNOOZE}</button>'
@@ -228,12 +233,13 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         ext_link = ""
         actions_html = ""
 
+    body_attrs = f' id="body-{esc(cluster_key)}" hidden' if (lead and cluster_key and (summ_html or rbtl_html)) else ""
     return f"""<article class="{cls}" data-search="{search_blob}">
   <div class="item-head-main">
     <a class="title" href="{url}" target="_blank" rel="noopener"{reader_attr}>{title}</a>
     {new_badge}{pin}{ext_link}
   </div>
-  <div class="item-body">{summ_html}{rbtl_html}</div>
+  <div class="item-body"{body_attrs}>{summ_html}{rbtl_html}</div>
   <div class="item-rail">
     <div class="meta"><span class="src">{src}</span><span class="dot" aria-hidden="true">|</span><span class="stype">{stype}</span>{date_html}</div>
     {actions_html}
@@ -403,7 +409,7 @@ def build_html(corpus, run_date):
   .pill.zero:hover, .pill.zero:active, .pill.zero[aria-pressed="true"] {{ color:var(--paper); }}
   .pill .pc {{ font-variant-numeric:tabular-nums; margin-left:var(--sp-4); }}
   .search-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
-  .search-field {{ position:relative; flex:1 1 160px; min-width:0; display:flex; align-items:center; }}
+  .search-field {{ position:relative; flex:1 1 var(--field-basis); min-width:0; display:flex; align-items:center; }}
   .search-field .ico {{ position:absolute; left:var(--sp-12); color:var(--muted); pointer-events:none; }}
   #q {{ font:inherit; width:100%; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12) var(--sp-8) calc(var(--sp-24) + var(--sp-16));
     border:var(--rule-firm); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink); }}
@@ -438,6 +444,7 @@ def build_html(corpus, run_date):
     grid-template-areas:"head" "meta" "body" "actions"; margin:0; padding:0; }}
   .item-head-main {{ grid-area:head; min-width:0; display:flex; align-items:baseline; gap:var(--sp-8); flex-wrap:wrap; }}
   .item-body {{ grid-area:body; min-width:0; }}
+  .item-body[hidden] {{ display:none; }}
   .item-rail {{ display:contents; }}
   .item-rail .meta {{ grid-area:meta; }}
   .item-rail .card-actions {{ grid-area:actions; }}
@@ -521,6 +528,8 @@ def build_html(corpus, run_date):
     background-color:transparent; color:var(--muted); font-size:var(--fs-md); line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center; padding:0; touch-action:manipulation;
     transition:background-color var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
+  .more-btn .ico {{ transition:transform var(--dur-1) var(--ease-out); }}
+  .more-btn[aria-expanded="true"] .ico {{ transform:rotate(180deg); }}
   .card-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
   .card-btn:active {{ background-color:var(--ink); color:var(--paper); }}
   .dismiss-btn:hover {{ background-color:var(--anchor-deep); border-color:var(--anchor-deep); color:var(--paper); }}
@@ -554,7 +563,7 @@ def build_html(corpus, run_date):
     transition:outline-color var(--dur-2) var(--ease-out); scroll-margin:var(--sp-64); }}
   /* tooltips */
   [data-tip] {{ position:relative; }}
-  [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
+  [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + var(--tip-gap));
     left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper);
     font-size:var(--fs-sm); font-family:var(--font-body);
     font-weight:400; padding:var(--sp-4) var(--sp-8); border-radius:var(--radius-0); white-space:nowrap;
@@ -657,7 +666,7 @@ def build_html(corpus, run_date):
   .kbd-overlay {{ position:fixed; inset:0; z-index:999; display:flex; align-items:center; justify-content:center;
     background:color-mix(in srgb, var(--paper) 72%, transparent); }}
   .kbd-box {{ background:var(--sheet); color:var(--ink); box-shadow:0 0 32px var(--shadow); padding:var(--sp-24);
-    min-width:280px; max-width:calc(100vw - var(--sp-32)); max-height:calc(100vh - var(--sp-32)); overflow-y:auto; }}
+    min-width:var(--overlay-min); max-width:calc(100vw - var(--sp-32)); max-height:calc(100vh - var(--sp-32)); overflow-y:auto; }}
   .kbd-head {{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-16); margin:0 0 var(--sp-12); }}
   .kbd-head h2 {{ margin:0; font-family:var(--font-display); font-size:var(--fs-md); font-weight:900; }}
   .kbd-close {{ font:inherit; font-size:var(--fs-sm); color:var(--ink); background:transparent; border:var(--rule-firm);
@@ -666,7 +675,7 @@ def build_html(corpus, run_date):
   .kbd-close:hover, .kbd-close:active {{ background:var(--ink); color:var(--paper); }}
   .kbd-table {{ border-collapse:collapse; width:100%; }}
   .kbd-table th, .kbd-table td {{ padding:var(--sp-4) var(--sp-8); font-size:var(--fs-sm); text-align:left; vertical-align:top; }}
-  .kbd-table th {{ font-weight:700; font-variant-numeric:tabular-nums; width:110px; }}
+  .kbd-table th {{ font-weight:700; font-variant-numeric:tabular-nums; width:var(--kbd-col); }}
   .kbd-table td {{ font-weight:400; }}
   .kbd-note {{ margin:var(--sp-8) 0 0; font-size:var(--fs-sm); color:var(--muted); }}
   @media (max-width:900px) {{
@@ -686,7 +695,7 @@ def build_html(corpus, run_date):
   @media (prefers-reduced-motion: reduce) {{
     a, .title, .pill, #q, .ext-link, .ext-link:hover, .card-btn, .arc-pill, .note-trigger, .note-input,
     .drag-handle, .cluster:hover .drag-handle, #theme-btn, .pane-close, .pane-newtab, #hl-btn, .kbd-close,
-    .item-head-main, .meta, .summary, .rbtl,
+    .item-head-main, .meta, .summary, .rbtl, .more-btn .ico,
     .topic-ring .ring-fg, .cluster.focused > .item.lead, [data-tip]::after,
     .reading-pane, .reading-pane.open,
     .pane-loading {{ transition:none; animation:none; }}
@@ -720,6 +729,7 @@ def build_html(corpus, run_date):
     </div>
     <div class="search-row">
       <div class="search-field">{ICON_SEARCH}<input id="q" type="search" placeholder="Filter" autocomplete="off" aria-label="Filter stories"></div>
+      <button id="sum-pill" class="arc-pill" aria-pressed="false">Summaries</button>
       <button id="rl-pill" class="arc-pill" aria-pressed="false">Saved</button>
       <button id="arc-pill" class="arc-pill" aria-pressed="false">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>
@@ -986,8 +996,32 @@ def build_html(corpus, run_date):
     updateTopicRings();
   }}
 
+  // summaries: collapsed by default; one toggle per story, one pill for all of them
+  const sumPill = document.getElementById('sum-pill');
+  function setSummary(key, open) {{
+    const b = document.querySelector('.more-btn[data-key="' + esc2(key) + '"]');
+    if (!b) return;
+    b.setAttribute('aria-expanded', String(open));
+    b.setAttribute('aria-label', open ? 'Hide summary' : 'Show summary');
+    b.setAttribute('data-tip', (open ? 'Hide summary' : 'Show summary') + ' (e)');
+    const body = document.getElementById(b.getAttribute('aria-controls'));
+    if (body) body.hidden = !open;
+  }}
+  function toggleSummary(key) {{
+    const b = document.querySelector('.more-btn[data-key="' + esc2(key) + '"]');
+    if (b) setSummary(key, b.getAttribute('aria-expanded') !== 'true');
+  }}
+  sumPill.addEventListener('click', () => {{
+    const open = sumPill.getAttribute('aria-pressed') !== 'true';
+    sumPill.setAttribute('aria-pressed', String(open));
+    document.querySelectorAll('.more-btn').forEach(b => setSummary(b.dataset.key, open));
+  }});
+
   // button click delegation
   document.addEventListener('click', e => {{
+    if (e.target.closest('.more-btn')) {{
+      const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); toggleSummary(k); return;
+    }}
     if (e.target.closest('.dismiss-btn')) {{
       const k = e.target.closest('[data-key]').dataset.key; e.stopPropagation(); doArchive(k); return;
     }}
@@ -1107,6 +1141,7 @@ def build_html(corpus, run_date):
         const link = document.querySelector('.cluster[data-key="' + esc2(focusedKey) + '"] .item.lead .title[data-reader]');
         if (link) link.click();
         break;
+      case 'e': if (focusedKey) toggleSummary(focusedKey); break;
       case 'x': if (focusedKey) doArchive(focusedKey); break;
       case 's': if (focusedKey) doSnooze(focusedKey);  break;
       case 'b': if (focusedKey) doRL(focusedKey);      break;
@@ -1138,7 +1173,7 @@ def build_html(corpus, run_date):
   // ── shortcuts overlay ─────────────────────────────────────────────────────
   const SHORTCUTS = [
     ['j / ↓', 'Next card'], ['k / ↑', 'Previous card'], ['Enter / o / r', 'Open in reader pane'],
-    ['m', 'Toggle read'], ['x', 'Archive'], ['s', 'Snooze until tomorrow'], ['b', 'Save for later'],
+    ['e', 'Show / hide summary'], ['m', 'Toggle read'], ['x', 'Archive'], ['s', 'Snooze until tomorrow'], ['b', 'Save for later'],
     ['n', 'Add / edit note'], ['/', 'Focus search'], ['?', 'This help'], ['Esc', 'Clear focus'],
   ];
   let kbdOpener = null;
