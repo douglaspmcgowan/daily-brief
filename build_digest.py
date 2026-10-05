@@ -74,16 +74,25 @@ DARK_TOKENS = _palette_tokens(PALETTE_DARK)
 FONTS_HREF = ("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700"
               "&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap")
 
-ICON_OPEN = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">'
-ICON_EXT = ICON_OPEN + '<path d="M7 17L17 7M9 7h8v8"/></svg>'
-ICON_BOOKMARK = ICON_OPEN + '<path d="M6 3h12v18l-6-4-6 4z"/></svg>'
-ICON_SNOOZE = ICON_OPEN + '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>'
-ICON_ARCHIVE = ICON_OPEN + '<path d="M4 7h16v4H4zM6 11v9h12v-9M10 15h4"/></svg>'
-ICON_CHECK = ICON_OPEN + '<path d="M5 12.5l4.5 4.5L19 7"/></svg>'
-ICON_EDIT = ICON_OPEN + '<path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/></svg>'
-ICON_CLOSE = ICON_OPEN + '<path d="M6 6l12 12M18 6L6 18"/></svg>'
-ICON_STAR = '<svg class="ico fill" viewBox="0 0 24 24" role="img" aria-label="Pinned"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>'
-ICON_GRIP = '<svg class="ico fill" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>'
+# Phosphor 2.1.1 path data, unmodified (DESIGN.md 'Icons'): bold at rest, fill for a toggled-on state.
+ICON_EXT = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M204,64V168a12,12,0,0,1-24,0V93L72.49,200.49a12,12,0,0,1-17-17L163,76H88a12,12,0,0,1,0-24H192A12,12,0,0,1,204,64Z"/></svg>'
+ICON_BOOKMARK = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M184,28H72A20,20,0,0,0,52,48V224a12,12,0,0,0,18.36,10.18l57.63-36,57.65,36A12,12,0,0,0,204,224V48A20,20,0,0,0,184,28Zm-4,174.35-45.65-28.53a12,12,0,0,0-12.72,0L76,202.35V52H180Z"/></svg>'
+ICON_BOOKMARK_FILL = '<svg class="ico fill" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M184,32H72A16,16,0,0,0,56,48V224a8,8,0,0,0,12.24,6.78L128,193.43l59.77,37.35A8,8,0,0,0,200,224V48A16,16,0,0,0,184,32Z"/></svg>'
+ICON_SNOOZE = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M236.37,139.4a12,12,0,0,0-12-3A84.07,84.07,0,0,1,119.6,31.59a12,12,0,0,0-15-15A108.86,108.86,0,0,0,49.69,55.07,108,108,0,0,0,136,228a107.09,107.09,0,0,0,64.93-21.69,108.86,108.86,0,0,0,38.44-54.94A12,12,0,0,0,236.37,139.4Zm-49.88,47.74A84,84,0,0,1,68.86,69.51,84.93,84.93,0,0,1,92.27,48.29Q92,52.13,92,56A108.12,108.12,0,0,0,200,164q3.87,0,7.71-.27A84.79,84.79,0,0,1,186.49,187.14Z"/></svg>'
+ICON_SNOOZE_FILL = '<svg class="ico fill" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z"/></svg>'
+ICON_ARCHIVE = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M224,44H32A20,20,0,0,0,12,64V88a20,20,0,0,0,16,19.6V192a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V107.6A20,20,0,0,0,244,88V64A20,20,0,0,0,224,44ZM36,68H220V84H36ZM52,188V108H204v80Zm112-52a12,12,0,0,1-12,12H104a12,12,0,0,1,0-24h48A12,12,0,0,1,164,136Z"/></svg>'
+ICON_CHECK = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>'
+ICON_CHECK_FILL = '<svg class="ico fill" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>'
+ICON_EDIT = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M230.14,70.54,185.46,25.85a20,20,0,0,0-28.29,0L33.86,149.17A19.85,19.85,0,0,0,28,163.31V208a20,20,0,0,0,20,20H92.69a19.86,19.86,0,0,0,14.14-5.86L230.14,98.82a20,20,0,0,0,0-28.28ZM91,204H52V165l84-84,39,39ZM192,103,153,64l18.34-18.34,39,39Z"/></svg>'
+ICON_CLOSE = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"/></svg>'
+ICON_STAR = '<svg class="ico fill" viewBox="0 0 256 256" fill="currentColor" role="img" aria-label="Pinned"><path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,86l59-4.76,22.76-55.08a16.36,16.36,0,0,1,30.27,0l22.75,55.08,59,4.76a16.46,16.46,0,0,1,9.37,28.86Z"/></svg>'
+ICON_GRIP = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M108,60A16,16,0,1,1,92,44,16,16,0,0,1,108,60Zm56,16a16,16,0,1,0-16-16A16,16,0,0,0,164,76ZM92,112a16,16,0,1,0,16,16A16,16,0,0,0,92,112Zm72,0a16,16,0,1,0,16,16A16,16,0,0,0,164,112ZM92,180a16,16,0,1,0,16,16A16,16,0,0,0,92,180Zm72,0a16,16,0,1,0,16,16A16,16,0,0,0,164,180Z"/></svg>'
+ICON_SEARCH = '<svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg>'
+ICONS_JS = json.dumps({
+    'read': [ICON_CHECK, ICON_CHECK_FILL],
+    'rl': [ICON_BOOKMARK, ICON_BOOKMARK_FILL],
+    'snooze': [ICON_SNOOZE, ICON_SNOOZE_FILL],
+})
 
 # Type, spacing, rules, motion and status tokens (DESIGN.md 'Type', 'Spacing, radii, rules,
 # elevation', 'Motion tokens'). Mode-independent: colours resolve through var() per element.
@@ -208,9 +217,9 @@ def render_item_html(it, lead=True, cluster_key="", run_date=None):
         ext_link = f'<a class="ext-link" href="{url}" target="_blank" rel="noopener" data-tip="Open in new tab" aria-label="Open in new tab">{ICON_EXT}</a>'
         actions_html = (
             f'<div class="card-actions">'
-            f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read">{ICON_CHECK}</button>'
-            f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)" aria-label="Save for later">{ICON_BOOKMARK}</button>'
-            f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)" aria-label="Snooze until tomorrow">{ICON_SNOOZE}</button>'
+            f'<button class="card-btn read-btn" data-key="{k}" data-tip="Mark read (m)" aria-label="Mark read" aria-pressed="false">{ICON_CHECK}</button>'
+            f'<button class="card-btn rl-btn" data-key="{k}" data-tip="Save for later (b)" aria-label="Save for later" aria-pressed="false">{ICON_BOOKMARK}</button>'
+            f'<button class="card-btn snooze-btn" data-key="{k}" data-tip="Snooze until tomorrow (s)" aria-label="Snooze until tomorrow" aria-pressed="false">{ICON_SNOOZE}</button>'
             f'<button class="card-btn dismiss-btn" data-key="{k}" data-tip="Archive (x)" aria-label="Archive">{ICON_ARCHIVE}</button>'
             f'</div>'
         )
@@ -317,7 +326,8 @@ def build_html(corpus, run_date):
         )
         whats_new = f'<section class="whatsnew"><h2>New since last digest</h2><ol>{new_rows}</ol></section>'
     else:
-        whats_new = ""
+        whats_new = ('<section class="whatsnew"><h2>New since last digest</h2>'
+                     '<p class="empty">Nothing new since the last digest.</p></section>')
 
     # daily insight — top-scored new item with an rbtl
     top_rbtl = sorted([it for it in items if it.get("is_new") and it.get("rbtl")],
@@ -336,8 +346,8 @@ def build_html(corpus, run_date):
         insight_html = ""
 
     pills = "".join(
-        f'<button class="pill" data-filter="{t}">{esc(TOPIC_LABELS[t])} '
-        f'<span class="pc">{counts[t]}</span></button>'
+        f'<button class="pill{" zero" if not counts[t] else ""}" data-filter="{t}" aria-pressed="false">'
+        f'{esc(TOPIC_LABELS[t])} <span class="pc">{counts[t]}</span></button>'
         for t in TOPICS
     )
 
@@ -383,28 +393,35 @@ def build_html(corpus, run_date):
     border-bottom:var(--rule-hair); z-index:5;
     display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
   .pills-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; flex:1; min-width:0; }}
-  .pill {{ font:inherit; font-size:var(--fs-sm); border:var(--rule-firm); background:transparent;
+  .pill, .arc-pill, #theme-btn {{ font:inherit; font-size:var(--fs-sm); border:var(--rule-firm); background:transparent;
     color:var(--ink); padding:var(--sp-8) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
-    touch-action:manipulation; min-height:44px; min-width:44px;
+    touch-action:manipulation; min-height:44px; min-width:44px; white-space:nowrap;
     transition:background-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
-  .pill.active {{ background:var(--ink); color:var(--paper); }}
-  .pill .pc {{ opacity:.65; font-variant-numeric:tabular-nums; margin-left:var(--sp-4); }}
+  .pill:hover, .arc-pill:hover, #theme-btn:hover,
+  .pill:active, .arc-pill:active, #theme-btn:active {{ background:var(--ink); color:var(--paper); }}
+  .pill[aria-pressed="true"], .arc-pill[aria-pressed="true"] {{ background:var(--ink); color:var(--paper); }}
+  .pill.zero {{ color:var(--muted); }}
+  .pill.zero:hover, .pill.zero:active, .pill.zero[aria-pressed="true"] {{ color:var(--paper); }}
+  .pill .pc {{ font-variant-numeric:tabular-nums; margin-left:var(--sp-4); }}
   .search-row {{ display:flex; flex-wrap:wrap; gap:var(--sp-8); align-items:center; }}
-  #q {{ font:inherit; flex:1 1 160px; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12);
-    transition:border-color var(--dur-1) var(--ease-out); border:1px solid var(--rule);
-    border-radius:var(--radius-0); background:var(--sheet); color:var(--ink); }}
-  .whatsnew {{ background:transparent; border:var(--rule-hair);
-    border-radius:var(--radius-0); padding:var(--sp-16) var(--sp-16); margin:var(--sp-24) 0; }}
+  .search-field {{ position:relative; flex:1 1 160px; min-width:0; display:flex; align-items:center; }}
+  .search-field .ico {{ position:absolute; left:var(--sp-12); color:var(--muted); pointer-events:none; }}
+  #q {{ font:inherit; width:100%; min-width:0; min-height:44px; padding:var(--sp-8) var(--sp-12) var(--sp-8) calc(var(--sp-24) + var(--sp-16));
+    border:var(--rule-firm); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink); }}
+  #q::placeholder {{ color:var(--muted); opacity:1; }}
+  .whatsnew {{ background:transparent; border:0; border-top:var(--rule-double); border-bottom:var(--rule-hair);
+    border-radius:var(--radius-0); padding:var(--sp-16) 0; margin:var(--sp-24) 0; }}
   .whatsnew h2 {{ margin:0 0 var(--sp-8); font-size:var(--fs-md); font-weight:700;
     color:var(--anchor-deep); }}
-  .whatsnew ol {{ margin:0; padding-left:var(--sp-16); }}
+  .whatsnew ol {{ margin:0; padding-left:var(--sp-24); }}
+  .whatsnew li + li {{ border-top:var(--rule-hair); }}
   .whatsnew li, .also-list li, .ref-list li {{ margin:0; padding:var(--sp-12) 0; line-height:1.6; }}
   .whatsnew a {{ color:var(--ink); text-decoration:none; font-weight:700; }}
   .whatsnew a:hover {{ text-decoration:underline; }}
-  .new-src {{ color:var(--muted); font-weight:400; font-size:var(--fs-sm); }}
+  .new-src {{ color:var(--muted); font-weight:400; font-style:italic; font-size:var(--fs-sm); }}
   .topic {{ margin:clamp(var(--sp-24), 5vw, var(--sp-32)) 0 0; }}
   .topic-h {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:900; margin:0 0 var(--sp-12);
-    padding-bottom:var(--sp-8); border-bottom:2px solid var(--ink); }}
+    padding-top:var(--sp-12); border-top:var(--rule-double); }}
   .topic-h .count {{ font-size:var(--fs-sm); color:var(--muted); font-family:inherit;
     vertical-align:middle; }}
   .cluster {{ margin:0 0 var(--sp-12); container-type:inline-size; }}
@@ -438,7 +455,8 @@ def build_html(corpus, run_date):
   .insight-src a {{ display:inline-block; padding:var(--sp-12) 0; line-height:1.7; }}
   .also-list a {{ color:var(--ink); }}
   .also-src {{ color:var(--muted); font-size:var(--fs-sm); }}
-  .empty {{ color:var(--muted); font-style:italic; }}
+  .empty {{ color:var(--muted); font-style:italic; margin:var(--sp-8) 0; padding:var(--sp-12) 0; border-bottom:var(--rule-hair); }}
+  .whatsnew .empty {{ margin:0; padding:var(--sp-8) 0 0; border:0; }}
   .no-results {{ margin:var(--sp-48) 0; text-align:center; color:var(--muted); }}
   .no-results[hidden] {{ display:none; }}
   .references {{ margin:var(--sp-48) 0 0; border-top:var(--rule-double); padding-top:var(--sp-16); }}
@@ -481,25 +499,22 @@ def build_html(corpus, run_date):
     .item {{ padding:var(--sp-12); }}
     .summary {{ font-size:var(--fs-sm); }}
   }}
-  .ico {{ width:1em; height:1em; fill:none; stroke:currentColor; stroke-width:2;
-    stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }}
-  .ico.fill {{ fill:currentColor; stroke:none; }}
-  .card-btn .ico {{ width:var(--fs-md); height:var(--fs-md); }}
-  /* per-card read toggle — checkmark, not a ring */
-  .read-btn {{ opacity:.35; }}
-  .read-btn:hover {{ opacity:1; }}
-  .cluster.is-read .read-btn {{ opacity:1; color:var(--status-done); box-shadow:inset 0 0 0 1px var(--status-done); background-color:transparent; }}
-  .cluster.is-read .item.lead {{ opacity:.65; }}
-  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-0); border:var(--sp-8) solid transparent;
-    background-color:transparent; background-clip:padding-box; box-shadow:inset 0 0 0 1px var(--rule);
-    color:var(--muted); font-size:var(--fs-sm); line-height:1; cursor:pointer;
-    display:flex; align-items:center; justify-content:center;
-    transition:background-color var(--dur-1) var(--ease-out),box-shadow var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); padding:0;
-    touch-action:manipulation; margin:calc(-1*var(--sp-8)) 0; }}
-  .card-btn:hover {{ background-color:var(--sheet); box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
-  .dismiss-btn:hover {{ background-color:var(--anchor-deep); box-shadow:inset 0 0 0 1px var(--anchor-deep); color:var(--paper); }}
-  .snooze-btn.active {{ box-shadow:inset 0 0 0 1px var(--status-caution); color:var(--status-caution); }}
-  .rl-btn.active {{ box-shadow:inset 0 0 0 1px var(--status-saved); color:var(--status-saved); }}
+  .ico {{ width:1.15em; height:1.15em; fill:currentColor; flex-shrink:0; }}
+  /* story actions: borderless 44px squares; toggled on = fill-weight icon + aria-pressed */
+  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
+    background-color:transparent; color:var(--muted); font-size:var(--fs-md); line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; padding:0; touch-action:manipulation;
+    transition:background-color var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
+  .card-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
+  .card-btn:active {{ background-color:var(--ink); color:var(--paper); }}
+  .dismiss-btn:hover {{ background-color:var(--anchor-deep); border-color:var(--anchor-deep); color:var(--paper); }}
+  .read-btn[aria-pressed="true"] {{ color:var(--status-done); }}
+  .rl-btn[aria-pressed="true"] {{ color:var(--status-saved); }}
+  .snooze-btn[aria-pressed="true"] {{ color:var(--status-caution); }}
+  .cluster.is-read .item-head-main, .cluster.is-read .meta, .cluster.is-read .summary, .cluster.is-read .rbtl {{ opacity:.55; }}
+  .item-head-main, .meta, .summary, .rbtl {{ transition:opacity var(--dur-2) var(--ease-out); }}
+  /* disabled: defined for every control, no hover response */
+  button:disabled, button[aria-disabled="true"], a[aria-disabled="true"] {{ opacity:.45; cursor:not-allowed; pointer-events:none; }}
   /* topic-level read progress ring */
   .topic-progress {{ display:inline-flex; align-items:center; gap:var(--sp-4); margin-left:var(--sp-12);
     vertical-align:middle; }}
@@ -521,8 +536,6 @@ def build_html(corpus, run_date):
   /* keyboard-navigation focus state — a ring, not a coloured left bar (banned) */
   .cluster.focused > .item.lead {{ outline:2px solid var(--anchor); outline-offset:-1px;
     background:var(--sheet); transition:background var(--dur-2) var(--ease-out); scroll-margin:var(--sp-64); }}
-  .cluster:hover > .item.lead {{ background:color-mix(in srgb, var(--sheet) 90%, var(--anchor) 10%); }}
-  .cluster.focused:hover > .item.lead {{ background:var(--sheet); }}
   /* tooltips */
   [data-tip] {{ position:relative; }}
   [data-tip]::after {{ content:attr(data-tip); position:absolute; bottom:calc(100% + 7px);
@@ -532,28 +545,21 @@ def build_html(corpus, run_date):
     pointer-events:none; opacity:0; transition:opacity var(--dur-1) var(--ease-out); z-index:20; }}
   [data-tip]:hover::after {{ opacity:1; }}
   .card-actions [data-tip]::after, .ext-link[data-tip]::after, #help-btn[data-tip]::after {{ left:auto; right:0; transform:none; }}
-  .arc-pill {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
-    white-space:nowrap; min-height:44px; transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
-  .arc-pill:hover {{ border-color:var(--ink); color:var(--ink); }}
-  .arc-pill.has-arc {{ border-color:var(--anchor); color:var(--anchor); }}
   #help-btn {{ width:44px; height:44px; padding:0; display:inline-flex; align-items:center;
     justify-content:center; font-size:var(--fs-sm); font-weight:700; }}
   /* note area */
   .note-area {{ padding:var(--sp-4) var(--sp-4) var(--sp-4); }}
-  .note-trigger {{ font:inherit; font-size:var(--fs-sm); color:var(--muted); background-color:transparent;
-    border:0; border-block:var(--sp-8) solid transparent; background-clip:padding-box;
-    box-shadow:inset 0 0 0 1px var(--rule); border-radius:var(--radius-0); cursor:pointer;
+  .note-trigger {{ font:inherit; font-size:var(--fs-sm); color:var(--ink); background-color:transparent;
+    border:var(--rule-firm); border-radius:var(--radius-0); cursor:pointer;
     padding:var(--sp-4) var(--sp-12); display:inline-flex; align-items:center; gap:var(--sp-8); min-height:44px;
-    transition:box-shadow var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); user-select:none; margin:calc(-1*var(--sp-8)) 0; }}
-  .note-trigger .ico {{ width:var(--fs-md); height:var(--fs-md); }}
-  .note-trigger:hover {{ box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
-  .note-trigger.has-note {{ box-shadow:inset 0 0 0 1px var(--ink); color:var(--ink); }}
+    transition:background-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); user-select:none; }}
+  .note-trigger .ico {{ width:1.15em; height:1.15em; }}
+  .note-trigger:hover, .note-trigger:active {{ background:var(--ink); color:var(--paper); }}
+  .note-trigger.has-note {{ font-weight:700; }}
   .note-body {{ margin:var(--sp-4) 0 var(--sp-4); }}
   .note-input {{ width:100%; font:inherit; font-size:var(--fs-sm); resize:none;
-    border:1px solid var(--rule); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink);
+    border:var(--rule-firm); border-radius:var(--radius-0); background:var(--sheet); color:var(--ink);
     padding:var(--sp-8) var(--sp-8); }}
-  .note-input:focus {{ outline:2px solid var(--anchor); border-color:transparent; }}
   .note-display {{ font-size:var(--fs-sm); color:var(--muted); white-space:pre-wrap;
     padding:var(--sp-4) var(--sp-4) var(--sp-4); font-style:italic; display:none; border-left:1px solid var(--rule);
     margin-left:var(--sp-4); padding-left:var(--sp-12); }}
@@ -576,10 +582,6 @@ def build_html(corpus, run_date):
       {DARK_TOKENS}
     }}
   }}
-  #theme-btn {{ font:inherit; font-size:var(--fs-sm); border:1px solid var(--rule); background:transparent;
-    color:var(--muted); padding:var(--sp-4) var(--sp-12); border-radius:var(--radius-0); cursor:pointer;
-    min-height:44px; transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); touch-action:manipulation; white-space:nowrap; }}
-  #theme-btn:hover {{ border-color:var(--ink); color:var(--ink); }}
   /* ── reading pane ──────────────────────────────────────────────────────── */
   .reading-pane {{ display:none; position:fixed; top:0; right:0; width:40vw; height:100vh;
     background:var(--sheet); z-index:50;
@@ -589,15 +591,17 @@ def build_html(corpus, run_date):
   .pane-toolbar {{ display:flex; align-items:center; padding:var(--sp-8) var(--sp-12); border-bottom:var(--rule-hair);
     gap:var(--sp-8); flex-shrink:0; position:sticky; top:0; background:var(--sheet); z-index:2; }}
   .pane-site {{ font-size:var(--fs-sm); color:var(--muted); font-variant-numeric:tabular-nums; }}
-  .pane-close,.pane-newtab {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid var(--rule);
+  .pane-close,.pane-newtab {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
     background:transparent; color:var(--muted); font-size:var(--fs-md); cursor:pointer; display:flex;
     align-items:center; justify-content:center;
     transition:border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); text-decoration:none; flex-shrink:0; }}
   .pane-close:hover,.pane-newtab:hover {{ border-color:var(--ink); color:var(--ink); }}
   .pane-body {{ flex:1; overflow-y:auto; padding:var(--sp-24) var(--sp-24) var(--sp-64); }}
-  .pane-loading {{ color:var(--muted); font-style:italic; padding:var(--sp-24) 0; animation:pulse 1.4s var(--ease-out) infinite; }}
+  .pane-loading {{ color:var(--muted); font-style:italic; padding:var(--sp-12) 0; border-top:var(--rule-hair);
+    border-bottom:var(--rule-hair); animation:pulse 1.4s var(--ease-out) infinite; }}
   @keyframes pulse {{ 0%,100% {{ opacity:.5; }} 50% {{ opacity:1; }} }}
-  .pane-error {{ color:var(--status-error); font-size:var(--fs-sm); padding:var(--sp-8) 0 var(--sp-4); line-height:1.5; }}
+  .pane-error {{ color:var(--status-error); font-size:var(--fs-sm); font-weight:700; padding:var(--sp-12) 0;
+    border-top:var(--rule-double); line-height:1.5; }}
   .pane-error a {{ color:var(--ink); }}
   .pane-title {{ font-family:var(--font-display); font-size:var(--fs-md); font-weight:700; line-height:1.3;
     margin:0 0 var(--sp-8); color:var(--ink); }}
@@ -623,11 +627,28 @@ def build_html(corpus, run_date):
   .pane-content li {{ margin:.3em 0; }}
   .pane-content mark.hl {{ background:var(--highlight); color:inherit; border-radius:var(--radius-0); padding:0 var(--sp-4); }}
   /* highlight tooltip */
-  .hl-tooltip {{ position:fixed; background:var(--ink); color:var(--paper); border-radius:var(--radius-0);
-    padding:var(--sp-4) var(--sp-4); z-index:200; box-shadow:0 0 32px var(--shadow); }}
-  #hl-btn {{ background:none; border:none; color:var(--paper); cursor:pointer;
-    font-size:var(--fs-sm); padding:var(--sp-12); min-height:44px; white-space:nowrap; font-family:inherit; }}
-  #hl-btn:hover {{ opacity:.8; }}
+  .hl-tooltip {{ position:fixed; background:var(--sheet); color:var(--ink); border-radius:var(--radius-0);
+    padding:var(--sp-4); z-index:200; box-shadow:0 0 32px var(--shadow); }}
+  #hl-btn {{ background:transparent; border:0; color:var(--ink); cursor:pointer; font-weight:700;
+    font-size:var(--fs-sm); padding:var(--sp-12); min-height:44px; white-space:nowrap; font-family:inherit;
+    transition:background-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
+  #hl-btn:hover, #hl-btn:active {{ background:var(--ink); color:var(--paper); }}
+  /* shortcuts dialog: level 2, a sheet with a shadow and no border */
+  .kbd-overlay {{ position:fixed; inset:0; z-index:999; display:flex; align-items:center; justify-content:center;
+    background:color-mix(in srgb, var(--paper) 72%, transparent); }}
+  .kbd-box {{ background:var(--sheet); color:var(--ink); box-shadow:0 0 32px var(--shadow); padding:var(--sp-24);
+    min-width:280px; max-width:calc(100vw - var(--sp-32)); max-height:calc(100vh - var(--sp-32)); overflow-y:auto; }}
+  .kbd-head {{ display:flex; align-items:center; justify-content:space-between; gap:var(--sp-16); margin:0 0 var(--sp-12); }}
+  .kbd-head h2 {{ margin:0; font-family:var(--font-display); font-size:var(--fs-md); font-weight:900; }}
+  .kbd-close {{ font:inherit; font-size:var(--fs-sm); color:var(--ink); background:transparent; border:var(--rule-firm);
+    border-radius:var(--radius-0); min-height:44px; min-width:44px; padding:var(--sp-8) var(--sp-12); cursor:pointer;
+    transition:background-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
+  .kbd-close:hover, .kbd-close:active {{ background:var(--ink); color:var(--paper); }}
+  .kbd-table {{ border-collapse:collapse; width:100%; }}
+  .kbd-table th, .kbd-table td {{ padding:var(--sp-4) var(--sp-8); font-size:var(--fs-sm); text-align:left; vertical-align:top; }}
+  .kbd-table th {{ font-weight:700; font-variant-numeric:tabular-nums; width:110px; }}
+  .kbd-table td {{ font-weight:400; }}
+  .kbd-note {{ margin:var(--sp-8) 0 0; font-size:var(--fs-sm); color:var(--muted); }}
   @media (max-width:900px) {{
     .reading-pane {{ width:100vw; }}
     body.pane-open .wrap {{ margin-right:0; }}
@@ -644,7 +665,8 @@ def build_html(corpus, run_date):
   /* ── reduced motion: drop every transition and animation on request ────── */
   @media (prefers-reduced-motion: reduce) {{
     a, .title, .pill, #q, .ext-link, .ext-link:hover, .card-btn, .arc-pill, .note-trigger, .note-input,
-    .drag-handle, .cluster:hover .drag-handle, #theme-btn, .pane-close, .pane-newtab,
+    .drag-handle, .cluster:hover .drag-handle, #theme-btn, .pane-close, .pane-newtab, #hl-btn, .kbd-close,
+    .item-head-main, .meta, .summary, .rbtl,
     .topic-ring .ring-fg, .cluster.focused > .item.lead, [data-tip]::after,
     .pane-loading {{ transition:none; animation:none; }}
     html {{ scroll-behavior:auto; }}
@@ -672,13 +694,13 @@ def build_html(corpus, run_date):
 
   <div class="controls">
     <div class="pills-row">
-      <button class="pill active" data-filter="all">All</button>
+      <button class="pill active" data-filter="all" aria-pressed="true">All</button>
       {pills}
     </div>
     <div class="search-row">
-      <input id="q" type="search" placeholder="Filter… (/ to focus)" autocomplete="off">
-      <button id="rl-pill" class="arc-pill">Saved</button>
-      <button id="arc-pill" class="arc-pill">Archive</button>
+      <div class="search-field">{ICON_SEARCH}<input id="q" type="search" placeholder="Filter… (/ to focus)" autocomplete="off" aria-label="Filter stories"></div>
+      <button id="rl-pill" class="arc-pill" aria-pressed="false">Saved</button>
+      <button id="arc-pill" class="arc-pill" aria-pressed="false">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>
       <button id="help-btn" class="arc-pill" data-tip="Keyboard shortcuts" aria-label="Help">?</button>
     </div>
@@ -708,8 +730,8 @@ def build_html(corpus, run_date):
     <button class="pane-close" data-tip="Close (Esc)" aria-label="Close reader">{ICON_CLOSE}</button>
   </div>
   <div class="pane-body">
-    <div class="pane-loading">Loading…</div>
-    <div class="pane-error" style="display:none"></div>
+    <div class="pane-loading" role="status">Loading…</div>
+    <div class="pane-error" role="alert" style="display:none"></div>
     <h2 class="pane-title"></h2>
     <div class="pane-byline"></div>
     <div class="pane-content"></div>
@@ -749,14 +771,24 @@ def build_html(corpus, run_date):
   lsSet('digest-snoozed', snoozed);
 
   // ── cluster class sync ────────────────────────────────────────────────────
+  // Toggle buttons carry aria-pressed; the fill-weight icon replaces the bold one while on.
+  const ICONS = {ICONS_JS};
+  function setToggle(btn, kind, on) {{
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.classList.toggle('active', on);
+    const want = on ? 1 : 0;
+    if (btn.dataset.ico !== String(want)) {{ btn.innerHTML = ICONS[kind][want]; btn.dataset.ico = String(want); }}
+  }}
   function syncClasses() {{
     document.querySelectorAll('.cluster[data-key]').forEach(cl => {{
       const k = cl.dataset.key;
       cl.classList.toggle('is-read', readSet.has(k));
+      const rdBtn  = cl.querySelector('.read-btn');
       const rlBtn  = cl.querySelector('.rl-btn');
       const snzBtn = cl.querySelector('.snooze-btn');
-      if (rlBtn)  rlBtn.classList.toggle('active', readLater.has(k));
-      if (snzBtn) snzBtn.classList.toggle('active', !!snoozed[k]);
+      if (rdBtn)  setToggle(rdBtn,  'read',   readSet.has(k));
+      if (rlBtn)  setToggle(rlBtn,  'rl',     readLater.has(k));
+      if (snzBtn) setToggle(snzBtn, 'snooze', !!snoozed[k]);
     }});
   }}
   syncClasses();
@@ -826,8 +858,8 @@ def build_html(corpus, run_date):
     arcPill.textContent = viewMode === 'archive'
       ? (arcN ? 'Archive (' + arcN + ') \xd7' : 'Archive \xd7')
       : (arcN ? 'Archive (' + arcN + ')' : 'Archive');
-    rlPill.classList.toggle('has-arc',  rlN > 0  || viewMode === 'readlater');
-    arcPill.classList.toggle('has-arc', arcN > 0 || viewMode === 'archive');
+    rlPill.setAttribute('aria-pressed',  viewMode === 'readlater' ? 'true' : 'false');
+    arcPill.setAttribute('aria-pressed', viewMode === 'archive'   ? 'true' : 'false');
   }}
 
   // ── topic read-progress rings ─────────────────────────────────────────────
@@ -879,16 +911,22 @@ def build_html(corpus, run_date):
     updateTopicRings();
   }}
   apply();
+  function setActivePill(f) {{
+    pills.forEach(x => {{
+      const on = x.dataset.filter === f;
+      x.classList.toggle('active', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }});
+  }}
   document.getElementById('clear-filters').addEventListener('click', () => {{
     q.value = ''; active = 'all'; viewMode = 'normal';
-    pills.forEach(x => x.classList.toggle('active', x.dataset.filter === 'all'));
+    setActivePill('all');
     apply(); q.focus();
   }});
 
   pills.forEach(p => p.addEventListener('click', () => {{
-    pills.forEach(x => x.classList.remove('active'));
-    p.classList.add('active');
     active = p.dataset.filter;
+    setActivePill(active);
     apply();
   }}));
   q.addEventListener('input', apply);
@@ -1035,6 +1073,8 @@ def build_html(corpus, run_date):
   document.addEventListener('keydown', e => {{
     const inField = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
     if (inField) {{ if (e.key === 'Escape') e.target.blur(); return; }}
+    // Enter on a focused button, link or summary activates it; it must not also open the focused story.
+    if (e.key === 'Enter' && e.target.closest && e.target.closest('button,a,summary')) return;
     switch (e.key) {{
       case 'ArrowDown': case 'j': e.preventDefault(); moveFocus(1);  break;
       case 'ArrowUp':   case 'k': e.preventDefault(); moveFocus(-1); break;
@@ -1073,30 +1113,43 @@ def build_html(corpus, run_date):
   }});
 
   // ── shortcuts overlay ─────────────────────────────────────────────────────
+  const SHORTCUTS = [
+    ['j / ↓', 'Next card'], ['k / ↑', 'Previous card'], ['Enter / o / r', 'Open in reader pane'],
+    ['m', 'Toggle read'], ['x', 'Archive'], ['s', 'Snooze until tomorrow'], ['b', 'Save for later'],
+    ['n', 'Add / edit note'], ['/', 'Focus search'], ['?', 'This help'], ['Esc', 'Clear focus'],
+  ];
+  let kbdOpener = null;
+  function closeShortcuts() {{
+    const ov = document.getElementById('kbd-overlay');
+    if (!ov) return;
+    ov.remove();
+    if (kbdOpener && document.contains(kbdOpener)) kbdOpener.focus();
+    kbdOpener = null;
+  }}
   function showShortcuts() {{
-    if (document.getElementById('kbd-overlay')) {{ document.getElementById('kbd-overlay').remove(); return; }}
+    if (document.getElementById('kbd-overlay')) {{ closeShortcuts(); return; }}
+    kbdOpener = document.activeElement;
     const ov = document.createElement('div');
     ov.id = 'kbd-overlay';
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;';
+    ov.className = 'kbd-overlay';
     const box = document.createElement('div');
-    box.style.cssText = 'background:var(--sheet);box-shadow:0 0 32px var(--shadow);padding:var(--sp-24);min-width:280px;max-width:calc(100vw - var(--sp-32));';
-    box.innerHTML = '<h3 style="margin:0 0 var(--sp-12);font-family:var(--font-display);font-size:var(--fs-md);">Keyboard shortcuts</h3>' +
-      '<table style="border-collapse:collapse;width:100%">' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);width:110px;padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">j / ↓</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Next card</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">k / ↑</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Previous card</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Enter / o / r</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Open in reader pane</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">m</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Toggle read</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">x</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Archive</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">s</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Snooze until tomorrow</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">b</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Save for later</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">n</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Add / edit note</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">/</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Focus search</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">?</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">This help</td></tr>' +
-      '<tr><td style="font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Esc</td><td style="padding:var(--sp-4) var(--sp-8);font-size:var(--fs-sm)">Clear focus</td></tr>' +
-      '</table><p style="margin:var(--sp-8) 0 0;font-size:var(--fs-sm);color:var(--muted)">Press ? or click outside to close</p>';
+    box.className = 'kbd-box';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-labelledby', 'kbd-title');
+    box.innerHTML = '<div class="kbd-head"><h2 id="kbd-title">Keyboard shortcuts</h2>' +
+      '<button type="button" class="kbd-close">Close</button></div>' +
+      '<table class="kbd-table">' +
+      SHORTCUTS.map(r => '<tr><th scope="row">' + r[0] + '</th><td>' + r[1] + '</td></tr>').join('') +
+      '</table><p class="kbd-note">Press ? or Esc to close</p>';
     ov.appendChild(box);
-    ov.addEventListener('click', e => {{ if (e.target === ov) ov.remove(); }});
+    ov.addEventListener('click', e => {{ if (e.target === ov) closeShortcuts(); }});
+    box.querySelector('.kbd-close').addEventListener('click', closeShortcuts);
+    ov.addEventListener('keydown', e => {{
+      if (e.key === 'Tab') {{ e.preventDefault(); box.querySelector('.kbd-close').focus(); }}
+    }});
     document.body.appendChild(ov);
+    box.querySelector('.kbd-close').focus();
   }}
 
   // ── dark mode ─────────────────────────────────────────────────────────────
@@ -1257,6 +1310,11 @@ def build_html(corpus, run_date):
 
   // override Escape to close pane first
   document.addEventListener('keydown', e => {{
+    if (e.key === 'Escape' && document.getElementById('kbd-overlay')) {{
+      e.stopImmediatePropagation();
+      closeShortcuts();
+      return;
+    }}
     if (e.key === 'Escape' && readPane.classList.contains('open')) {{
       e.stopImmediatePropagation();
       closePane();
