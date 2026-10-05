@@ -155,10 +155,7 @@
     .mast-sub { font-size:var(--fs-sm); gap:var(--sp-4); }
     .mast-topics { display:none; }
     .controls { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-8); }
-    .pills-row { flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
-      scrollbar-width:none; gap:var(--sp-4); padding-bottom:var(--sp-4); }
-    .pills-row::-webkit-scrollbar { display:none; }
-    .pill { flex-shrink:0; }
+    .pills-row { flex-wrap:wrap; gap:var(--sp-4); }
     .search-row { gap:var(--sp-4); }
     #q { min-width:0; font-size:var(--fs-md); }
     .title { line-height:1.35; }
@@ -178,7 +175,7 @@
   .card-actions { display:flex; align-items:center; gap:var(--sp-8); }
   .ico { width:1.15em; height:1.15em; fill:currentColor; flex-shrink:0; }
   /* story actions: borderless 44px squares; toggled on = fill-weight icon + aria-pressed */
-  .card-btn { width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
+  .card-btn { font:inherit; width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
     background-color:transparent; color:var(--muted); font-size:var(--fs-md); line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center; padding:0; touch-action:manipulation;
     transition:background-color var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }
@@ -386,7 +383,7 @@
       <button class="pill" data-filter="ai" aria-pressed="false">AI <span class="pc">54</span></button><button class="pill" data-filter="design" aria-pressed="false">Design <span class="pc">14</span></button><button class="pill" data-filter="ai_in_design" aria-pressed="false">AI × Design / Eng <span class="pc">26</span></button><button class="pill" data-filter="tech" aria-pressed="false">Tech &amp; Coding <span class="pc">17</span></button>
     </div>
     <div class="search-row">
-      <div class="search-field"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg><input id="q" type="search" placeholder="Filter… (/ to focus)" autocomplete="off" aria-label="Filter stories"></div>
+      <div class="search-field"><svg class="ico" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg><input id="q" type="search" placeholder="Filter" autocomplete="off" aria-label="Filter stories"></div>
       <button id="rl-pill" class="arc-pill" aria-pressed="false">Saved</button>
       <button id="arc-pill" class="arc-pill" aria-pressed="false">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>

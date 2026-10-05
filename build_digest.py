@@ -497,10 +497,7 @@ def build_html(corpus, run_date):
     .mast-sub {{ font-size:var(--fs-sm); gap:var(--sp-4); }}
     .mast-topics {{ display:none; }}
     .controls {{ flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:var(--sp-8); }}
-    .pills-row {{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
-      scrollbar-width:none; gap:var(--sp-4); padding-bottom:var(--sp-4); }}
-    .pills-row::-webkit-scrollbar {{ display:none; }}
-    .pill {{ flex-shrink:0; }}
+    .pills-row {{ flex-wrap:wrap; gap:var(--sp-4); }}
     .search-row {{ gap:var(--sp-4); }}
     #q {{ min-width:0; font-size:var(--fs-md); }}
     .title {{ line-height:1.35; }}
@@ -520,7 +517,7 @@ def build_html(corpus, run_date):
   .card-actions {{ display:flex; align-items:center; gap:var(--sp-8); }}
   .ico {{ width:1.15em; height:1.15em; fill:currentColor; flex-shrink:0; }}
   /* story actions: borderless 44px squares; toggled on = fill-weight icon + aria-pressed */
-  .card-btn {{ width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
+  .card-btn {{ font:inherit; width:44px; height:44px; border-radius:var(--radius-0); border:1px solid transparent;
     background-color:transparent; color:var(--muted); font-size:var(--fs-md); line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center; padding:0; touch-action:manipulation;
     transition:background-color var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out),color var(--dur-1) var(--ease-out); }}
@@ -722,7 +719,7 @@ def build_html(corpus, run_date):
       {pills}
     </div>
     <div class="search-row">
-      <div class="search-field">{ICON_SEARCH}<input id="q" type="search" placeholder="Filter… (/ to focus)" autocomplete="off" aria-label="Filter stories"></div>
+      <div class="search-field">{ICON_SEARCH}<input id="q" type="search" placeholder="Filter" autocomplete="off" aria-label="Filter stories"></div>
       <button id="rl-pill" class="arc-pill" aria-pressed="false">Saved</button>
       <button id="arc-pill" class="arc-pill" aria-pressed="false">Archive</button>
       <button id="theme-btn" title="Toggle dark mode">Dark</button>

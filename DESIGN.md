@@ -380,6 +380,10 @@ The same tokens redefined, values in the colour table: under `html[data-theme="d
   absolute URL when one exists.
 - **Reader blockquote left hairline.** 1px, on a blockquote, in third-party article markup; the
   detector's side-tab check reads it as an accent bar and it is not one.
+- **Known regression: page height.** Full-page height grew against the pre-Ledger shots (1440: 21317px to
+  28047px, 768: 24634px to 30936px, 375: 35251px to 43432px), mostly from summaries shown in full and
+  hairline spacing. No Ledger rule justifies it. Collapse-by-default for summaries is proposed for later
+  and is the planned fix.
 - **`em` rhythm inside `.pane-content`.** It styles markup this project does not author.
 
 ### Recommendations
