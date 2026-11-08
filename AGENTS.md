@@ -102,3 +102,5 @@ Record the actual command or observable proof in authoritative task state: Work 
 - Cursor loads `.cursor\rules\00-project-contract.mdc`, which points here.
 
 When the local shared harness exists, also follow `~/.agents/AGENTS.md`. Repository rules supply the portable fallback for cloud sessions.
+
+- Readiness: read [READINESS.md](READINESS.md) first, take its Next list, and after each change refresh it with Test-ProductReadiness.ps1 -ProductPath . -Check all -Write -Url http://127.0.0.1:4222
