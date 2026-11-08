@@ -80,6 +80,9 @@ taskstate/
 .agents/work/events.jsonl
 .agents/work/event-archives/*.jsonl
 .agents/work/state.json
+# The Work Scope lock beside it is the same machine-local state: a tracked copy rides into every
+# clone and Reconcile-WorkState reports it as a stale lock with no live owner.
+.agents/work/state.lock
 # Splice-WorkStateEventChains.ps1 writes a per-splice receipt (renumbered event range, source
 # hashes, merge point) beside the event log it merges; OutputPath must stay under .agents/work
 # so the receipt is device-local runtime evidence like events.jsonl, never tracked history.
