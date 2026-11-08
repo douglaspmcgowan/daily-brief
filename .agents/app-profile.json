@@ -1,0 +1,14 @@
+{
+  "name": "daily-brief",
+  "archetype": "reader",
+  "surfaces": ["web"],
+  "posture": "transient",
+  "audience": "self",
+  "expertise": "expert",
+  "access": "anonymous",
+  "data": "none",
+  "sensitivity": "none",
+  "stakes": "daily-tool",
+  "ai": "none",
+  "notes": "Douglas's personal news digest (README): a static page rendered by build_digest.py from corpus.json, read to catch up on AI/design/tech news, so archetype is reader not monitor. No preset; every facet is set explicitly. audience=self and expertise=expert because the author is the only reader. data=none: no user data is stored, corpus.json is committed content. The only server endpoint, api/reader.js, is unauthenticated, sends Access-Control-Allow-Origin * and fetches any public http(s) URL server-side (an open fetch proxy with an SSRF blocklist of localhost and RFC-1918 names only, no rate limit); it is read-only toward the app's own data. First gap: lock down or rate-limit api/reader.js. No deployed URL could be confirmed (vercel.json deploys master but no URL is recorded in README, PRODUCT.md or package.json; guessed daily-brief*.vercel.app hosts serve other apps), so readiness uses http://127.0.0.1:4222 and deployed-url cannot be verified. PRODUCT.md is an empty template and there is no SPEC.md, so judge items about intent are could-not-tell. Root package.json has typecheck and test scripts but no build script by design (README). The agent-run 'build' is python build_digest.py, which prunes by wall-clock date and must not be run to judge."
+}

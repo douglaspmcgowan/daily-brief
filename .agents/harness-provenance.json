@@ -4,7 +4,7 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "sha256": "89f27a564ea732905e5f752960cf96a50d7b1fb4b290db9cce57ea8a3cf3c75e"
+      "sha256": "cd23fad84f0cbb587b8f8d573f202ca08792a7edfd37c9c9949d9fa0eaddd87d"
     },
     {
       "path": "CLAUDE.md",
@@ -16,19 +16,7 @@
     },
     {
       "path": "DESIGN.md",
-      "sha256": "d9276cc2772f4cc0aef34b5cc5d7d77b4dabe682ab9571b9b9085528c529dff4"
-    },
-    {
-      "path": "TASK.md",
-      "sha256": "7284271fa0462f73f50709016100269ad532bc531d3084e90cfd6f1c33f3f796"
-    },
-    {
-      "path": "LOG.md",
-      "sha256": "54105b742bac8537d0a72ef8541ebd2e64eff8ef9fc2316478570277ae4322f2"
-    },
-    {
-      "path": "BACKBURNER.md",
-      "sha256": "40f5acc2eb99d93be0b4e5c4a5b5df6f8aac1e2726f315d3f3573d59180aa8a6"
+      "sha256": "88413a2847171d95b498a1f950f891d4d095b2770661ac7e73e3c431228dd1bd"
     },
     {
       "path": "MEMORY.md",
@@ -36,7 +24,7 @@
     },
     {
       "path": "skills-manifest.json",
-      "sha256": "562eb1aa20b5f69631506c77f5fbe3adfeefe5e68093b909cb7b5ca06c66350f"
+      "sha256": "b844ee083972ebbcb5f108186b5aa403de6d9ac361182f1c04f0adae8186882c"
     },
     {
       "path": "data-manifest.yaml",
@@ -61,10 +49,6 @@
     {
       "path": ".github\\workflows\\gitleaks.yml",
       "sha256": "119775586cd0d192e66eff7e6e77e603d59b96424459a9a175794c80de335357"
-    },
-    {
-      "path": ".agents\\feedback\\FEEDBACK-LOG.md",
-      "sha256": "fe02ff6fa43a47243a351c77911024049049e1a4803b7c0b95b2694e2e805608"
     },
     {
       "path": ".agents\\skill-pathways.json",

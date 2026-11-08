@@ -1,0 +1,34 @@
+{
+  "queue_version": 1,
+  "queue_id": "8d2d38f5-b044-40b7-a5c8-e6605089b040",
+  "kind": "work-scope-discovery",
+  "operation": "add",
+  "queued_at": "2026-11-08T04:23:23.6724938Z",
+  "source_tool": "Add-ProjectIntake.ps1",
+  "payload": {
+    "DedupCheckedBy": "Add-ProjectIntake.ps1",
+    "SuggestedTrack": "intake",
+    "Id": "app-standard-gaps",
+    "EntryDepth": "D1",
+    "FixRecommendation": "1 Rate-limit or restrict api/reader.js (origin allowlist instead of CORS *). 2 Fix horizontal overflow at 375px in build_digest.py CSS. 3 Add window error and unhandledrejection listeners in build_digest.py. 4 Add link rel=canonical in build_digest.py, plus robots.txt and sitemap.xml. 5 Fill PRODUCT.md and add SPEC.md naming core flows. Then run Test-ProductReadiness.ps1 -ProductPath . -Check all -Write -Url http://127.0.0.1:4222.",
+    "SuggestedCapability": "intake.external",
+    "CannotFixHere": "sweep files the app's own gaps record into its lane worktree by design",
+    "FixRationale": "These are the failing checks in READINESS.md; build_digest.py generates index.html so fixes go there, not in the output.",
+    "Evidence": [
+      [
+        "READINESS.md at sweep: npm test fails (tests/floor.spec.js 375px page scrolls sideways, scrollWidth 382 vs 375); keyboard-focus fails (31 links not reached by Tab); error-capture fails (no window error or unhandledrejection listener); seo-tags fails (no canonical, robots.txt, sitemap.xml); PRODUCT.md is an empty template and there is no SPEC.md; no deployed URL recorded so deployed-url is unverified. Gap 1: api/reader.js is unauthenticated, CORS *, fetches any public URL."
+      ]
+    ],
+    "Root": "/home/user/daily-brief",
+    "SourceDate": "2026-11-08",
+    "CapabilityNotYetFiled": true,
+    "Value": "high",
+    "Risk": "high",
+    "Title": "daily-brief App Standard gaps (reader, target polished, stage works not met)",
+    "ObligationClass": "actionable",
+    "DiscoveredFrom": "app-standard-sweep",
+    "CapabilityNotYetFiledReason": "intake sentinel: filer has no standing to assign a real capability, the owning session retracks it",
+    "FixLocation": "build_digest.py (page CSS and JS), api/reader.js, PRODUCT.md, SPEC.md",
+    "Relationship": "defect"
+  }
+}
